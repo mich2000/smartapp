@@ -1,1 +1,1 @@
-# smartapp
+# Xam-xam smart application

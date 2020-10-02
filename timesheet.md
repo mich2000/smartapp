@@ -1,0 +1,12 @@
+# Timesheet
+
+Timesheet to demonstrate my learning and making to complete my project.
+
+## Week 1
+
+* Course: 4h
+* Learning on a small react project I made using rust backend: 2h
+
+## Week 2
+
+* Conversation with instructor to discuss project: 20min
