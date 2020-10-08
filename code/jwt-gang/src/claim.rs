@@ -1,8 +1,7 @@
 use chrono::prelude::*;
-use jsonwebtoken::errors::ErrorKind;
-use jsonwebtoken::{decode, encode, Header, TokenData, Validation};
 use serde::{Deserialize, Serialize};
 use crate::jwt_numeric_date;
+use crate::claim_error::JwtCustomError;
 
 /**
  * Claim is used to prove authorization for an user for a certain amount of time.
@@ -29,10 +28,10 @@ impl Claim {
         subject : &str,
         issuer : &str,
         expiration : i64
-    ) -> Result<Claim, &'static str> {
+    ) -> Result<Claim, JwtCustomError> {
         if subject.is_empty() {
             warn!("The subject of the jwt claim is empty");
-            return Err("A subject of a JWT token can't be empty")
+            return Err(JwtCustomError::EmptySubjectOfToken)
         }
         let today = Utc::now();
         Ok(

@@ -10,3 +10,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 2
 
 * Conversation with instructor to discuss project: 20min
+* Working on a mini library for JWT tokens later to be used in my project: 2h
