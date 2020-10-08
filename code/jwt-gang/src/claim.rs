@@ -15,20 +15,24 @@ use crate::claim_error::JwtCustomError;
  */
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Claim {
-    pub sub: String,
-    pub iss: String,
+    sub: String,
+    iss: String,
     #[serde(with = "jwt_numeric_date")]
-    pub exp: DateTime<Utc>,
+    exp: DateTime<Utc>,
     #[serde(with = "jwt_numeric_date")]
-    pub iat: DateTime<Utc>
+    iat: DateTime<Utc>
 }
 
 impl Claim {
     pub fn new(
         subject : &str,
         issuer : &str,
-        expiration : i64
+        expiration : usize
     ) -> Result<Claim, JwtCustomError> {
+        if expiration == 0 {
+            warn!("JWT claim cannot have a expiration equal to 0.");
+            return Err(JwtCustomError::ExpirationEqualsNull)
+        }
         if subject.is_empty() {
             warn!("The subject of the jwt claim is empty");
             return Err(JwtCustomError::EmptySubjectOfToken)
@@ -38,9 +42,17 @@ impl Claim {
             Self {
                 sub: subject.to_string(),
                 iss: issuer.to_string(),
-                exp: today + chrono::Duration::seconds(expiration),
+                exp: today + chrono::Duration::seconds(expiration as i64),
                 iat: today
             }
         )
+    }
+
+    pub fn get_subject(&self) -> &str {
+        &self.sub
+    }
+
+    pub fn get_issuer(&self) -> &str {
+        &self.iss
     }
 }

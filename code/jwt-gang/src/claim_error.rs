@@ -9,6 +9,7 @@ pub enum JwtCustomError {
     TokenIsInvalid,
     IssuerIsInvalid,
     SignatureHasExpired,
+    ExpirationEqualsNull,
     CustomError(String)
 }
 
@@ -21,6 +22,7 @@ impl fmt::Display for JwtCustomError {
             JwtCustomError::TokenIsInvalid => write!(f,"JWT token is invalid"),
             JwtCustomError::IssuerIsInvalid => write!(f,"JWT token issuer is invalid"),
             JwtCustomError::SignatureHasExpired => write!(f,"Signature of jwt token has been expired"),
+            JwtCustomError::ExpirationEqualsNull => write!(f,"JWT claim cannot have a expiration equal to 0."),
             JwtCustomError::CustomError(e) => write!(f,"{}",e)
         }
     }

@@ -1,16 +1,22 @@
 use jsonwebtoken::errors::ErrorKind;
 use jsonwebtoken::{decode, encode, Header, TokenData, Validation};
+use serde::Deserialize;
 use crate::claim::Claim;
 use crate::claim_error::JwtCustomError;
 
+/**
+ * This configuration will be used to make claims and to validate these claims.
+ * - claim_issuer : issuer is mostly the server name, used to identify 
+ */
+#[derive(Clone, Deserialize)]
 pub struct ClaimConfiguration {
     claim_issuer : String,
     claim_secret : String,
-    claim_expiration : i64
+    claim_expiration : usize
 }
 
 impl ClaimConfiguration {
-    pub fn new(issuer : &str, secret : &str, expiration : i64) -> Self {
+    pub fn new(issuer : &str, secret : &str, expiration : usize) -> Self {
         Self {
             claim_issuer : issuer.to_string(),
             claim_secret : secret.to_string(),
@@ -18,14 +24,26 @@ impl ClaimConfiguration {
         }
     }
 
+    pub fn get_issuer(&self) -> &str {
+        &self.claim_issuer
+    }
+
+    pub fn get_secret(&self) -> &[u8] {
+        self.claim_secret.as_ref()
+    }
+
+    pub fn get_expiration(&self) -> usize {
+        self.claim_expiration
+    }
+
     pub fn create_claim(&self, user_id : &str) -> Result<Claim,JwtCustomError> {
         Ok(
-            Claim::new(user_id, &self.claim_issuer, self.claim_expiration)?
+            Claim::new(user_id, self.get_issuer(), self.get_expiration())?
         )
     }
 
-    pub fn string_from_claim(&self, claim : &Claim) -> Result<String, JwtCustomError> {
-        match encode(&Header::default(), &claim, self.claim_secret.as_ref()) {
+    pub fn token_from_claim(&self, claim : &Claim) -> Result<String, JwtCustomError> {
+        match encode(&Header::default(), &claim, self.get_secret()) {
             Ok(token) => {
                 info!("A token has been made from a claim");
                 Ok(token)
@@ -51,10 +69,10 @@ impl ClaimConfiguration {
             return Err(JwtCustomError::TokenIsEmpty)
         }
         let mut validate: Validation = Validation::default();
-        validate.iss = Some(self.claim_issuer.to_string());
+        validate.iss = Some(self.get_issuer().to_string());
         match decode::<Claim>(
             &token,
-            self.claim_secret.as_ref(),
+            self.get_secret(),
             &validate,
         ) {
             Ok(c) => Ok(c),
