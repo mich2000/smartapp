@@ -1,7 +1,8 @@
+use crate::schema::*;
 /**
  * Struct that represents the basic user. This form of user is very simple.
 */
-#[derive(Debug,Queryable, Identifiable)]
+#[derive(Debug,Queryable, Identifiable,Insertable)]
 #[table_name = "users"]
 pub struct User {
     pub id: i32,

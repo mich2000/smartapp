@@ -11,3 +11,5 @@ Timesheet to demonstrate my learning and making to complete my project.
 
 * Conversation with instructor to discuss project: 20min
 * Working on a mini library for JWT tokens later to be used in my project: 4h
+* Working on a mini library for JWT tokens and my models: 3h
+* Working on a working database connection between and models: 1h30

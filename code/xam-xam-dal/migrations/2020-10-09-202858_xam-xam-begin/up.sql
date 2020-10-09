@@ -8,7 +8,6 @@ CREATE TABLE "users"
 );
 
 CREATE TYPE StorageKind AS ENUM ('Other','Closet','Fridge','Freezer');
-
 CREATE TYPE ProductKind AS ENUM ('Other','Vegetables','Fruit','Grain','Meat','Fish','Dairy','FatAndSugar','Bean');
 
 CREATE TABLE "storages" (
@@ -24,5 +23,5 @@ CREATE TABLE "products"(
     name TEXT NOT NULL,
     amount INTEGER NOT NULL,
     peremption_date DATE NOT NULL,
-    product_kind ProductKind NOT NULL,
+    product_kind ProductKind NOT NULL
 );

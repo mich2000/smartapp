@@ -1,5 +1,6 @@
 use crate::enums::storage_kind::StorageKind;
 use crate::models::user::User;
+use crate::schema::*;
 
 #[derive(Debug,Associations,Queryable)]
 #[belongs_to(User)]
