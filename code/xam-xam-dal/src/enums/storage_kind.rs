@@ -1,0 +1,11 @@
+/**
+ * Enumeration containing all the kind of storage a storage can be.
+ */
+#[derive(Debug, PartialEq, DbEnum)]
+#[DieselType = "StorageKind"]
+pub enum StorageKind {
+    Other,
+    Closet,
+    Fridge,
+    Freezer
+}

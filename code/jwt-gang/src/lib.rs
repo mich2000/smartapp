@@ -1,15 +1,13 @@
-mod claim_config;
-mod claim;
+pub mod claim_config;
+pub mod claim;
 mod jwt_numeric_date;
 mod claim_error;
 
 use claim_config::ClaimConfiguration;
-use claim_error::JwtCustomError;
-use std::fs;
 
 #[macro_use] extern crate log;
 
-pub fn from_env_config() -> Result<ClaimConfiguration, JwtCustomError> {
+/*pub fn from_env_config() -> Result<ClaimConfiguration, JwtCustomError> {
     let toml_str = match fs::read_to_string("./Jwt.toml") {
         Ok(toml) => toml,
         Err(_) => return Err(JwtCustomError::CustomError("Could not get the toml config file".to_string()))
@@ -21,7 +19,7 @@ pub fn from_env_config() -> Result<ClaimConfiguration, JwtCustomError> {
     Ok(
         config
     )
-}
+}*/
 
 #[test]
 fn test_good_claim() {
