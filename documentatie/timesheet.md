@@ -9,7 +9,12 @@ Timesheet to demonstrate my learning and making to complete my project.
 
 ## Week 2
 
-* Conversation with instructor to discuss project: 20min
+* Conversation with instructor to discuss project: 20m
 * Working on a mini library for JWT tokens later to be used in my project: 4h
 * Working on a mini library for JWT tokens and my models: 3h
 * Working on a working database connection between and models: 1h30
+
+## Week 3
+
+* Conversation with instructor to discuss project: 10m
+* Working on database models(adding some constraints), adding errors and some utilities(regex, random hash giver) to use: 4h

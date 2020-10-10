@@ -26,8 +26,6 @@ table! {
 
 table! {
     use diesel::sql_types::*;
-    use crate::models::*;
-    use crate::enums::*;
 
     users (id) {
         id -> Int4,
