@@ -35,3 +35,30 @@ Design of the style of the application, rust backend and databases. The only att
 ### Out-scope
 
 Other values, like the nutritive values are not registered in the database.
+
+## Services
+
+For this project I am going to try to seperate the small monolith into microservices.
+
+### Authentication service(Rust actix-web)
+
+This service will manage the user side of the application. This means:
+
+* Registrations of users
+* Login: will attach a private cookie(JWT token)
+* Changing email if logged in
+* Changing password if logged in
+* Logging out users
+* Sending email with a code for users who forgot their password, this code will be in a redis database and expire.
+
+### Business service(Rust actix-web)
+
+This service will manage business related side of the application, this will only accept and execute requests with a valid JWT. The following things are done by this service:
+
+* CRUD operations of storages
+* CRUD operations of products
+* Move products between storages
+
+### Frontend service(Nginx)
+
+Service used to serve react app to the users.
