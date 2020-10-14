@@ -2,7 +2,7 @@ use crate::enums::storage_kind::StorageKind;
 use crate::models::user::User;
 use crate::schema::*;
 
-#[derive(Debug,Associations,Queryable)]
+#[derive(Insertable, Queryable, Associations, Identifiable, Debug, PartialEq, Clone)]
 #[belongs_to(User)]
 #[table_name = "storages"]
 pub struct Storage {

@@ -18,3 +18,5 @@ Timesheet to demonstrate my learning and making to complete my project.
 
 * Conversation with instructor to discuss project: 10m
 * Working on database models(adding some constraints), adding errors and some utilities(regex, random hash giver) to use: 4h
+* Working on enumeration problem: 1h
+* Working on problems related to enums, this is difficult between the diesel orm and the database: 2h30
