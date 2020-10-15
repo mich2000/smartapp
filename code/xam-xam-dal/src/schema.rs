@@ -5,7 +5,7 @@ table! {
         id -> Int4,
         storage_id -> Int4,
         name -> Text,
-        amount -> Int4,
+        amount -> Int2,
         peremption_date -> Date,
         product_kind -> crate::enums::product_kind::Product_Kind,
     }

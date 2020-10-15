@@ -5,7 +5,7 @@ CREATE TABLE "users"
     email TEXT NOT NULL,
     password_hash TEXT NOT NULL,
     salt TEXT NOT NULL,
-    UNIQUE(email)
+    UNIQUE (email)
 );
 
 CREATE TYPE StorageKind AS ENUM ('other','closet','fridge','freezer');
@@ -23,7 +23,7 @@ CREATE TABLE "products"(
     id SERIAL PRIMARY KEY,
     storage_id INTEGER NOT NULL REFERENCES storages(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
-    amount INTEGER NOT NULL,
+    amount SMALLINT NOT NULL CHECK(amount > 0),
     peremption_date DATE NOT NULL,
     product_kind ProductKind NOT NULL DEFAULT 'other',
     UNIQUE (id,name)

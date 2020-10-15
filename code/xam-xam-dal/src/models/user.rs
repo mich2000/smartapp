@@ -1,6 +1,6 @@
 use crate::schema::*;
 use crate::util;
-use crate::err::IdentityError;
+use crate::err::XamXamError;
 use argon2::Config;
 
 /**
@@ -34,20 +34,20 @@ impl InsertableUser {
      * * email isn't in the right format
      * * Hashing of password fails
      */
-    pub fn new(email : &str, pwd : &str) -> Result<InsertableUser, IdentityError> {
+    pub fn new(email : &str, pwd : &str) -> Result<InsertableUser, XamXamError> {
         if email.is_empty() {
-            return Err(IdentityError::EmailIsEmpty)
+            return Err(XamXamError::EmailIsEmpty)
         }
         if pwd.is_empty() {
-            return Err(IdentityError::PasswordIsEmpty)
+            return Err(XamXamError::PasswordIsEmpty)
         }
         if !util::control_email(email) {
-            return Err(IdentityError::EmailNotCorrectFormat)
+            return Err(XamXamError::EmailNotCorrectFormat)
         }
         let hash : String = util::get_hash(8);
         let hashed_pwd : String = match argon2::hash_encoded(pwd.as_bytes(), hash.as_bytes(), &Config::default()) {
             Ok(hash) => hash,
-            Err(_) => return Err(IdentityError::PasswordCannotBeMade) 
+            Err(_) => return Err(XamXamError::PasswordCannotBeMade) 
         };
         Ok(
             InsertableUser {
