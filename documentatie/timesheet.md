@@ -21,3 +21,8 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on enumeration problem: 1h
 * Working on problems related to enums, this is difficult between the diesel orm and the database: 2h30
 * Working on my models and making database insertable structs for them: 1h30
+
+## Week 4
+
+* Conversation with instructor to discuss project: 10m
+* Working on the data access layer(focused on the user): 3h

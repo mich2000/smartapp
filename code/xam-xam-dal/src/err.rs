@@ -76,4 +76,10 @@ impl fmt::Display for XamXamError {
     }
 }
 
+impl From<diesel::result::Error> for XamXamError {
+    fn from(error: diesel::result::Error) -> Self {
+        XamXamError::CustomError(format!("{}", error))
+    }
+}
+
 impl Error for XamXamError { }

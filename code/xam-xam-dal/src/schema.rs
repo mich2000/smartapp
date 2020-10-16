@@ -28,6 +28,7 @@ table! {
     users (id) {
         id -> Int4,
         email -> Text,
+        email_confirmed -> Bool,
         password_hash -> Text,
         salt -> Text,
     }

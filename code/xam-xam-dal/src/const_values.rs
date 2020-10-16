@@ -1,0 +1,1 @@
+pub static SALT_LENGTH : usize = 8;

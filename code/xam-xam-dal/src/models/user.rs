@@ -2,6 +2,7 @@ use crate::schema::*;
 use crate::util;
 use crate::err::XamXamError;
 use argon2::Config;
+use crate::const_values;
 
 /**
  * Struct that represents the basic user. This form of user is very simple.
@@ -11,6 +12,7 @@ use argon2::Config;
 pub struct User {
     pub id: i32,
     pub email : String,
+    pub email_confirmed : bool,
     pub password_hash : String,
     pub salt : String
 }
@@ -22,6 +24,7 @@ pub struct User {
 #[table_name = "users"]
 pub struct InsertableUser {
     pub email : String,
+    pub email_confirmed : bool,
     pub password_hash : String,
     pub salt : String
 }
@@ -44,7 +47,7 @@ impl InsertableUser {
         if !util::control_email(email) {
             return Err(XamXamError::EmailNotCorrectFormat)
         }
-        let hash : String = util::get_hash(8);
+        let hash : String = util::get_hash(const_values::SALT_LENGTH);
         let hashed_pwd : String = match argon2::hash_encoded(pwd.as_bytes(), hash.as_bytes(), &Config::default()) {
             Ok(hash) => hash,
             Err(_) => return Err(XamXamError::PasswordCannotBeMade) 
@@ -52,6 +55,7 @@ impl InsertableUser {
         Ok(
             InsertableUser {
                 email : email.to_string(),
+                email_confirmed : false,
                 password_hash :  hashed_pwd.to_string(),
                 salt : hash
             }

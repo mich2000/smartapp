@@ -16,6 +16,13 @@ pub struct Storage {
     pub storage_kind : StorageKind
 }
 
+#[derive(AsChangeset)]
+#[table_name = "storages"]
+pub struct UpdateStorage {
+    pub name : Option<String>,
+    pub storage_kind : Option<StorageKind>
+}
+
 /**
  * Struct that is used to insert a storage in the database.
  */

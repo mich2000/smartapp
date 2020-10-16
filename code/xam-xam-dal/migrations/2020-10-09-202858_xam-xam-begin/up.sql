@@ -3,6 +3,7 @@ CREATE TABLE "users"
 (
     id SERIAL PRIMARY KEY,
     email TEXT NOT NULL,
+    email_confirmed BOOL NOT NULL,
     password_hash TEXT NOT NULL,
     salt TEXT NOT NULL,
     UNIQUE (email)
@@ -16,7 +17,7 @@ CREATE TABLE "storages" (
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
     storage_kind StorageKind NOT NULL DEFAULT 'other',
-    UNIQUE (id,name)
+    UNIQUE (user_id,name)
 );
 
 CREATE TABLE "products"(
