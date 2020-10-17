@@ -1,5 +1,5 @@
 [package]
-name = "xam-xam-dal"
+name = "xam-xam-id-bll"
 version = "0.1.0"
 authors = ["Michael Hertsens <michael28072000@outlook.com>"]
 edition = "2018"
@@ -7,13 +7,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-diesel = { version = "1.4.5", features = ["postgres","chrono"] }
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4.0"
-chrono = "0.4"
-dotenv ="0.15.0"
-diesel-derive-enum = { version = "1", features = ["postgres"] }
-rand = "0.7.3"
-rust-argon2 = "0.8"
-regex = "1"
-lazy_static = "1.4.0"
+mailgang = "0.2.0"
+jwt-gang = { path = "../jwt-gang"}
+xam-xam-dal = { path = "../xam-xam-dal" }

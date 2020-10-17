@@ -47,7 +47,7 @@ impl InsertableStorage {
         }
         Ok(
             Self {
-                user_id : user_id,
+                user_id,
                 name : storage_name.to_string(),
                 storage_kind : storage_kind.unwrap_or(StorageKind::Other)
             }

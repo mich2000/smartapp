@@ -3,14 +3,18 @@ pub mod claim;
 mod jwt_numeric_date;
 mod claim_error;
 
-use claim_config::ClaimConfiguration;
-
 #[macro_use] extern crate log;
 
-/*pub fn from_env_config() -> Result<ClaimConfiguration, JwtCustomError> {
-    let toml_str = match fs::read_to_string("./Jwt.toml") {
+use claim_config::ClaimConfiguration;
+use claim_error::JwtCustomError;
+
+/**
+ * Returns a Result with a claim configuration if succeeded, a path is needed.
+ */
+pub fn from_env_config(path : &str) -> Result<ClaimConfiguration, JwtCustomError> {
+    let toml_str = match std::fs::read_to_string(path) {
         Ok(toml) => toml,
-        Err(_) => return Err(JwtCustomError::CustomError("Could not get the toml config file".to_string()))
+        Err(_) => return Err(JwtCustomError::CustomError("Could not get the toml config file for the jwt config".to_string()))
     };
     let config = match toml::from_str(&toml_str) {
         Ok(config) => config,
@@ -19,10 +23,11 @@ use claim_config::ClaimConfiguration;
     Ok(
         config
     )
-}*/
+}
 
 #[test]
 fn test_good_claim() {
+    use claim_config::ClaimConfiguration;
     let config = ClaimConfiguration::new("i", "s", 15);
     let claim = config.create_claim("u").unwrap();
     let token = config.token_from_claim(&claim).unwrap();
@@ -32,7 +37,15 @@ fn test_good_claim() {
 
 #[test]
 fn test_expiration() {
+    use claim_config::ClaimConfiguration;
     let config = ClaimConfiguration::new("i", "s", 15);
     let claim = config.create_claim("u");
     assert!(!claim.is_err())
+}
+
+#[test]
+fn test_config() {
+    let config = from_env_config("Jwt.toml").unwrap();
+    assert!(!config.get_issuer().is_empty());
+    assert!(!config.get_expiration() != 0);
 }

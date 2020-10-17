@@ -1,0 +1,3 @@
+claim_issuer = 'test'
+claim_secret = 'secret'
+claim_expiration = 50

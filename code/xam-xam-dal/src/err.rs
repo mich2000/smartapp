@@ -23,16 +23,6 @@ pub enum XamXamError {
     StorageNameIsEmpty,
     // Storage related errors
     ProductNameIsEmpty,
-    //Token related error
-    SubjectOfTokenIsEmpty,
-    TokenCannotBeMadeFromClaim,
-    TokenIsEmpty,
-    TokenIsInvalid,
-    IssuerIsInvalid,
-    SignatureHasExpired,
-    //Email and SMTP related errors
-    SmtpDomainNotGood,
-    CouldNotSendEmail,
     //Custom errors
     CustomError(String)
 }
@@ -60,16 +50,6 @@ impl fmt::Display for XamXamError {
             XamXamError::StorageNameIsEmpty => write!(f,"The name of a storage cannot be empty"),
             // Storage related errors
             XamXamError::ProductNameIsEmpty => write!(f,"The name of a product cannot be emtpy"),
-            //Token related error
-            XamXamError::SubjectOfTokenIsEmpty => write!(f,"The subject is empty"),
-            XamXamError::TokenCannotBeMadeFromClaim => write!(f,"Couldn't create a token out of a claim"),
-            XamXamError::TokenIsEmpty => write!(f,"Token cannot be emtpy"),
-            XamXamError::TokenIsInvalid => write!(f,"Token is invalid"),
-            XamXamError::IssuerIsInvalid => write!(f,"Issuer is invalid"),
-            XamXamError::SignatureHasExpired => write!(f,"Signature has expired"),
-            //Email and SMTP related errors
-            XamXamError::SmtpDomainNotGood => write!(f,"Stmp domain is not good"),
-            XamXamError::CouldNotSendEmail => write!(f,"Could not send the email throught the smtp transport"),
             // Custom errors
             XamXamError::CustomError(e) => write!(f,"{}",e)
         }

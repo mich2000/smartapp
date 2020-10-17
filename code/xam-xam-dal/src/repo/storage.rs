@@ -5,7 +5,6 @@ use crate::schema::storages::dsl::*;
 use crate::schema::storages::*;
 use crate::diesel::RunQueryDsl;
 use crate::diesel::ExpressionMethods;
-use crate::diesel::query_dsl::filter_dsl::FindDsl;
 use crate::diesel::query_dsl::filter_dsl::FilterDsl;
 
 /**

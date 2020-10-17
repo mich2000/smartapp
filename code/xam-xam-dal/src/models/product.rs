@@ -51,9 +51,9 @@ impl InsertableProduct {
         }
         Ok(
             Self {
-                storage_id : storage_id,
+                storage_id,
                 name : product_name.to_string(),
-                amount : amount,
+                amount,
                 peremption_date : peremption_date.unwrap_or_else(|| Utc::now().naive_local().date()),
                 product_kind : product_kind.unwrap_or(ProductKind::Other)
             }
