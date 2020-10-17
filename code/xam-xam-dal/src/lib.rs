@@ -2,6 +2,7 @@ mod util;
 mod enums;
 mod repo;
 mod const_values;
+mod basic_user_info;
 
 #[macro_use] extern crate diesel;
 #[macro_use] extern crate lazy_static;

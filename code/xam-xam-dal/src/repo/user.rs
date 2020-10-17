@@ -9,6 +9,7 @@ use crate::diesel::query_dsl::filter_dsl::FilterDsl;
 use crate::util::{control_email,get_hash};
 use crate::const_values;
 use argon2::Config;
+use crate::basic_user_info::BasicUserInfo;
 
 /**
  * Inserts a user in a database
@@ -113,4 +114,19 @@ pub fn delete_user(conn : &PgConnection, user_id : i32) -> Result<bool,XamXamErr
         },
         Err(e) => Err(e.into())
     }
+}
+
+use chrono::NaiveDate;
+
+pub fn get_information_from_id(conn : &PgConnection, user_id : i32) -> Result<BasicUserInfo, XamXamError> {
+    use diesel::sql_types::Integer;
+    let sql : String = format!(r#"
+    select count(s.id) as amount_storage,
+    count(pi.id) as amount_product,
+    min(pi.peremption_date) as min_bederf,
+    max(pi.peremption_date) as max_bederf
+    from storages s left join products pi on s.ID = pi.id where s.user_id = ?
+    "#);
+    let result = diesel::sql_query(&sql).bind::<Integer,_>(user_id).get_result::<BasicUserInfo>(conn);
+    Err(XamXamError::EmailAndPasswordIsEmpty)
 }
