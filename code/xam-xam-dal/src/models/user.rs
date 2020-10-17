@@ -56,7 +56,7 @@ impl InsertableUser {
             InsertableUser {
                 email : email.to_string(),
                 email_confirmed : false,
-                password_hash :  hashed_pwd.to_string(),
+                password_hash :  hashed_pwd,
                 salt : hash
             }
         )

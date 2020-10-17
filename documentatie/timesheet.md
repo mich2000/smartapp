@@ -26,3 +26,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 
 * Conversation with instructor to discuss project: 10m
 * Working on the data access layer(focused on the user): 3h
+* Working on my data access layer: 3h

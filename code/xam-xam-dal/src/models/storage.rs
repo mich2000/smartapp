@@ -16,6 +16,9 @@ pub struct Storage {
     pub storage_kind : StorageKind
 }
 
+/**
+ * Struct that is used to update a storage unit.
+ */
 #[derive(AsChangeset)]
 #[table_name = "storages"]
 pub struct UpdateStorage {

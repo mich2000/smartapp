@@ -13,4 +13,3 @@ These are sources I used and researched to be able to make my project.
 * rust ORM helper library to write less code for enums: https://github.com/adwhit/diesel-derive-enums
 * Project that I wrote a during vacation, I am re-using code of this project: https://github.com/mich2000/identity
 * Stackoverflow blog post detailing about necessary features in the project config files to increase compatibility with the diesel orm for enums: https://stackoverflow.com/questions/55783064/the-trait-dieselexpression-is-not-implemented-for-bigdecimalbigdecimal/55783407#55783407
-* Stackoverflow post talking about how to 

@@ -19,6 +19,15 @@ pub struct Product {
     pub product_kind : ProductKind
 }
 
+#[derive(AsChangeset)]
+#[table_name = "products"]
+pub struct UpdateProduct {
+    pub name : Option<String>,
+    pub amount : Option<i16>,
+    pub peremption_date: Option<NaiveDate>,
+    pub product_kind : Option<ProductKind>
+}
+
 /**
  * Struct that is used to insert a product into the database
  */
@@ -45,7 +54,7 @@ impl InsertableProduct {
                 storage_id : storage_id,
                 name : product_name.to_string(),
                 amount : amount,
-                peremption_date : peremption_date.unwrap_or(Utc::now().naive_local().date()),
+                peremption_date : peremption_date.unwrap_or_else(|| Utc::now().naive_local().date()),
                 product_kind : product_kind.unwrap_or(ProductKind::Other)
             }
         )
