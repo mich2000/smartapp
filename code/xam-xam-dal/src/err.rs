@@ -19,6 +19,7 @@ pub enum XamXamError {
     UserIsNotPresent,
     UserDeleteFailed,
     UserCannotBeUpdated,
+    UserNotVerified,
     //Storage related error
     StorageNameIsEmpty,
     // Storage related errors
@@ -46,6 +47,7 @@ impl fmt::Display for XamXamError {
             XamXamError::UserIsNotPresent => write!(f,"User is not present"),
             XamXamError::UserDeleteFailed => write!(f,"The user's password wasn't correct or delete confirmation was not set to true"),
             XamXamError::UserCannotBeUpdated => write!(f,"User cannot be updated."),
+            XamXamError::UserNotVerified => write!(f,"User has to be verified"),
             //Storage related error
             XamXamError::StorageNameIsEmpty => write!(f,"The name of a storage cannot be empty"),
             // Storage related errors

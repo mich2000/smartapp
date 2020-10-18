@@ -28,3 +28,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on the data access layer(focused on the user): 3h
 * Working on my data access layer: 3h
 * Working on jwt configuration, data access layer and setting up the basic project for the service authentication: 2h
+* Working on my service layer and adjusting my data access layer: 4h

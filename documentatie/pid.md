@@ -46,8 +46,9 @@ This service will manage the user side of the application. This means:
 
 * Registrations of users
 * Login: will attach a private cookie(JWT token)
-* Changing email if logged in
-* Changing password if logged in
+* Confirming email
+* Changing email if logged in, if they are a confirmed user
+* Changing password if logged in, if they are a confirmed user
 * Logging out users
 * Sending email with a code for users who forgot their password, this code will be in a redis database and expire.
 

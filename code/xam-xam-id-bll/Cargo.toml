@@ -12,3 +12,5 @@ log = "0.4.0"
 mailgang = "0.2.0"
 jwt-gang = { path = "../jwt-gang"}
 xam-xam-dal = { path = "../xam-xam-dal" }
+redis = { version = "0.17.0" }
+toml = "0.5"
