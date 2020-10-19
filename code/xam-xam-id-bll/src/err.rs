@@ -6,6 +6,8 @@ use xam_xam_dal::err::XamXamError;
 pub enum XamXamServiceError {
     //Dal error
     XamXamDalError(XamXamError),
+    //User related error
+    UserAlreadyInRedisDB,
     //Custom errors
     CustomError(String)
 }
@@ -15,6 +17,7 @@ impl fmt::Display for XamXamServiceError {
         match self {
             //Dal error
             XamXamServiceError::XamXamDalError(err) => write!(f,"{}",err),
+            XamXamServiceError::UserAlreadyInRedisDB => write!(f,"A user can not be already present in the redis database"),
             // Custom errors
             XamXamServiceError::CustomError(e) => write!(f,"{}",e)
         }
@@ -26,7 +29,11 @@ impl From<XamXamError> for XamXamServiceError {
 }
 
 impl From<redis::RedisError> for XamXamServiceError { 
-    fn from (err : redis::RedisError) -> Self { XamXamServiceError::CustomError(format!("{}",err)) } 
+    fn from (err : redis::RedisError) -> Self { XamXamServiceError::CustomError(err.to_string()) } 
+}
+
+impl From<&str> for XamXamServiceError { 
+    fn from (err : &str) -> Self { XamXamServiceError::CustomError(err.to_string()) } 
 }
 
 impl Error for XamXamServiceError { }

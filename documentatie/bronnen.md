@@ -16,3 +16,4 @@ These are sources I used and researched to be able to make my project.
 * Rust diesel post on the rust forum talking about how to make a Database connection pool: https://users.rust-lang.org/t/first-baby-steps-with-diesel-r2d2/37858/3
 * Rust forum post about converting raw sql to a struct: https://discourse.diesel.rs/t/get-raw-result-without-structuring/80/4
 * Rust redis client I use for retaining tokens: https://docs.rs/redis/0.17.0/redis/#basic-operation
+* Rust diesel function to count rows: https://docs.diesel.rs/1.4.x/diesel/dsl/fn.count_star.html

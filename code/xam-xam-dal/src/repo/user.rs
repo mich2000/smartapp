@@ -6,6 +6,7 @@ use crate::diesel::RunQueryDsl;
 use crate::diesel::ExpressionMethods;
 use crate::diesel::query_dsl::filter_dsl::FindDsl;
 use crate::diesel::query_dsl::filter_dsl::FilterDsl;
+use crate::diesel::query_dsl::select_dsl::SelectDsl;
 use crate::diesel::OptionalExtension;
 use crate::util::{control_email,get_hash};
 use crate::const_values;
@@ -24,6 +25,15 @@ pub fn insert_user(conn : &PgConnection, user : &InsertableUser) -> Result<(),Xa
         },
         Err(e) => Err(e.into())
     }
+}
+
+/**
+ * Function that is used to know if a user with a specific email exists.
+*/
+pub fn user_exists_by_email(conn : &PgConnection, user_email : &str) -> Result<bool,XamXamError> {
+    Ok(
+        users.filter(email.eq(user_email)).select(diesel::dsl::count_star()).get_result::<i64>(conn)? > 0
+    )
 }
 
 /**
