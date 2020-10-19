@@ -3,6 +3,7 @@ use serde::{Deserialize,Serialize};
 #[derive(Serialize,Deserialize)]
 pub struct NewUser {
     email : String,
+    token : String,
     password : String,
     password_confirm : String
 }
@@ -10,6 +11,10 @@ pub struct NewUser {
 impl NewUser {
     pub fn get_email(&self) -> &str {
         &self.email
+    }
+
+    pub fn get_token(&self) -> &str {
+        &self.token
     }
 
     pub fn get_password(&self) -> &str {

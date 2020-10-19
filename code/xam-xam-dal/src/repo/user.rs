@@ -6,11 +6,11 @@ use crate::diesel::RunQueryDsl;
 use crate::diesel::ExpressionMethods;
 use crate::diesel::query_dsl::filter_dsl::FindDsl;
 use crate::diesel::query_dsl::filter_dsl::FilterDsl;
-use crate::diesel::query_dsl::select_dsl::SelectDsl;
+use crate::diesel::OptionalExtension;
 use crate::util::{control_email,get_hash};
 use crate::const_values;
-use argon2::Config;
 use crate::basic_user_info::BasicUserInfo;
+use argon2::Config;
 use diesel::sql_types::Integer;
 
 /**
@@ -29,28 +29,10 @@ pub fn insert_user(conn : &PgConnection, user : &InsertableUser) -> Result<(),Xa
 /**
  * Returns a user based on his email
  */
-pub fn get_user_by_mail(conn : &PgConnection, user_email : &str) -> Result<User,XamXamError> {
+pub fn get_user_by_mail(conn : &PgConnection, user_email : &str) -> Result<Option<User>,XamXamError> {
     Ok(
-        users.filter(email.eq(user_email)).first::<User>(conn)?
+        users.filter(email.eq(user_email)).get_result::<User>(conn).optional()?
     )
-}
-
-/**
- * Function that is used to confirm a user, mostly through the email. The result can if succeeded return a boolean, true means a row has changed otherwhise a false will be given.
- */
-pub fn confirm_user(conn : &PgConnection, user_id : i32) -> Result<bool, XamXamError> {
-    match diesel::update(users.find(user_id)).set(email_confirmed.eq(true)).execute(conn) {
-        Ok(rows_affected) => {
-            if rows_affected > 0 {
-                info!("The user with the id {} has succesfully been confirmed.", user_id);
-                Ok(true)
-            } else {
-                info!("The user with the id {} has succesfully couldn't be confirmed.", user_id);
-                Ok(false)
-            }
-        },
-        Err(e) => Err(e.into())
-    }
 }
 
 /**
@@ -116,13 +98,6 @@ pub fn delete_user(conn : &PgConnection, user_id : i32) -> Result<bool,XamXamErr
         },
         Err(e) => Err(e.into())
     }
-}
-
-/**
- * Returns if a user is verified or not.
- */
-pub fn is_user_confirmed(conn : &PgConnection, user_id : i32) -> Result<bool,XamXamError> {
-    Ok(users.find(user_id).select(email_confirmed).get_result(conn)?)
 }
 
 /**

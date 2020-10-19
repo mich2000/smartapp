@@ -1,4 +1,3 @@
-mod util;
 mod enums;
 mod const_values;
 mod basic_user_info;
@@ -11,3 +10,4 @@ pub mod schema;
 pub mod models;
 pub mod err;
 pub mod repo;
+pub mod util;

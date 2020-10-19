@@ -12,7 +12,6 @@ use crate::const_values;
 pub struct User {
     pub id: i32,
     pub email : String,
-    pub email_confirmed : bool,
     pub password_hash : String,
     pub salt : String
 }
@@ -24,7 +23,6 @@ pub struct User {
 #[table_name = "users"]
 pub struct InsertableUser {
     pub email : String,
-    pub email_confirmed : bool,
     pub password_hash : String,
     pub salt : String
 }
@@ -55,7 +53,6 @@ impl InsertableUser {
         Ok(
             InsertableUser {
                 email : email.to_string(),
-                email_confirmed : false,
                 password_hash :  hashed_pwd,
                 salt : hash
             }

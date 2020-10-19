@@ -1,4 +1,4 @@
-use chrono::{NaiveDate,Utc};
+use chrono::NaiveDate;
 use diesel::sql_types::{BigInt,Date,Nullable};
 
 #[derive(Debug,QueryableByName,FromSqlRow)]

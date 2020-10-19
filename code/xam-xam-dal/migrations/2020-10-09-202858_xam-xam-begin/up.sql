@@ -3,7 +3,6 @@ CREATE TABLE "users"
 (
     id SERIAL PRIMARY KEY,
     email TEXT NOT NULL,
-    email_confirmed BOOL NOT NULL,
     password_hash TEXT NOT NULL,
     salt TEXT NOT NULL,
     UNIQUE (email)

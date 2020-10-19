@@ -25,4 +25,8 @@ impl From<XamXamError> for XamXamServiceError {
     fn from(err : XamXamError) -> Self { XamXamServiceError::XamXamDalError(err) }
 }
 
+impl From<redis::RedisError> for XamXamServiceError { 
+    fn from (err : redis::RedisError) -> Self { XamXamServiceError::CustomError(format!("{}",err)) } 
+}
+
 impl Error for XamXamServiceError { }
