@@ -693,6 +693,7 @@ dependencies = [
  "log",
  "serde",
  "toml",
+ "xam-xam-common",
 ]
 
 [[package]]
@@ -1680,6 +1681,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xam-xam-common"
+version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "rand",
+ "regex",
+]
+
+[[package]]
 name = "xam-xam-dal"
 version = "0.1.0"
 dependencies = [
@@ -1687,12 +1697,10 @@ dependencies = [
  "diesel",
  "diesel-derive-enum",
  "dotenv",
- "lazy_static",
  "log",
- "rand",
- "regex",
  "rust-argon2",
  "serde",
+ "xam-xam-common",
 ]
 
 [[package]]
@@ -1705,5 +1713,6 @@ dependencies = [
  "redis",
  "serde",
  "toml",
+ "xam-xam-common",
  "xam-xam-dal",
 ]

@@ -12,3 +12,4 @@ chrono = "0.4"
 jsonwebtoken = "5.0.1"
 log = "0.4.0"
 toml = "0.5"
+xam-xam-common= { path="../xam-xam-common" }

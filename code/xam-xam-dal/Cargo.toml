@@ -13,7 +13,5 @@ log = "0.4.0"
 chrono = "0.4"
 dotenv ="0.15.0"
 diesel-derive-enum = { version = "1", features = ["postgres"] }
-rand = "0.7.3"
 rust-argon2 = "0.8"
-regex = "1"
-lazy_static = "1.4.0"
+xam-xam-common={ path="../xam-xam-common" }

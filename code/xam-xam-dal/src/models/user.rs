@@ -1,5 +1,4 @@
 use crate::schema::*;
-use crate::util;
 use crate::err::XamXamError;
 use argon2::Config;
 use crate::const_values;
@@ -14,6 +13,15 @@ pub struct User {
     pub email : String,
     pub password_hash : String,
     pub salt : String
+}
+
+impl User {
+    pub fn verify_pwd(&self, pwd : &str) -> bool {
+        if pwd.is_empty() {
+            return false
+        }
+        argon2::verify_encoded(&self.password_hash, pwd.as_bytes()).unwrap()
+    }
 }
 
 /**
@@ -42,10 +50,10 @@ impl InsertableUser {
         if pwd.is_empty() {
             return Err(XamXamError::PasswordIsEmpty)
         }
-        if !util::control_email(email) {
+        if !xam_xam_common::util::control_email(email) {
             return Err(XamXamError::EmailNotCorrectFormat)
         }
-        let hash : String = util::get_hash(const_values::SALT_LENGTH);
+        let hash : String = xam_xam_common::util::get_hash(const_values::SALT_LENGTH);
         let hashed_pwd : String = match argon2::hash_encoded(pwd.as_bytes(), hash.as_bytes(), &Config::default()) {
             Ok(hash) => hash,
             Err(_) => return Err(XamXamError::PasswordCannotBeMade) 

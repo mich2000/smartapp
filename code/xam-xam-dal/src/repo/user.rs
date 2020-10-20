@@ -8,7 +8,7 @@ use crate::diesel::query_dsl::filter_dsl::FindDsl;
 use crate::diesel::query_dsl::filter_dsl::FilterDsl;
 use crate::diesel::query_dsl::select_dsl::SelectDsl;
 use crate::diesel::OptionalExtension;
-use crate::util::{control_email,get_hash};
+use xam_xam_common::util::{control_email,get_hash};
 use crate::const_values;
 use crate::basic_user_info::BasicUserInfo;
 use argon2::Config;

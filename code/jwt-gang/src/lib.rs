@@ -1,7 +1,7 @@
 pub mod claim_config;
 pub mod claim;
+pub mod claim_error;
 mod jwt_numeric_date;
-mod claim_error;
 
 #[macro_use] extern crate log;
 
@@ -20,9 +20,7 @@ pub fn from_env_config(path : &str) -> Result<ClaimConfiguration, JwtCustomError
         Ok(config) => config,
         Err(e) => return Err(JwtCustomError::CustomError(format!("{}", e)))
     };
-    Ok(
-        config
-    )
+    Ok(config)
 }
 
 #[test]

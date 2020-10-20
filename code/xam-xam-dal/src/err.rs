@@ -64,4 +64,21 @@ impl From<diesel::result::Error> for XamXamError {
     }
 }
 
+impl xam_xam_common::err_trait::PublicErrorTrait for XamXamError {
+    fn show_public_error(&self) -> String {
+        match self {
+            XamXamError::EmailNotCorrectFormat => "Email is not in the correct form",
+            XamXamError::EmailIsEmpty => "Email cannot be empty",
+            XamXamError::EmailIsAlreadyTaken => "User email is already taken",
+            XamXamError::EmailAndPasswordIsEmpty => "Email and password can't be equal to nothing",
+            XamXamError::PasswordIsEmpty => "Password cannot be empty",
+            XamXamError::PasswordAndPasswordConfirmedNotEqual => "Password and confirmed password aren't the same",
+            XamXamError::UserNotFound => "User cannot be found",
+            XamXamError::UserAlreadyPresent => "User is already present",
+            XamXamError::UserIsNotPresent => "User is not present",
+            _ => "An internal error happened"
+        }.to_string()
+    }
+}
+
 impl Error for XamXamError { }
