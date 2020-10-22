@@ -54,14 +54,17 @@ impl Error for XamXamServiceError { }
 
 impl xam_xam_common::err_trait::PublicErrorTrait for XamXamServiceError {
     fn show_public_error(&self) -> String {
-        match self {
-            XamXamServiceError::XamXamDalError(err) => err.show_public_error(),
-            //User related error
-            XamXamServiceError::TokenNotCorrectForUserCreation => "Token that was given is not correct, to create a new user".to_string(),
-            XamXamServiceError::TokenNotCorrectForForgottenPwd => "Token that was given is not right, to change the forgotten password".to_string(),
-            // JWT errors
-            XamXamServiceError::JWTerror(err) => err.show_public_error(),
-            _ => "An internal error happened".to_string()
+        if let XamXamServiceError::XamXamDalError(value) = &self {
+            return value.show_public_error()
         }
+        if let XamXamServiceError::JWTerror(value) = &self {
+            return value.show_public_error()
+        }
+        match self {
+            //User related error
+            XamXamServiceError::TokenNotCorrectForUserCreation => "Token that was given is not correct, to create a new user",
+            XamXamServiceError::TokenNotCorrectForForgottenPwd => "Token that was given is not right, to change the forgotten password",
+            _ => "An internal error happened"
+        }.to_string()
     }
 }

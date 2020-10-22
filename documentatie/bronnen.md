@@ -3,6 +3,7 @@
 These are sources I used and researched to be able to make my project.
 
 ## Links
+
 * React functional hooks: https://reactjs.org/docs/hooks-intro.html
 * Rust web framework: https://actix.rs/
 * Rust orm for mysql/postgresql/sqlite: https://diesel.rs/
@@ -17,3 +18,5 @@ These are sources I used and researched to be able to make my project.
 * Rust forum post about converting raw sql to a struct: https://discourse.diesel.rs/t/get-raw-result-without-structuring/80/4
 * Rust redis client I use for retaining tokens: https://docs.rs/redis/0.17.0/redis/#basic-operation
 * Rust diesel function to count rows: https://docs.diesel.rs/1.4.x/diesel/dsl/fn.count_star.html
+* Rust actix-web errors documentation page: https://actix.rs/docs/errors/
+* Rust actix-web responses documentation page: https://actix.rs/docs/response/
