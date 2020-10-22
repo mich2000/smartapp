@@ -20,3 +20,4 @@ These are sources I used and researched to be able to make my project.
 * Rust diesel function to count rows: https://docs.diesel.rs/1.4.x/diesel/dsl/fn.count_star.html
 * Rust actix-web errors documentation page: https://actix.rs/docs/errors/
 * Rust actix-web responses documentation page: https://actix.rs/docs/response/
+* Rust actix-web application state documentation page: https://actix.rs/docs/application/
