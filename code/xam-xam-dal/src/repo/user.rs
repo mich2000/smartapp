@@ -8,11 +8,10 @@ use crate::diesel::query_dsl::filter_dsl::FindDsl;
 use crate::diesel::query_dsl::filter_dsl::FilterDsl;
 use crate::diesel::query_dsl::select_dsl::SelectDsl;
 use crate::diesel::OptionalExtension;
-use xam_xam_common::util::{control_email,get_hash};
-use crate::const_values;
+use xam_xam_common::util::{control_email};
 use crate::basic_user_info::BasicUserInfo;
-use argon2::Config;
 use diesel::sql_types::Integer;
+use bcrypt::{DEFAULT_COST, hash};
 
 /**
  * Inserts a user in a database
@@ -73,12 +72,11 @@ pub fn change_password(conn : &PgConnection, user_id : i32, new_user_pwd : &str)
     if new_user_pwd.is_empty() {
         return Err(XamXamError::PasswordIsEmpty)
     }
-    let new_salt : String = get_hash(const_values::SALT_LENGTH);
-    let hashed_pwd : String = match argon2::hash_encoded(new_user_pwd.as_bytes(), new_salt.as_bytes(), &Config::default()) {
+    let hashed_pwd : String = match hash(new_user_pwd,DEFAULT_COST) {
         Ok(hash) => hash,
         Err(_) => return Err(XamXamError::PasswordCannotBeMade) 
     };
-    match diesel::update(users.find(user_id)).set((password_hash.eq(&hashed_pwd),salt.eq(&new_salt))).execute(conn) {
+    match diesel::update(users.find(user_id)).set(password_hash.eq(&hashed_pwd)).execute(conn) {
         Ok(rows_affected) => {
             if rows_affected > 0 {
                 info!("The user with the id {} has succesfully changed its password", user_id);

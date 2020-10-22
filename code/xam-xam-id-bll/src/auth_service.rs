@@ -145,7 +145,7 @@ pub fn authenthicate_get_token(db_conn : &PgConnection, claim_config : &ClaimCon
         return Err(XamXamError::PasswordIsEmpty.into())
     }
     let person : User = user::get_user_by_mail(db_conn, email)?.ok_or_else(|| XamXamServiceError::from(XamXamError::UserIsNotPresent))?;
-    if person.verify_pwd(pwd) {
+    if person.verify_pwd(pwd)? {
         return Err(XamXamError::PasswordIsNotCorrect.into())
     }
     Ok(claim_config.token_from_claim(&claim_config.create_claim(&person.id.to_string())?)?)

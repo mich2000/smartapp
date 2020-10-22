@@ -8,4 +8,3 @@ pub mod models;
 pub mod err;
 pub mod repo;
 pub mod basic_user_info;
-pub mod const_values;

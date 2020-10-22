@@ -1,7 +1,6 @@
 use crate::schema::*;
 use crate::err::XamXamError;
-use argon2::Config;
-use crate::const_values;
+use bcrypt::{DEFAULT_COST, hash, verify};
 
 /**
  * Struct that represents the basic user. This form of user is very simple.
@@ -12,15 +11,14 @@ pub struct User {
     pub id: i32,
     pub email : String,
     pub password_hash : String,
-    pub salt : String
 }
 
 impl User {
-    pub fn verify_pwd(&self, pwd : &str) -> bool {
+    pub fn verify_pwd(&self, pwd : &str) -> Result<bool, XamXamError> {
         if pwd.is_empty() {
-            return false
+            return Ok(false)
         }
-        argon2::verify_encoded(&self.password_hash, pwd.as_bytes()).unwrap()
+        Ok(verify(pwd, &self.password_hash)?)
     }
 }
 
@@ -31,8 +29,7 @@ impl User {
 #[table_name = "users"]
 pub struct InsertableUser {
     pub email : String,
-    pub password_hash : String,
-    pub salt : String
+    pub password_hash : String
 }
 
 impl InsertableUser {
@@ -53,8 +50,7 @@ impl InsertableUser {
         if !xam_xam_common::util::control_email(email) {
             return Err(XamXamError::EmailNotCorrectFormat)
         }
-        let hash : String = xam_xam_common::util::get_hash(const_values::SALT_LENGTH);
-        let hashed_pwd : String = match argon2::hash_encoded(pwd.as_bytes(), hash.as_bytes(), &Config::default()) {
+        let hashed_pwd : String = match hash(pwd, DEFAULT_COST) {
             Ok(hash) => hash,
             Err(_) => return Err(XamXamError::PasswordCannotBeMade) 
         };
@@ -62,7 +58,6 @@ impl InsertableUser {
             InsertableUser {
                 email : email.to_string(),
                 password_hash :  hashed_pwd,
-                salt : hash
             }
         )
     }

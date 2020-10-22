@@ -64,6 +64,12 @@ impl From<diesel::result::Error> for XamXamError {
     }
 }
 
+impl From<bcrypt::BcryptError> for XamXamError {
+    fn from(error : bcrypt::BcryptError) -> Self {
+        XamXamError::CustomError(format!("{}",error))
+    }
+}
+
 impl xam_xam_common::err_trait::PublicErrorTrait for XamXamError {
     fn show_public_error(&self) -> String {
         match self {
