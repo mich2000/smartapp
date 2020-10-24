@@ -1,7 +1,7 @@
 use jwt_gang::claim_config::ClaimConfiguration;
 use mailgang::mailer_gang::Mailer;
 use mailgang::mail_struct::Report;
-use redis::Connection;
+use r2d2_redis::redis;
 use crate::viewmodels::new_user::NewUser;
 use crate::viewmodels::email::EmailHolder;
 use crate::viewmodels::new_email::NewEmailHolder;
@@ -14,7 +14,8 @@ use xam_xam_common::util::{get_hash,control_email};
 use xam_xam_dal::basic_user_info::BasicUserInfo;
 use crate::err::XamXamServiceError;
 use xam_xam_dal::err::XamXamError;
-
+use crate::R2D2Con;
+use std::ops::DerefMut;
 
 /**
  * ============================================================ USER CREATION ============================================================
@@ -22,18 +23,18 @@ use xam_xam_dal::err::XamXamError;
 /**
  * Function that is used to control if a user is present in the postgresql or redis database, this will return an error. If after this it finds nothing a token which last for a certain time will be added to the redis database and a mail will be send to the user who wants to create an account with a token within.
 */
-pub fn introduce_user_creation_demand(redis_conn : &mut Connection, db_conn : &PgConnection, mailer : Mailer, email : &str) -> Result<(),XamXamServiceError> {
+pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgConnection, mailer : &Mailer, email : &str) -> Result<(),XamXamServiceError> {
     if user::user_exists_by_email(db_conn, email)? {
         return Err(XamXamError::UserAlreadyPresent.into())
     }
-    if redis::cmd("EXISTS").arg(email).query::<bool>(redis_conn)? {
+    if r2d2_redis::redis::cmd("EXISTS").arg(email).query::<bool>(redis_conn.deref_mut())? {
         return Err(XamXamServiceError::UserAlreadyInRedisDB)
     }
     let token = get_hash(4);
-    redis::pipe()
+    r2d2_redis::redis::pipe()
     .cmd("SET").arg(email).arg(&token).ignore()
     .cmd("EXPIRE").arg(email).arg(600).ignore()
-    .query(redis_conn)?;
+    .query(redis_conn.deref_mut())?;
     let clear_text = format!(
         r#"
         Hello dear potential user
@@ -56,14 +57,14 @@ pub fn introduce_user_creation_demand(redis_conn : &mut Connection, db_conn : &P
 /**
  * Function used to create an user in the database. It will check the given token that equal to the one found in the redis database. Passord and their confirmation needs to be equal to each other.
 */
-pub fn create_user(redis_conn : &mut Connection, db_conn : &PgConnection, model : &NewUser) -> Result<(),XamXamServiceError> {
+pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgConnection, model : &NewUser) -> Result<(),XamXamServiceError> {
     if user::user_exists_by_email(db_conn, model.get_email())? {
         return Err(XamXamError::UserAlreadyPresent.into())
     }
     if model.get_password() != model.get_password_confirmed() {
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
     }
-    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn)?;
+    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn.deref_mut())?;
     if token != model.get_token() {
         return Err(XamXamServiceError::TokenNotCorrectForUserCreation)
     }
@@ -77,28 +78,28 @@ pub fn create_user(redis_conn : &mut Connection, db_conn : &PgConnection, model 
 /**
  * Introduces a
  */
-pub fn introduce_email_change_demand(redis_conn : &mut Connection, db_conn : &PgConnection, model : &EmailHolder)-> Result<(),XamXamServiceError> {
+pub fn introduce_email_change_demand(redis_conn : &mut R2D2Con, db_conn : &PgConnection, model : &EmailHolder)-> Result<(),XamXamServiceError> {
     if !control_email(model.get_email()) {
         return Err(XamXamError::EmailNotCorrectFormat.into())
     }
     if user::user_exists_by_email(db_conn, model.get_email())? {
         return Err(XamXamError::UserAlreadyPresent.into())
     }
-    if redis::cmd("EXISTS").arg(model.get_email()).query::<bool>(redis_conn)? {
+    if redis::cmd("EXISTS").arg(model.get_email()).query::<bool>(redis_conn.deref_mut())? {
         return Err(XamXamServiceError::UserAlreadyInRedisDB)
     }
     let token = get_hash(4);
     redis::pipe()
     .cmd("SET").arg(model.get_email()).arg(&token).ignore()
     .cmd("EXPIRE").arg(model.get_email()).arg(600).ignore()
-    .query(redis_conn)?;
+    .query(redis_conn.deref_mut())?;
     Ok(())
 }
 /** 
  * Function used to change the email of the given user id. The email must comply with the email regex or it will be rejected. It will also need a token you get from your the email you want to change to.
 */
-pub fn change_email(redis_conn : &mut Connection, db_conn : &PgConnection, user_id : i32, model : &NewEmailHolder) -> Result<(),XamXamServiceError> {
-    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn)?;
+pub fn change_email(redis_conn : &mut R2D2Con, db_conn : &PgConnection, user_id : i32, model : &NewEmailHolder) -> Result<(),XamXamServiceError> {
+    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn.deref_mut())?;
     if token != model.get_token() {
         return Err(XamXamServiceError::TokenNotCorrectForChangingEmail)
     }
@@ -135,16 +136,16 @@ pub fn change_pwd (db_conn : &PgConnection, user_id : i32, model : &PasswordHold
 /**
  * Function that sends a mail with a token that the user uses to change his forgotten password. The email associated with the user wanting to change is used as a key appended with the word ':pwd-token'.
 */
-pub fn send_token_forgotten_pwd(redis_conn : &mut Connection, db_conn : &PgConnection, mailer : Mailer, model : EmailHolder) -> Result<(),XamXamServiceError> {
+pub fn send_token_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgConnection, mailer : Mailer, model : EmailHolder) -> Result<(),XamXamServiceError> {
     let user : User = user::get_user_by_mail(db_conn, model.get_email())?.ok_or_else(|| XamXamServiceError::from(XamXamError::UserIsNotPresent))?;
-    if redis::cmd("EXISTS").arg(user.id).query::<bool>(redis_conn)? {
+    if redis::cmd("EXISTS").arg(user.id).query::<bool>(redis_conn.deref_mut())? {
         return Err(XamXamServiceError::UserAlreadyInRedisDB)
     }
     let token = get_hash(6);
     redis::pipe()
     .cmd("SET").arg(user.id).arg(&token).ignore()
     .cmd("EXPIRE").arg(user.id).arg(600).ignore()
-    .query(redis_conn)?;
+    .query(redis_conn.deref_mut())?;
     let clear_text = format!(
         r#"
         Hello dear user
@@ -167,7 +168,7 @@ pub fn send_token_forgotten_pwd(redis_conn : &mut Connection, db_conn : &PgConne
 /**
  * Function that is used to change the password of a person that has forgotten theirs. It compares the given token and compares with what is found inside the redis database and if equal the change is then made.
 */
-pub fn change_forgotten_pwd(redis_conn : &mut Connection, db_conn : &PgConnection, model : &ForgottenPassword) -> Result<(),XamXamServiceError> {
+pub fn change_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgConnection, model : &ForgottenPassword) -> Result<(),XamXamServiceError> {
     if model.get_password().is_empty() {
         return Err(XamXamError::PasswordIsEmpty.into())
     }
@@ -175,12 +176,12 @@ pub fn change_forgotten_pwd(redis_conn : &mut Connection, db_conn : &PgConnectio
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
     }
     let person : User = user::get_user_by_mail(db_conn, model.get_email())?.ok_or_else(|| XamXamServiceError::from(XamXamError::UserIsNotPresent))?;
-    let token : String = redis::cmd("GET").arg(person.id).query::<String>(redis_conn)?;
+    let token : String = redis::cmd("GET").arg(person.id).query::<String>(redis_conn.deref_mut())?;
     if token != model.get_token() {
         return Err(XamXamServiceError::TokenNotCorrectForForgottenPwd)
     }
     user::change_password(db_conn, person.id, model.get_password())?;
-    redis::cmd("DEL").arg(person.id).query(redis_conn)?;
+    redis::cmd("DEL").arg(person.id).query(redis_conn.deref_mut())?;
     Ok(())
 }
 

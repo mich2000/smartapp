@@ -25,6 +25,12 @@ impl From<&str> for XamXamWebError {
     fn from (err : &str) -> Self { XamXamWebError::CustomError(err.to_string()) } 
 }
 
+impl From<xam_xam_id_bll::err::XamXamServiceError> for XamXamWebError {
+    fn from(err: xam_xam_id_bll::err::XamXamServiceError) -> Self {
+        XamXamWebError::ServiceError(err)
+    }
+}
+
 impl Error for XamXamWebError { }
 
 impl xam_xam_common::err_trait::PublicErrorTrait for XamXamWebError {
@@ -49,6 +55,7 @@ pub struct XamActixError {
 
 impl XamActixError {
     pub fn new<E : std::error::Error + xam_xam_common::err_trait::PublicErrorTrait>(error : &E) -> Self {
+        error!("{}",error);
         Self {
             error : error.show_public_error()
         }
