@@ -10,7 +10,7 @@ edition = "2018"
 xam-xam-id-bll={path="../xam-xam-id-bll"}
 xam-xam-common={path="../xam-xam-common"}
 jwt-gang={path="../jwt-gang"}
-mailgang="0.1.3"
+mailgang={ path="../mailgang" }
 actix-web = "3"
 serde = { version = "1.0", features = ["derive"] }
 log="0.4.0"

@@ -595,8 +595,6 @@ dependencies = [
 [[package]]
 name = "mailgang"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f07b80df9536b43c90272d2878de3ff65dc8acdb508fa506ccae0cf70d60d88"
 dependencies = [
  "dotenv",
  "lettre",

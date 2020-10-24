@@ -35,3 +35,7 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my web layer and on the errors: 1h30
 * Working a bit on my models: 20m
 * Working on my business layer and a bit on my web layer for my authentication service: 2h
+
+## Week 5
+* Conversation with instructor to discuss project: 10m
+* Working on my business layer, web layer and fixing problems with sending emails: 4h30

@@ -1,0 +1,14 @@
+[package]
+name = "mailgang"
+version = "0.1.3"
+authors = ["Michael Hertsens <michael28072000@outlook.com>"]
+description = "Crate that I use to abstract away the smtp(email-related stuff)."
+edition = "2018"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+dotenv = "0.15.0"
+log = "0.4.0"
+lettre = "0.9.3"
+regex = "1"
+lettre_email = "0.9"

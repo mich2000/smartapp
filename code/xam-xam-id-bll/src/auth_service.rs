@@ -49,7 +49,7 @@ pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgCo
         <p>Use this token to create your account: {}.</p>
         "#,&token
     );
-    mailer.send_email(Report::new(email,"", "Token for user account createion", &clear_text)?)?;
+    mailer.send_email(Report::new(email,"", "Token for user account creation", &clear_text)?)?;
     //mailer.send_mail(email, "Token for user account createion", &clear_text, &html_text)?;
     Ok(())
 }
