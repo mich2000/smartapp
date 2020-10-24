@@ -35,6 +35,7 @@ impl Error for XamXamWebError { }
 
 impl xam_xam_common::err_trait::PublicErrorTrait for XamXamWebError {
     fn show_public_error(&self) -> String {
+        error!("{}", self.show_public_error());
         if let XamXamWebError::ServiceError(value) = &self {
             return value.show_public_error()
         }

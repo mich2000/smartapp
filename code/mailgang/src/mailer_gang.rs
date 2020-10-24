@@ -9,6 +9,7 @@ pub type MailTransport = Mutex<SmtpTransport>;
 pub struct Mailer(MailTransport,String);
 
 fn get_transport(domain : &str, email : &str, pwd : &str) -> MailTransport {
+    info!("Transport has been created.Box");
     Mutex::new(
         lettre::SmtpClient::new_simple(&domain.to_string())
         .expect("stmp domain is not good")

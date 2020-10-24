@@ -25,9 +25,11 @@ use std::ops::DerefMut;
 */
 pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgConnection, mailer : &Mailer, email : &str) -> Result<(),XamXamServiceError> {
     if user::user_exists_by_email(db_conn, email)? {
+        info!("email {} already existed in the postgres database", email);
         return Err(XamXamError::UserAlreadyPresent.into())
     }
     if r2d2_redis::redis::cmd("EXISTS").arg(email).query::<bool>(redis_conn.deref_mut())? {
+        info!("email {} already existed in the redis database", email);
         return Err(XamXamServiceError::UserAlreadyInRedisDB)
     }
     let token = get_hash(4);

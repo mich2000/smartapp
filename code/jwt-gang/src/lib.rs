@@ -20,6 +20,7 @@ pub fn from_env_config(path : &str) -> Result<ClaimConfiguration, JwtCustomError
         Ok(config) => config,
         Err(e) => return Err(JwtCustomError::CustomError(format!("{}", e)))
     };
+    info!("A jwt configuration from the file {} has been created", path);
     Ok(config)
 }
 
