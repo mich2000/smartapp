@@ -9,9 +9,10 @@ edition = "2018"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4.0"
-mailgang = "0.2.0"
+mailgang = "0.1.3"
 jwt-gang = { path = "../jwt-gang"}
 xam-xam-dal = { path = "../xam-xam-dal" }
 redis = { version = "0.17.0" }
 toml = "0.5"
 xam-xam-common={ path="../xam-xam-common" }
+r2d2_redis = "0.13.0"

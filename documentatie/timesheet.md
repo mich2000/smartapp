@@ -34,3 +34,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my business layer and error handling: 3h
 * Working on my web layer and on the errors: 1h30
 * Working a bit on my models: 20m
+* Working on my business layer and a bit on my web layer for my authentication service: 2h

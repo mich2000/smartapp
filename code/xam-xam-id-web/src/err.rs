@@ -71,6 +71,7 @@ impl error::ResponseError for XamXamWebError {
                 XamXamServiceError::UserAlreadyInRedisDB => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForUserCreation => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForForgottenPwd => StatusCode::UNAUTHORIZED,
+                XamXamServiceError::TokenNotCorrectForChangingEmail => StatusCode::UNAUTHORIZED,
                 // DAL errors
                 XamXamServiceError::XamXamDalError(_) => StatusCode::BAD_REQUEST,
                 // JWT errors

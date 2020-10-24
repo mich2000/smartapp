@@ -11,6 +11,7 @@ pub enum XamXamServiceError {
     UserAlreadyInRedisDB,
     TokenNotCorrectForUserCreation,
     TokenNotCorrectForForgottenPwd,
+    TokenNotCorrectForChangingEmail,
     // JWT errors
     JWTerror(JwtCustomError),
     //Custom errors
@@ -26,6 +27,7 @@ impl fmt::Display for XamXamServiceError {
             XamXamServiceError::UserAlreadyInRedisDB => write!(f,"A user can not be already present in the redis database"),
             XamXamServiceError::TokenNotCorrectForUserCreation => write!(f,"Token that was given is not right, to create a new user"),
             XamXamServiceError::TokenNotCorrectForForgottenPwd => write!(f,"Token that was given is not right, to change the forgotten password"),
+            XamXamServiceError::TokenNotCorrectForChangingEmail => write!(f,"Token that was given is not right, to change the email"),
             // JWT errors
             XamXamServiceError::JWTerror(err) => write!(f,"{}",err),
             // Custom errors
@@ -64,6 +66,7 @@ impl xam_xam_common::err_trait::PublicErrorTrait for XamXamServiceError {
             //User related error
             XamXamServiceError::TokenNotCorrectForUserCreation => "Token that was given is not correct, to create a new user",
             XamXamServiceError::TokenNotCorrectForForgottenPwd => "Token that was given is not right, to change the forgotten password",
+            XamXamServiceError::TokenNotCorrectForChangingEmail => "Token that was given is not right, to change the email",
             _ => "An internal error happened"
         }.to_string()
     }

@@ -1,8 +1,10 @@
 use jwt_gang::claim_config::ClaimConfiguration;
-use mailgang::curl_mail::Mailer;
+use mailgang::mailer_gang::Mailer;
+use mailgang::mail_struct::Report;
 use redis::Connection;
 use crate::viewmodels::new_user::NewUser;
 use crate::viewmodels::email::EmailHolder;
+use crate::viewmodels::new_email::NewEmailHolder;
 use crate::viewmodels::password::PasswordHolder;
 use crate::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_dal::models::user::{InsertableUser,User};
@@ -13,6 +15,10 @@ use xam_xam_dal::basic_user_info::BasicUserInfo;
 use crate::err::XamXamServiceError;
 use xam_xam_dal::err::XamXamError;
 
+
+/**
+ * ============================================================ USER CREATION ============================================================
+ */
 /**
  * Function that is used to control if a user is present in the postgresql or redis database, this will return an error. If after this it finds nothing a token which last for a certain time will be added to the redis database and a mail will be send to the user who wants to create an account with a token within.
 */
@@ -35,25 +41,29 @@ pub fn introduce_user_creation_demand(redis_conn : &mut Connection, db_conn : &P
         Use this token to create your account: {}.
         "#,&token
     );
-    let html_text = format!(
+    let _html_text = format!(
         r#"
         <h1>Hello dear potential user</h1>
         </br>
         <p>Use this token to create your account: {}.</p>
         "#,&token
     );
-    mailer.send_mail(email, "Token for user account createion", &clear_text, &html_text)?;
+    mailer.send_email(Report::new(email,"", "Token for user account createion", &clear_text)?)?;
+    //mailer.send_mail(email, "Token for user account createion", &clear_text, &html_text)?;
     Ok(())
 }
 
 /**
- * Function used to create an user in the database. It will check the given token that equal to the one found in the redis database. Passord and their confirmation needs to be equal to eacht other.
+ * Function used to create an user in the database. It will check the given token that equal to the one found in the redis database. Passord and their confirmation needs to be equal to each other.
 */
 pub fn create_user(redis_conn : &mut Connection, db_conn : &PgConnection, model : &NewUser) -> Result<(),XamXamServiceError> {
-    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn)?;
+    if user::user_exists_by_email(db_conn, model.get_email())? {
+        return Err(XamXamError::UserAlreadyPresent.into())
+    }
     if model.get_password() != model.get_password_confirmed() {
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
     }
+    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn)?;
     if token != model.get_token() {
         return Err(XamXamServiceError::TokenNotCorrectForUserCreation)
     }
@@ -61,17 +71,50 @@ pub fn create_user(redis_conn : &mut Connection, db_conn : &PgConnection, model 
     Ok(())
 }
 
-/** 
- * Function used to change the email of the given user id. The email must comply with the email regex or it will be rejected.
-*/
-pub fn change_email(db_conn : &PgConnection, user_id : i32, model : EmailHolder) -> Result<(),XamXamServiceError> {
+/**
+ * ============================================================ CHANGING EMAIL ============================================================
+ */
+/**
+ * Introduces a
+ */
+pub fn introduce_email_change_demand(redis_conn : &mut Connection, db_conn : &PgConnection, model : &EmailHolder)-> Result<(),XamXamServiceError> {
     if !control_email(model.get_email()) {
         return Err(XamXamError::EmailNotCorrectFormat.into())
+    }
+    if user::user_exists_by_email(db_conn, model.get_email())? {
+        return Err(XamXamError::UserAlreadyPresent.into())
+    }
+    if redis::cmd("EXISTS").arg(model.get_email()).query::<bool>(redis_conn)? {
+        return Err(XamXamServiceError::UserAlreadyInRedisDB)
+    }
+    let token = get_hash(4);
+    redis::pipe()
+    .cmd("SET").arg(model.get_email()).arg(&token).ignore()
+    .cmd("EXPIRE").arg(model.get_email()).arg(600).ignore()
+    .query(redis_conn)?;
+    Ok(())
+}
+/** 
+ * Function used to change the email of the given user id. The email must comply with the email regex or it will be rejected. It will also need a token you get from your the email you want to change to.
+*/
+pub fn change_email(redis_conn : &mut Connection, db_conn : &PgConnection, user_id : i32, model : &NewEmailHolder) -> Result<(),XamXamServiceError> {
+    let token = redis::cmd("GET").arg(model.get_email()).query::<String>(redis_conn)?;
+    if token != model.get_token() {
+        return Err(XamXamServiceError::TokenNotCorrectForChangingEmail)
+    }
+    if !control_email(model.get_email()) {
+        return Err(XamXamError::EmailNotCorrectFormat.into())
+    }
+    if user::user_exists_by_email(db_conn, model.get_email())? {
+        return Err(XamXamError::UserAlreadyPresent.into())
     }
     user::change_email(db_conn, user_id, model.get_email())?;
     Ok(())
 }
 
+/**
+ * ========================================================== CHANGING PASSWORD ============================================================
+ */
 /**
  * Function used to change the password of the given user id. The given password and its confirmation equals to each other or an error will be returned.
 */
@@ -86,6 +129,9 @@ pub fn change_pwd (db_conn : &PgConnection, user_id : i32, model : &PasswordHold
     Ok(())
 }
 
+/**
+ * ============================================================ FORGOTTEN PASSWORD ============================================================
+ */
 /**
  * Function that sends a mail with a token that the user uses to change his forgotten password. The email associated with the user wanting to change is used as a key appended with the word ':pwd-token'.
 */
@@ -106,14 +152,15 @@ pub fn send_token_forgotten_pwd(redis_conn : &mut Connection, db_conn : &PgConne
         Use this token to put in the form to change you're password you have forgotten: {}.
         "#,&token
     );
-    let html_text = format!(
+    let _html_text = format!(
         r#"
         <h1>Hello dear potential user</h1>
         </br>
         <p>Use this token to put in the form to change you're password you have forgotten: {}.</p>
         "#,&token
     );
-    mailer.send_mail(model.get_email(), "Token to change forgotten password", &clear_text, &html_text)?;
+    mailer.send_email(Report::new(model.get_email(), "", "Token to change forgotten password", &clear_text)?)?;
+    //mailer.send_mail(model.get_email(), "Token to change forgotten password", &clear_text, &html_text)?;
     Ok(())
 }
 
@@ -138,6 +185,9 @@ pub fn change_forgotten_pwd(redis_conn : &mut Connection, db_conn : &PgConnectio
 }
 
 /**
+ * ============================================================ JWT TOKENS ============================================================
+ */
+/**
  * Authenticates a user password and returns if the result is right or not. It will return if right a jwt token string, that the user can use to authenticate and be authorized to do his operations, otherwise an error is thrown out.
 */
 pub fn authenthicate_get_token(db_conn : &PgConnection, claim_config : &ClaimConfiguration, email : &str, pwd : &str) -> Result<String, XamXamServiceError> {
@@ -152,16 +202,19 @@ pub fn authenthicate_get_token(db_conn : &PgConnection, claim_config : &ClaimCon
 }
 
 /**
- * returns the struct containing basic information of the user with the give id.
-*/
-pub fn get_basic_information(db_conn : &PgConnection, user_id : i32) -> Result<BasicUserInfo,XamXamServiceError> {
-    Ok(user::get_information_from_id(db_conn, user_id)?)
-}
-
-/**
  * Function that controls the given token and returns a new token if the previous was valid.
 */
 pub fn renew_token(claim_config : &ClaimConfiguration, token : &str) -> Result<String, XamXamServiceError> {
     let claim = claim_config.decode_token(token)?;
     Ok(claim_config.token_from_claim(&claim_config.create_claim(&claim.claims.get_subject())?)?)
+}
+
+/**
+ * ==================================================== GET BASIC INFO USER =======================================================
+ */
+/**
+ * returns the struct containing basic information of the user with the give id.
+*/
+pub fn get_basic_information(db_conn : &PgConnection, user_id : i32) -> Result<BasicUserInfo,XamXamServiceError> {
+    Ok(user::get_information_from_id(db_conn, user_id)?)
 }
