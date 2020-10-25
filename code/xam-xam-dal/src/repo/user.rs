@@ -1,4 +1,4 @@
-use diesel::PgConnection;
+use crate::PgCon;
 use crate::schema::users::dsl::*;
 use crate::models::user::{InsertableUser, User};
 use crate::err::XamXamError;
@@ -16,7 +16,7 @@ use bcrypt::{DEFAULT_COST, hash};
 /**
  * Inserts a user in a database
  */
-pub fn insert_user(conn : &PgConnection, user : &InsertableUser) -> Result<(),XamXamError> {
+pub fn insert_user(conn : &PgCon, user : &InsertableUser) -> Result<(),XamXamError> {
     match diesel::insert_into(users).values(user).get_result::<User>(conn) {
         Ok(user) => {
             info!("User has succesfully been inserted, with email {} and with user id {}", &user.email,&user.id);
@@ -29,7 +29,7 @@ pub fn insert_user(conn : &PgConnection, user : &InsertableUser) -> Result<(),Xa
 /**
  * Function that is used to know if a user with a specific email exists.
 */
-pub fn user_exists_by_email(conn : &PgConnection, user_email : &str) -> Result<bool,XamXamError> {
+pub fn user_exists_by_email(conn : &PgCon, user_email : &str) -> Result<bool,XamXamError> {
     Ok(
         users.filter(email.eq(user_email)).select(diesel::dsl::count_star()).get_result::<i64>(conn)? > 0
     )
@@ -38,7 +38,7 @@ pub fn user_exists_by_email(conn : &PgConnection, user_email : &str) -> Result<b
 /**
  * Returns a user based on his email
  */
-pub fn get_user_by_mail(conn : &PgConnection, user_email : &str) -> Result<Option<User>,XamXamError> {
+pub fn get_user_by_mail(conn : &PgCon, user_email : &str) -> Result<Option<User>,XamXamError> {
     Ok(
         users.filter(email.eq(user_email)).get_result::<User>(conn).optional()?
     )
@@ -47,7 +47,7 @@ pub fn get_user_by_mail(conn : &PgConnection, user_email : &str) -> Result<Optio
 /**
  * Function that is used to change the email of an user. The result can if succeeded return a boolean, true means a row has changed otherwhise a false will be given.
  */
-pub fn change_email(conn : &PgConnection, user_id : i32, new_user_email : &str) -> Result<bool,XamXamError> {
+pub fn change_email(conn : &PgCon, user_id : i32, new_user_email : &str) -> Result<bool,XamXamError> {
     if !control_email(new_user_email) {
         return Err(XamXamError::EmailNotCorrectFormat)
     }
@@ -68,7 +68,7 @@ pub fn change_email(conn : &PgConnection, user_id : i32, new_user_email : &str) 
 /**
  * Function that is used to change the password of an user. The result can if succeeded return a boolean, true means a row has changed otherwhise a false will be given.
  */
-pub fn change_password(conn : &PgConnection, user_id : i32, new_user_pwd : &str) -> Result<bool,XamXamError> {
+pub fn change_password(conn : &PgCon, user_id : i32, new_user_pwd : &str) -> Result<bool,XamXamError> {
     if new_user_pwd.is_empty() {
         return Err(XamXamError::PasswordIsEmpty)
     }
@@ -93,7 +93,7 @@ pub fn change_password(conn : &PgConnection, user_id : i32, new_user_pwd : &str)
 /**
  * Function that is used to delete an user based on its user id. The result could return a bool, it is true when a user has been deleted and a false when it was not there to begin with.
  */
-pub fn delete_user(conn : &PgConnection, user_id : i32) -> Result<bool,XamXamError> {
+pub fn delete_user(conn : &PgCon, user_id : i32) -> Result<bool,XamXamError> {
     match diesel::delete(users.find(user_id)).execute(conn) {
         Ok(rows_affected) => {
             if rows_affected > 0 {
@@ -111,7 +111,7 @@ pub fn delete_user(conn : &PgConnection, user_id : i32) -> Result<bool,XamXamErr
 /**
  * Function that is used to show statistics that user would want.
  */
-pub fn get_information_from_id(conn : &PgConnection, user_id : i32) -> Result<BasicUserInfo, XamXamError> {
+pub fn get_information_from_id(conn : &PgCon, user_id : i32) -> Result<BasicUserInfo, XamXamError> {
     let result : BasicUserInfo = diesel::sql_query(r#"select count(s.id) as amount_storage,
     count(pi.id) as amount_product,
     min(pi.peremption_date) as min_bederf,

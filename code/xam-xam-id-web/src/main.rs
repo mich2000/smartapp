@@ -1,7 +1,9 @@
-use actix_web::{App, HttpServer, middleware};
+use actix_web::{App, HttpServer, middleware,web};
+use actix_identity::{CookieIdentityPolicy, IdentityService};
 
 mod err;
-mod controller; 
+mod controller;
+mod db;
 
 use xam_xam_id_bll::{PgPool,get_pg_pool};
 use xam_xam_id_bll::{RedisPool,get_redis_pool};
@@ -23,14 +25,22 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     HttpServer::new(move|| {
         App::new()
         .wrap(middleware::Logger::default())
+        .wrap(IdentityService::new(CookieIdentityPolicy::new(&[0; 32]).name("Authorization").secure(true).http_only(true)))
         .data(pg_pool.clone())
         .data(redis_pool.clone())
         .data(mailgang::mailer_gang::Mailer::default())
         .app_data(jwt_gang::from_env_config("Jwt.toml").unwrap())
-        .service(controller::request_new_user)
+        .service(
+            web::scope("/request")
+                .service(controller::request_new_user)
+        )
+        .service(
+            web::scope("/user")
+                .service(controller::register)
+        )
     })
     .bind("0.0.0.0:8080")?
-    .workers(5)
+    .workers(1)
     .run()
     .await?;
     Ok(())

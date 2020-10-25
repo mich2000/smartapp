@@ -39,3 +39,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 5
 * Conversation with instructor to discuss project: 10m
 * Working on my business layer, web layer and fixing problems with sending emails: 4h30
+* Working primarly on the web layer: 2h30

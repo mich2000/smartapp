@@ -1,11 +1,15 @@
 use std::{error::Error, fmt};
 use serde::{Serialize,Deserialize};
 use xam_xam_id_bll::err::XamXamServiceError;
+use actix_web::{dev::HttpResponseBuilder, error, http::header, http::StatusCode, HttpResponse};
 
 #[derive(Debug,Serialize,Deserialize)]
 pub enum XamXamWebError {
     //Service related error
     ServiceError(XamXamServiceError),
+    //DB related error
+    CouldNotGetRedisConnection,
+    CouldNotGetPostGresConnection,
     //Custom errors
     CustomError(String)
 }
@@ -15,6 +19,9 @@ impl fmt::Display for XamXamWebError {
         match &self {
             //Service
             XamXamWebError::ServiceError(err) => write!(f,"{}",err),
+            //DB related error
+            XamXamWebError::CouldNotGetRedisConnection => write!(f,"Could not get the redis connection from the redis pool"),
+            XamXamWebError::CouldNotGetPostGresConnection => write!(f,"Could not get the postgres connection from the postgres pool"),
             // Custom errors
             XamXamWebError::CustomError(e) => write!(f,"{}",e)
         }
@@ -26,8 +33,14 @@ impl From<&str> for XamXamWebError {
 }
 
 impl From<xam_xam_id_bll::err::XamXamServiceError> for XamXamWebError {
-    fn from(err: xam_xam_id_bll::err::XamXamServiceError) -> Self {
+    fn from(err : xam_xam_id_bll::err::XamXamServiceError) -> Self {
         XamXamWebError::ServiceError(err)
+    }
+}
+
+impl From<jwt_gang::claim_error::JwtCustomError> for XamXamWebError {
+    fn from(err : jwt_gang::claim_error::JwtCustomError) -> Self {
+        XamXamWebError::ServiceError(XamXamServiceError::JWTerror(err))
     }
 }
 
@@ -39,15 +52,10 @@ impl xam_xam_common::err_trait::PublicErrorTrait for XamXamWebError {
         if let XamXamWebError::ServiceError(value) = &self {
             return value.show_public_error()
         }
-        match self {
-            _ => "An internal error happened"
-        }.to_string()
+        "An internal error happened".to_string()
     }
 }
 
-use actix_web::{
-    dev::HttpResponseBuilder, error, http::header, http::StatusCode, HttpResponse
-};
 
 #[derive(Debug,Deserialize, Serialize)]
 pub struct XamActixError {

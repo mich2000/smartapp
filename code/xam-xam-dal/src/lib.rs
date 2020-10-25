@@ -9,12 +9,12 @@ pub mod err;
 pub mod repo;
 pub mod basic_user_info;
 
-
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager;
 use r2d2::Pool;
 
 pub type PostgresPool = Pool<ConnectionManager<PgConnection>>;
+pub type PgCon = r2d2::PooledConnection<diesel::r2d2::ConnectionManager<diesel::PgConnection>>;
 
 /**
  * Code I got from this website: https://github.com/lucperkins/rust-graphql-juniper-actix-diesel-postgres/blob/master/src/db.rs
