@@ -1,4 +1,4 @@
-use actix_web::{App, HttpServer, middleware,web};
+use actix_web::{App, HttpServer, middleware,web,http::header::ContentEncoding};
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 
 mod err;
@@ -25,7 +25,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     HttpServer::new(move|| {
         App::new()
         .wrap(middleware::Logger::default())
-        .wrap(IdentityService::new(CookieIdentityPolicy::new(&[0; 32]).name("Authorization").secure(true).http_only(true)))
+        .wrap(middleware::Compress::new(ContentEncoding::Gzip))
+        .wrap(IdentityService::new(CookieIdentityPolicy::new(&[0; 32]).name("Authorization").max_age(86400).secure(true).http_only(true)))
         .data(pg_pool.clone())
         .data(redis_pool.clone())
         .data(mailgang::mailer_gang::Mailer::default())
@@ -35,8 +36,13 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 .service(controller::request_new_user)
         )
         .service(
-            web::scope("/user")
+            web::scope("/auth")
                 .service(controller::register)
+                .service(controller::login)
+                .service(controller::logout)
+        )
+        .service(
+            web::scope("/user")
         )
     })
     .bind("0.0.0.0:8080")?

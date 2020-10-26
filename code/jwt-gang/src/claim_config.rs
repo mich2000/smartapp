@@ -1,5 +1,5 @@
 use jsonwebtoken::errors::ErrorKind;
-use jsonwebtoken::{decode, encode, Header, TokenData, Validation};
+use jsonwebtoken::{decode, encode, Header, TokenData, Validation,DecodingKey,EncodingKey};
 use serde::Deserialize;
 use crate::claim::Claim;
 use crate::claim_error::JwtCustomError;
@@ -43,7 +43,7 @@ impl ClaimConfiguration {
     }
 
     pub fn token_from_claim(&self, claim : &Claim) -> Result<String, JwtCustomError> {
-        match encode(&Header::default(), &claim, self.get_secret()) {
+        match encode(&Header::default(), &claim, &EncodingKey::from_secret(self.get_secret())) {
             Ok(token) => {
                 info!("A token has been made from a claim");
                 Ok(token)
@@ -72,7 +72,7 @@ impl ClaimConfiguration {
         validate.iss = Some(self.get_issuer().to_string());
         match decode::<Claim>(
             &token,
-            self.get_secret(),
+            &DecodingKey::from_secret(self.get_secret()),
             &validate,
         ) {
             Ok(c) => Ok(c),

@@ -48,3 +48,9 @@ pub async fn login(id : Identity,pg : Data<PgPool>, jwt_config : Data<ClaimConfi
         .json(basic_user_info)
     )
 }
+
+#[post("/logout")]
+pub async fn logout(id : Identity) -> HttpResponse {
+    id.forget();
+    HttpResponse::Ok().finish()
+}

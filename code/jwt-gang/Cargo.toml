@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 chrono = "0.4"
-jsonwebtoken = "5.0.1"
+jsonwebtoken = "7"
 log = "0.4.0"
 toml = "0.5"
 xam-xam-common= { path="../xam-xam-common" }
