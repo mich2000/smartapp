@@ -1,0 +1,8 @@
+{
+  "short_name": "Xam Xam",
+  "name": "xam-xam web app, use this web app to manage your food into storages",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

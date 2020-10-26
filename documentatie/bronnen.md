@@ -23,3 +23,6 @@ These are sources I used and researched to be able to make my project.
 * Rust actix-web application state documentation page: https://actix.rs/docs/application/
 * Rust blog post about redis pools: https://blog.logrocket.com/using-redis-in-a-rust-web-service/
 * Rust crate I am using for my private cookies: https://docs.rs/actix-identity/0.3.1/actix_identity/
+* Rust repo that is used to implement TLS on the web server: https://github.com/actix/examples/blob/master/rustls/src/main.rs
+* Rust crate I use to implement CORS, this is important for when I will start to send requests with React: https://docs.rs/actix-cors/0.5.0/actix_cors/
+* Let self-signed certificates through Firefox: https://www.starnet.com/xwin32kb/installing-a-self-signed-certificate-on-firefox/

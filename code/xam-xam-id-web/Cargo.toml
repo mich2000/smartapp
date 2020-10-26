@@ -11,8 +11,9 @@ xam-xam-id-bll={path="../xam-xam-id-bll"}
 xam-xam-common={path="../xam-xam-common"}
 jwt-gang={path="../jwt-gang"}
 mailgang={ path="../mailgang" }
-actix-web = { version = "3", features = ["openssl"] }
-openssl = { version = "0.10", features = ["v110"] }
+actix-web = { version = "3", features = ["rustls"] }
+actix-cors = "0.5.0"
+rustls = "0.18.1"
 serde = { version = "1.0", features = ["derive"] }
 log="0.4.0"
 dotenv="0.15.0"
