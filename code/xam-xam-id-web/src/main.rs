@@ -16,17 +16,19 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     let pg_pool : PgPool = get_pg_pool(&dotenv::var("DATABASE_URL")?, dotenv::var("DATABASE_NUM")?.parse()?);
     let redis_pool : RedisPool = get_redis_pool(&dotenv::var("REDIS_URL")?, dotenv::var("REDIS_URL_NUM")?.parse()?);
+    let jwt_config = jwt_gang::from_env_config("Jwt.toml")?;
 
     HttpServer::new(move|| {
         App::new()
+        .data(web::JsonConfig::default().limit(4096))
+        .data(pg_pool.clone())
+        .data(redis_pool.clone())
+        .data(mailgang::mailer_gang::Mailer::default())
+        .data(jwt_config.clone())
         .wrap(middleware::Logger::default())
         .wrap(middleware::Compress::new(ContentEncoding::Gzip))
         .wrap(web_config::identity())
         .wrap(web_config::cors())
-        .data(pg_pool.clone())
-        .data(redis_pool.clone())
-        .data(mailgang::mailer_gang::Mailer::default())
-        .app_data(jwt_gang::from_env_config("Jwt.toml").unwrap())
         .service(
             web::scope("/request")
                 .service(controller::request_new_user)
@@ -40,9 +42,11 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         .service(
             web::scope("/user")
         )
+        .default_service(web::route().to(web::HttpResponse::NotFound))
     })
     .bind_rustls("0.0.0.0:8080",web_config::tls_config())?
     .workers(1)
+    .keep_alive(None)
     .run()
     .await?;
     Ok(())

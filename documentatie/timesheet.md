@@ -42,3 +42,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working primarly on the web layer: 2h30
 * Working on my web layer for identification and HTTPS2: 1h
 * Working on my web layer(https, cors) and beginning my react app: 3h
+* Working on my web layer and react app, troubleshooting errors and cors: 4h

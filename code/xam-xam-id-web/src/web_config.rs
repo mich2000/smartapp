@@ -1,5 +1,4 @@
 use actix_identity::{CookieIdentityPolicy, IdentityService};
-use actix_web::http;
 use rustls::{NoClientAuth, ServerConfig, internal::pemfile::{certs, pkcs8_private_keys}};
 use std::fs::File;
 use std::io::BufReader;
@@ -26,12 +25,8 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
  * Function returning cors middleware
  */
 pub fn cors() -> Cors {
-    Cors::default()
-    .allow_any_origin()
-    .allowed_methods(vec!["POST","GET", "PUT","DELETE","OPTIONS"])
-    .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
-    .allowed_header(http::header::CONTENT_TYPE)
-    .max_age(3600)
+    Cors::permissive()
+    .supports_credentials() 
 }
 
 /**

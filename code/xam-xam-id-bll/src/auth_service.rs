@@ -64,8 +64,14 @@ pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &NewUser
     if model.get_password() != model.get_password_confirmed() {
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
     }
-    let email = redis::cmd("GET").arg(model.get_token()).query::<String>(redis_conn.deref_mut())?;
-    if email != model.get_email() {
+    let email : Option<String> = match redis::cmd("GET").arg(model.get_token().to_owned()).query(redis_conn.deref_mut()) {
+        Ok(res) => res,
+        Err(e) => {
+            error!("{}",&e);
+            return Err(XamXamServiceError::from(e))
+        }
+    };
+    if email.unwrap_or("".to_string()) != model.get_email() {
         return Err(XamXamServiceError::TokenNotCorrectForUserCreation)
     }
     redis::cmd("DEL").arg(model.get_token()).query(redis_conn.deref_mut())?;

@@ -56,7 +56,6 @@ impl xam_xam_common::err_trait::PublicErrorTrait for XamXamWebError {
     }
 }
 
-
 #[derive(Debug,Deserialize, Serialize)]
 pub struct XamActixError {
     pub error : String
@@ -71,13 +70,12 @@ impl XamActixError {
     }
 }
 
+use xam_xam_common::err_trait::PublicErrorTrait;
+
 impl error::ResponseError for XamXamWebError {
     fn error_response(&self) -> HttpResponse {
         HttpResponseBuilder::new(self.status_code())
-            .set_header(header::CONTENT_TYPE, "application/json; charset=utf-8")
-            .json(
-                XamActixError::new(self)
-            )
+        .finish()
     }
 
     fn status_code(&self) -> StatusCode { 
