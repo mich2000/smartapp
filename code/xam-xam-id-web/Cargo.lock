@@ -1312,7 +1312,6 @@ dependencies = [
  "log",
  "serde",
  "toml",
- "xam-xam-common",
 ]
 
 [[package]]
@@ -3057,7 +3056,6 @@ dependencies = [
  "log4rs",
  "mailgang",
  "rustls",
- "serde",
  "xam-xam-common",
  "xam-xam-id-bll",
 ]

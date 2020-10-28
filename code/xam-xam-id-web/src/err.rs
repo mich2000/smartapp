@@ -1,9 +1,9 @@
 use std::{error::Error, fmt};
-use serde::{Serialize,Deserialize};
-use xam_xam_id_bll::err::XamXamServiceError;
 use actix_web::{dev::HttpResponseBuilder, error, http::header, http::StatusCode, HttpResponse};
+use jwt_gang::claim_error::JwtCustomError;
+use xam_xam_id_bll::{err::XamXamServiceError, XamXamError};
 
-#[derive(Debug,Serialize,Deserialize)]
+#[derive(Debug,Clone)]
 pub enum XamXamWebError {
     //Service related error
     ServiceError(XamXamServiceError),
@@ -46,36 +46,47 @@ impl From<jwt_gang::claim_error::JwtCustomError> for XamXamWebError {
 
 impl Error for XamXamWebError { }
 
-impl xam_xam_common::err_trait::PublicErrorTrait for XamXamWebError {
+impl XamXamWebError {
     fn show_public_error(&self) -> String {
-        error!("{}", self.show_public_error());
-        if let XamXamWebError::ServiceError(value) = &self {
-            return value.show_public_error()
+        if let XamXamWebError::ServiceError(service_err) = &self {
+            if let XamXamServiceError::XamXamDalError(dal_err) = service_err {
+                return match dal_err {
+                    XamXamError::EmailNotCorrectFormat => "Email is not in the correct form",
+                    XamXamError::EmailIsEmpty => "Email cannot be empty",
+                    XamXamError::EmailIsAlreadyTaken => "User email is already taken",
+                    XamXamError::EmailAndPasswordIsEmpty => "Email and password can't be equal to nothing",
+                    XamXamError::PasswordIsEmpty => "Password cannot be empty",
+                    XamXamError::PasswordAndPasswordConfirmedNotEqual => "Password and confirmed password aren't the same",
+                    XamXamError::UserNotFound => "User cannot be found",
+                    XamXamError::UserAlreadyPresent => "User is already present",
+                    XamXamError::UserIsNotPresent => "User is not present",
+                    _ => "An internal error happened"
+                }.to_string()
+            }
+            if let XamXamServiceError::JWTerror(err_jwt) = service_err {
+                return match err_jwt {
+                    JwtCustomError::TokenIsInvalid => "Token was invalid",
+                    JwtCustomError::SignatureHasExpired => "Token has expired",
+                    _ => "An internal error happened"
+                }.to_string()
+            }
+            return match service_err {
+                XamXamServiceError::TokenNotCorrectForUserCreation => "Token that was given is not correct, to create a new user",
+                XamXamServiceError::TokenNotCorrectForForgottenPwd => "Token that was given is not right, to change the forgotten password",
+                XamXamServiceError::TokenNotCorrectForChangingEmail => "Token that was given is not right, to change the email",
+                _ => "An internal error happened"
+            }.to_string()
         }
         "An internal error happened".to_string()
     }
 }
 
-#[derive(Debug,Deserialize, Serialize)]
-pub struct XamActixError {
-    pub error : String
-}
-
-impl XamActixError {
-    pub fn new<E : std::error::Error + xam_xam_common::err_trait::PublicErrorTrait>(error : &E) -> Self {
-        error!("{}",error);
-        Self {
-            error : error.show_public_error()
-        }
-    }
-}
-
-use xam_xam_common::err_trait::PublicErrorTrait;
-
 impl error::ResponseError for XamXamWebError {
     fn error_response(&self) -> HttpResponse {
+        error!("{}", self.show_public_error());
         HttpResponseBuilder::new(self.status_code())
-        .finish()
+            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .body(self.show_public_error())
     }
 
     fn status_code(&self) -> StatusCode { 

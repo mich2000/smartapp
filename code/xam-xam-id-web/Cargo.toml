@@ -14,7 +14,6 @@ mailgang={ path="../mailgang" }
 actix-web = { version = "3", features = ["rustls"] }
 actix-cors = "0.5.0"
 rustls = "0.18.1"
-serde = { version = "1.0", features = ["derive"] }
 log="0.4.0"
 dotenv="0.15.0"
 log4rs = "0.13.0"

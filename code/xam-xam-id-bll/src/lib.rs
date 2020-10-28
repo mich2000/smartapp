@@ -2,6 +2,8 @@ pub mod err;
 pub mod viewmodels;
 pub mod auth_service;
 
+pub use xam_xam_dal::err::XamXamError;
+
 #[macro_use] extern crate log;
 
 use r2d2_redis::{r2d2::Pool, RedisConnectionManager};

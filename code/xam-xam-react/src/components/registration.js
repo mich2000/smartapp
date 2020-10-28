@@ -1,6 +1,6 @@
 import React from 'react';
 import api_functions from '../api';
-import Input from './input';
+import {InputWithButton} from './input';
 import email from '../email';
 
 export default class Registration extends React.Component {
@@ -35,6 +35,7 @@ export default class Registration extends React.Component {
     }
 
     change_handler(event) {
+        this.log_error("");
         this.setState({[event.target.name] : event.target.value});
     }
 
@@ -42,14 +43,16 @@ export default class Registration extends React.Component {
         this.props.error_callback(err_msg);
     }
 
-    send_request(input) {
-        if(!email.control_email(input)) {
-            alert("Email is not good.");
+    send_request(event,value) {
+        if(!email.control_email(value)) {
+            this.log_error("Email is not in the correct format.");
+            event.preventDefault();
+            event.stopPropagation();
             return;
         }
         let opties = api_functions.method_post();
         opties.body = JSON.stringify({
-            email : input
+            email : value
         });
         fetch(api_functions.get_api() + "/request/new/user", opties)
         .then((api_call) => {
@@ -64,6 +67,8 @@ export default class Registration extends React.Component {
         }).catch(() => {
             this.log_error("Could not send through the request.");
         });
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     registration(submit_event) {
@@ -99,8 +104,11 @@ export default class Registration extends React.Component {
     render() {
         return (
             <div>
-                <Input name="Submit" valuePlaceholder="Email registration to get token" input_callback={(e) => this.send_request(e)}/>
-                <form className="col-md-6" onSubmit={(e) => this.registration(e)}>
+                <div className="m-3">
+                    <h2>Send token creation😀</h2>
+                    <InputWithButton name="Submit" type="email" valuePlaceholder="Email registration to get token" input_callback={(event,value) => this.send_request(event, value)}/>
+                </div>
+                <form onSubmit={(e) => this.registration(e)}>
                     <h2>Registration</h2>
                     <div className="form-group">
                         <label className="control-label">New email</label>

@@ -1,7 +1,7 @@
 use std::{error::Error, fmt};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug,Deserialize,Serialize)]
+#[derive(Debug,Deserialize,Serialize,Clone)]
 pub enum JwtCustomError {
     TokenCannotBeMadeFromClaim,
     EmptySubjectOfToken,
@@ -29,13 +29,3 @@ impl fmt::Display for JwtCustomError {
 }
 
 impl Error for JwtCustomError { }
-
-impl xam_xam_common::err_trait::PublicErrorTrait for JwtCustomError {
-    fn show_public_error(&self) -> String {
-        match self {
-            JwtCustomError::TokenIsInvalid => "Token was invalid",
-            JwtCustomError::SignatureHasExpired => "Token has expired",
-            _ => "An internal error happened"
-        }.to_string()
-    }
-}
