@@ -13,8 +13,10 @@ jwt-gang={path="../jwt-gang"}
 mailgang={ path="../mailgang" }
 actix-web = { version = "3", features = ["rustls"] }
 actix-cors = "0.5.0"
+actix-identity="0.3.1"
+actix-web-httpauth = "0.5.0"
 rustls = "0.18.1"
 log="0.4.0"
 dotenv="0.15.0"
 log4rs = "0.13.0"
-actix-identity="0.3.1"
+futures-util = "0.3.7"

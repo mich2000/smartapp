@@ -29,3 +29,6 @@ These are sources I used and researched to be able to make my project.
 * CORS blog post helping me out with one of the headers: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
 * React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
 * React hooks updating nested objects and using useEffects and mastering it to update state: https://stackoverflow.com/questions/53428291/react-hooks-modified-state-not-reflecting-immediately
+* Post talking about Basic and Bearer HTTP header: https://stackoverflow.com/questions/34013299/web-api-authentication-basic-vs-bearer
+* Post about setting up authorization header for basic authentication: https://stackoverflow.com/questions/33505130/how-to-assign-basic-authentication-header-to-xmlhttprequest
+* Rust actix example to help me with an user id extractor: https://github.com/emreyalvac/actix-web-jwt/blob/master/src/middlewares/auth.rs

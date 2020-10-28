@@ -71,7 +71,7 @@ pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &NewUser
             return Err(XamXamServiceError::from(e))
         }
     };
-    if email.unwrap_or("".to_string()) != model.get_email() {
+    if email.unwrap_or_else(|| "".to_string()) != model.get_email() {
         return Err(XamXamServiceError::TokenNotCorrectForUserCreation)
     }
     redis::cmd("DEL").arg(model.get_token()).query(redis_conn.deref_mut())?;

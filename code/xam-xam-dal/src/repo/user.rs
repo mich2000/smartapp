@@ -10,7 +10,6 @@ use crate::diesel::query_dsl::select_dsl::SelectDsl;
 use crate::diesel::OptionalExtension;
 use xam_xam_common::util::{control_email};
 use crate::basic_user_info::BasicUserInfo;
-use diesel::sql_types::Integer;
 use bcrypt::{DEFAULT_COST, hash};
 
 /**

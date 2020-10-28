@@ -4,6 +4,7 @@ mod err;
 mod controller;
 mod db;
 mod web_config;
+mod extractor;
 
 use xam_xam_id_bll::{PgPool,get_pg_pool};
 use xam_xam_id_bll::{RedisPool,get_redis_pool};
@@ -41,6 +42,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         )
         .service(
             web::scope("/user")
+                .service(controller::get_basic_info)
         )
         .default_service(web::route().to(web::HttpResponse::NotFound))
     })

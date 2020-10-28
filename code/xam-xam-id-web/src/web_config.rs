@@ -15,6 +15,7 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
     IdentityService::new(
         CookieIdentityPolicy::new(&[0; 32])
         .name("Authorization")
+        .path("/")
         .max_age(3600)
         .secure(true)
         .http_only(true)

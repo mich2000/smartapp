@@ -10,6 +10,10 @@ pub enum XamXamWebError {
     //DB related error
     CouldNotGetRedisConnection,
     CouldNotGetPostGresConnection,
+    //config related error
+    JwtConfigIsNotThere,
+    //HTTP related
+    CredentialsNotPresent,
     //Custom errors
     CustomError(String)
 }
@@ -22,9 +26,19 @@ impl fmt::Display for XamXamWebError {
             //DB related error
             XamXamWebError::CouldNotGetRedisConnection => write!(f,"Could not get the redis connection from the redis pool"),
             XamXamWebError::CouldNotGetPostGresConnection => write!(f,"Could not get the postgres connection from the postgres pool"),
+            //config related error
+            XamXamWebError::JwtConfigIsNotThere => write!(f,"Could not get the JWT config"),
+            //HTTP related
+            XamXamWebError::CredentialsNotPresent => write!(f,"Credentials where not present in the request"),
             // Custom errors
             XamXamWebError::CustomError(e) => write!(f,"{}",e)
         }
+    }
+}
+
+impl From<actix_web::error::ParseError> for XamXamWebError {
+    fn from(err : actix_web::error::ParseError) -> Self {
+        XamXamWebError::CustomError(err.to_string())
     }
 }
 
@@ -60,6 +74,7 @@ impl XamXamWebError {
                     XamXamError::UserNotFound => "User cannot be found",
                     XamXamError::UserAlreadyPresent => "User is already present",
                     XamXamError::UserIsNotPresent => "User is not present",
+                    XamXamError::PasswordIsNotCorrect => "Given password is wrong",
                     _ => "An internal error happened"
                 }.to_string()
             }
@@ -77,7 +92,10 @@ impl XamXamWebError {
                 _ => "An internal error happened"
             }.to_string()
         }
-        "An internal error happened".to_string()
+        match self {
+            XamXamWebError::CredentialsNotPresent => "Credentials where not present in the request",
+            _ => "An internal error happened"
+        }.to_string()
     }
 }
 
@@ -104,6 +122,7 @@ impl error::ResponseError for XamXamWebError {
                 //Custom errors
                 XamXamServiceError::CustomError(_) => StatusCode::BAD_REQUEST
             },
+            XamXamWebError::CredentialsNotPresent => StatusCode::BAD_REQUEST,
             _ => StatusCode::INTERNAL_SERVER_ERROR
         }
     }

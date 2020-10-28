@@ -17,7 +17,6 @@ export function Login(props) {
             return;
         }
         props.login_callback({ email : email_input, password : password });
-        props.error_callback("");
     }
 
     useEffect(() => {

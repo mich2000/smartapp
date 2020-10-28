@@ -88,7 +88,7 @@ impl ClaimConfiguration {
                 ErrorKind::ExpiredSignature => {
                     warn!("JWT error: {}", JwtCustomError::SignatureHasExpired);
                     Err(JwtCustomError::SignatureHasExpired)
-                }
+                },
                 e => {
                     warn!("JWT error: {}",format!("Some other JWT error. Error: {:#?}",&e));
                     Err(JwtCustomError::CustomError(format!("Some other JWT error. Error: {:#?}",&e)))

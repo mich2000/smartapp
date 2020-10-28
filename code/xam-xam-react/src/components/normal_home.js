@@ -27,16 +27,11 @@ export default class UnauthenticatedHome extends React.Component {
     }
 
     login(login_params) {
-        let email = login_params.email;
-        let password = login_params.password;
-        let options =api_functions.method_post();
-        options.body = JSON.stringify({
-            email : email,
-            pwd : password
-        });
+        let options =api_functions.method_get();
+        options.headers.Authorization = `Basic ${btoa(login_params.email + ':' + login_params.password)}`;
         fetch(api_functions.get_api() + "/auth/login",options)
         .then((api_call) => {
-            if(api_call.status == 200) {
+            if(api_call.status === 200) {
                 this.props.login_callback();
                 api_call.json()
                 .then(json => console.log(json));

@@ -35,7 +35,6 @@ export default class Registration extends React.Component {
     }
 
     change_handler(event) {
-        this.log_error("");
         this.setState({[event.target.name] : event.target.value});
     }
 
