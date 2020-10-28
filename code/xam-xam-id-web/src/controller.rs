@@ -2,7 +2,7 @@ use crate::err::XamXamWebError;
 use crate::{PgPool, RedisPool};
 use crate::db::{get_pg_conn,get_redis_conn};
 use actix_identity::Identity;
-use actix_web::{HttpResponse,post, web::Data, web::Json};
+use actix_web::{HttpResponse,get,post, web::Data, web::Json};
 use mailgang::mailer_gang::Mailer;
 use xam_xam_id_bll::viewmodels::email::EmailHolder;
 use xam_xam_id_bll::viewmodels::new_user::NewUser;
@@ -39,10 +39,27 @@ pub async fn register(redis_db : Data<RedisPool>, pg : Data<PgPool>, model: Json
 #[post("/login")]
 pub async fn login(id : Identity,pg : Data<PgPool>, jwt_config : Data<ClaimConfiguration>, model : Json<EmailAndPwdHolder>) -> Result<HttpResponse,XamXamWebError> {
     let pg_conn : PgCon = get_pg_conn(pg)?;
-    let jwt_token = auth_service::authenthicate_get_token(&pg_conn, jwt_config.as_ref(), model.get_email(), model.get_pwd())?;
+    info!("Got the connection.");
+    let jwt_token = match auth_service::authenthicate_get_token(&pg_conn, jwt_config.as_ref(), model.get_email(), model.get_pwd()) {
+        Ok(token) => token,
+        Err(e) => {
+            error!("{}",e);
+            return Err(XamXamWebError::from(e))
+        }
+    };
+    info!("Got the jwt token.");
     let user_id = jwt_config.as_ref().decode_token(&jwt_token)?.claims.get_subject().parse().unwrap();
-    let basic_user_info = UserInfo::new(&auth_service::get_basic_information(&pg_conn,user_id)?);
-    id.remember(format!("Bearer {}",jwt_token));
+    info!("Got the user id.");
+    let basic_user_info = UserInfo::new(&match auth_service::get_basic_information(&pg_conn,user_id) {
+        Ok(info) => info,
+        Err(e) => {
+            error!("{}",e);
+            return Err(XamXamWebError::from(e))
+        }
+    });
+    info!("Got the basic info.");
+    id.remember(format!("Bearer {}",&jwt_token));
+    info!("Got the id attached to it.");
     Ok(
         HttpResponse::Ok()
         .json(basic_user_info)

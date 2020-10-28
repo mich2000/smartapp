@@ -26,7 +26,10 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
  */
 pub fn cors() -> Cors {
     Cors::permissive()
-    .supports_credentials() 
+    .supports_credentials()
+    .allow_any_header()
+    .allow_any_method()
+    .allow_any_origin()
 }
 
 /**

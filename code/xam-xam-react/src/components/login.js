@@ -16,7 +16,7 @@ export function Login(props) {
             props.error_callback("Given password was empty.");
             return;
         }
-        props.login_callback({ email_input, password });
+        props.login_callback({ email : email_input, password : password });
         props.error_callback("");
     }
 

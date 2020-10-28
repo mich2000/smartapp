@@ -90,7 +90,7 @@ impl error::ResponseError for XamXamWebError {
     }
 
     fn status_code(&self) -> StatusCode { 
-        match self {
+        match &*self {
             XamXamWebError::ServiceError(service_err) => match service_err {
                 //User related error
                 XamXamServiceError::UserAlreadyInRedisDB => StatusCode::UNAUTHORIZED,

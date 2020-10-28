@@ -46,7 +46,7 @@ export default class UserContext extends React.Component {
                                 <About />
                             </Route>
                             <Route path="/">
-                                <UnauthenticatedHome/>
+                                <UnauthenticatedHome login_callback={this.login}/>
                             </Route>
                         </Switch>
                     </div>

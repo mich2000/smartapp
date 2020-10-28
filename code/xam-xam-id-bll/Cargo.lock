@@ -532,7 +532,6 @@ dependencies = [
  "log",
  "serde",
  "toml",
- "xam-xam-common",
 ]
 
 [[package]]

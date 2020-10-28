@@ -112,11 +112,7 @@ pub fn delete_user(conn : &PgCon, user_id : i32) -> Result<bool,XamXamError> {
  * Function that is used to show statistics that user would want.
  */
 pub fn get_information_from_id(conn : &PgCon, user_id : i32) -> Result<BasicUserInfo, XamXamError> {
-    let result : BasicUserInfo = diesel::sql_query(r#"select count(s.id) as amount_storage,
-    count(pi.id) as amount_product,
-    min(pi.peremption_date) as min_bederf,
-    max(pi.peremption_date) as max_bederf
-    from storages s left join products pi on s.ID = pi.id where s.user_id = ?
-    "#).bind::<Integer,_>(user_id).get_result(conn)?;
+    info!("id of basic user info {}",user_id);
+    let result : BasicUserInfo = diesel::sql_query(format!("select count(s.id) as amount_storage,count(pi.id) as amount_product,min(pi.peremption_date) as min_bederf,max(pi.peremption_date) as max_bederf from storages s left join products pi on s.ID = pi.id where s.user_id = {}",user_id)).get_result(conn)?;
     Ok(result)
 }

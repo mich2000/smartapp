@@ -94,7 +94,7 @@ export default class Registration extends React.Component {
                     this.log_error(json_obj.error);
                 }
             });
-        }).catch((e ) => {
+        }).catch((e) => {
             this.log_error(`Could not send through the request. error: ${e}`);
         });
         submit_event.preventDefault();
