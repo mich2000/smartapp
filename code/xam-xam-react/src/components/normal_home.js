@@ -1,5 +1,6 @@
 import React from 'react';
 import Registration from './registration';
+import {Login} from './login';
 
 export function About() {
     return (
@@ -16,11 +17,16 @@ export default class UnauthenticatedHome extends React.Component {
             error : ""
         }
         this.log_error = this.log_error.bind(this);
+        this.login = this.login.bind(this);
     }
 
     log_error(err_msg) {
         console.error(err_msg);
         this.setState({ error : err_msg });
+    }
+
+    login(login_params) {
+        let email = login_params
     }
 
     render() {
@@ -48,6 +54,18 @@ export default class UnauthenticatedHome extends React.Component {
                             </h4>
                         </div>
                         <div id="collapseUserLogin" className="collapse" aria-labelledby="UserLogin" data-parent="#accordion">
+                            <div className="card-body">
+                                <Login error_callback={(e) => this.log_error(e)} login_callback={(login) => this.login(login)}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-header" id="ForgottenPwd">
+                            <h4 className="mb-0">
+                                <button className="btn btn-link" data-toggle="collapse" data-target="#collapseForgottenPwd" aria-expanded="true" aria-controls="collapseForgottenPwd">Retrieve forgotten password</button>
+                            </h4>
+                        </div>
+                        <div id="collapseForgottenPwd" className="collapse" aria-labelledby="ForgottenPwd" data-parent="#accordion">
                             <div className="card-body">
 
                             </div>

@@ -44,3 +44,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my web layer(https, cors) and beginning my react app: 3h
 * Working on my web layer and react app, troubleshooting errors and cors: 4h
 * Working on my web layer and react app, solving errors: 3h
+* Working on my react app, trying to learn functional hooks: 2h

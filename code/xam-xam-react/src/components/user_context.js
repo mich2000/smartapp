@@ -9,6 +9,16 @@ export default class UserContext extends React.Component {
         this.state = {
             logged_in : false
         }
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+    }
+
+    login() {
+        this.setState({logged_in : true});
+    }
+
+    logout() {
+        this.setState({logged_in : false})
     }
     
     render() {

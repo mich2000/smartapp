@@ -13,6 +13,6 @@ export function InputWithButton(props) {
                     </button>
                 </div>
             </div>
-        </form>    
+        </form>
     );
 }

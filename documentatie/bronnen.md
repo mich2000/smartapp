@@ -27,3 +27,5 @@ These are sources I used and researched to be able to make my project.
 * Rust crate I use to implement CORS, this is important for when I will start to send requests with React: https://docs.rs/actix-cors/0.5.0/actix_cors/
 * Let self-signed certificates through Firefox: https://www.starnet.com/xwin32kb/installing-a-self-signed-certificate-on-firefox/
 * CORS blog post helping me out with one of the headers: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
+* React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
+* React hooks updating nested objects and using useEffects and mastering it to update state: https://stackoverflow.com/questions/53428291/react-hooks-modified-state-not-reflecting-immediately
