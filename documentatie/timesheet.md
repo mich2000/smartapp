@@ -47,3 +47,5 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my react app, trying to learn functional hooks: 2h
 * Working on login problem, was resolved: 1h
 * Working on my web layer and react app: 2h30
+* Working on problems related to cookies: 2h
+* Working on my web layer to make the cookies stay until their max age is reached and also on my react app: 3h

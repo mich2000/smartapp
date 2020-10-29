@@ -1,4 +1,3 @@
-use actix_identity::{CookieIdentityPolicy, IdentityService};
 use rustls::{NoClientAuth, ServerConfig, internal::pemfile::{certs, pkcs8_private_keys}};
 use std::fs::File;
 use std::io::BufReader;
@@ -7,19 +6,16 @@ use log::LevelFilter;
 use log4rs::append::console::ConsoleAppender;
 use log4rs::encode::pattern::PatternEncoder;
 use log4rs::config::{Appender, Config, Root};
-
+use actix_session::CookieSession;
 /**
  * Function that initializes an IdentityService
  */
-pub fn identity() -> IdentityService<CookieIdentityPolicy> {
-    IdentityService::new(
-        CookieIdentityPolicy::new(&[0; 32])
+pub fn identity() -> CookieSession {
+    CookieSession::signed(&[0; 32])
         .name("Authorization")
-        .path("/")
         .max_age(3600)
         .secure(true)
         .http_only(true)
-    )
 }
 
 /**
@@ -27,10 +23,6 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
  */
 pub fn cors() -> Cors {
     Cors::permissive()
-    .supports_credentials()
-    .allow_any_header()
-    .allow_any_method()
-    .allow_any_origin()
 }
 
 /**

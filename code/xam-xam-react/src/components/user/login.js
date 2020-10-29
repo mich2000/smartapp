@@ -1,5 +1,5 @@
-import React, { useState, useEffect }  from 'react';
-import email from '../email';
+import React, { useState }  from 'react';
+import email from '../../email';
 
 export function Login(props) {
     const [email_input, setEmail] = useState("");
@@ -18,10 +18,6 @@ export function Login(props) {
         }
         props.login_callback({ email : email_input, password : password });
     }
-
-    useEffect(() => {
-        props.error_callback("");
-    }, [email_input, password])
 
     return (
         <form onSubmit={(e) => login(e)}>

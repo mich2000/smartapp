@@ -101,20 +101,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "actix-identity"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3263fe74cf505c6f9e18209c89fbdba5569cfd3905a7e907b42aa1c85c18fae5"
-dependencies = [
- "actix-service",
- "actix-web",
- "futures-util",
- "serde",
- "serde_json",
- "time 0.2.22",
-]
-
-[[package]]
 name = "actix-macros"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -180,6 +166,22 @@ checksum = "0052435d581b5be835d11f4eb3bce417c8af18d87ddf8ace99f8e67e595882bb"
 dependencies = [
  "futures-util",
  "pin-project 0.4.27",
+]
+
+[[package]]
+name = "actix-session"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfe0c795741b7a1a6f8eb46680c5a0f6f53484d054226a7af9a86195dfc2c14d"
+dependencies = [
+ "actix-service",
+ "actix-web",
+ "bytes",
+ "derive_more",
+ "futures-util",
+ "serde",
+ "serde_json",
+ "time 0.2.22",
 ]
 
 [[package]]
@@ -3061,7 +3063,7 @@ name = "xam-xam-id-web"
 version = "0.1.0"
 dependencies = [
  "actix-cors",
- "actix-identity",
+ "actix-session",
  "actix-web",
  "actix-web-httpauth",
  "dotenv",

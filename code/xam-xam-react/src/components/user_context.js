@@ -2,48 +2,44 @@ import React from 'react';
 import api_functions from '../api';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UnauthenticatedHome, {About} from './normal_home';
-import {User} from './user';
+import {User} from './user/user';
 
 export default class UserContext extends React.Component {
     constructor() {
         super();
         this.state = {
-            logged_in : false
+            logged_in : false,
+            email : ''
         }
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
-        this.fetch_basic_info = this.fetch_basic_info.bind(this);
+        this.renew_token = this.renew_token.bind(this);
     }
 
-    login() {
-        this.setState({logged_in : true});
-    }
-
-    async fetch_basic_info() {
+    renew_token() {
         let options = api_functions.method_get();
-        await fetch(api_functions.get_api() + "/user/basic/info",options)
+        fetch(api_functions.get_api() + "/auth/renew/token",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                this.setState({logged_in : false});
-                api_call.json()
-                .then(json => console.log(json));
-            } else {
-                api_call.json()
-                .then(json => console.log(json));
+                this.login();
             }
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
         });
     }
 
-    componentDidMount() {
-        this.fetch_basic_info();
+    login(email) {
+        this.setState({logged_in : true, email : email});
     }
 
     logout() {
         fetch(api_functions.get_api + "/user/logout")
-        .then(() => this.setState({logged_in : false}))
-        .catch((e) => console.error("Could not log out. Error: " + e))
+        .then(() => this.setState({logged_in : false,email:''}))
+        .catch((e) => console.error("Could not log out. Error: " + e));
+    }
+
+    componentWillMount() {
+        this.renew_token();
     }
     
     render() {
@@ -97,20 +93,20 @@ export default class UserContext extends React.Component {
                             </ul>
                         </div>
                     </nav>
+                    <div className="div-inline-block">
+                        <button className="btn btn-primary" onClick={this.logout}>
+                            Log Out
+                        </button>
+                    </div>
                 </div>
                 <Switch>
                     <Route path="/about">
                         <About />
                     </Route>
                     <Route path="/">
-                        <User/>
+                        <User email={this.state.email}/>
                     </Route>
                 </Switch>
-                <div className="div-inline-block">
-                    <button className="btn btn-primary" onClick={this.logout}>
-                        Log Out
-                    </button>
-                </div>
             </Router>
         );
     }

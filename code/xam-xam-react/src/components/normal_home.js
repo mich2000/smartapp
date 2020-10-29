@@ -1,6 +1,6 @@
 import React from 'react';
-import Registration from './registration';
-import {Login} from './login';
+import Registration from './user/registration';
+import {Login} from './user/login';
 import api_functions from '../api';
 
 export function About() {
@@ -32,9 +32,7 @@ export default class UnauthenticatedHome extends React.Component {
         fetch(api_functions.get_api() + "/auth/login",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                this.props.login_callback();
-                api_call.json()
-                .then(json => console.log(json));
+                this.props.login_callback(login_params.email);
             } else {
                 api_call.json()
                 .then(json => console.log(json));
@@ -82,7 +80,7 @@ export default class UnauthenticatedHome extends React.Component {
                         </div>
                         <div id="collapseForgottenPwd" className="collapse" aria-labelledby="ForgottenPwd" data-parent="#accordion">
                             <div className="card-body">
-
+                                Unimplemented
                             </div>
                         </div>
                     </div>

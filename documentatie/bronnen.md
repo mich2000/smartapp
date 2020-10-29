@@ -32,3 +32,6 @@ These are sources I used and researched to be able to make my project.
 * Post talking about Basic and Bearer HTTP header: https://stackoverflow.com/questions/34013299/web-api-authentication-basic-vs-bearer
 * Post about setting up authorization header for basic authentication: https://stackoverflow.com/questions/33505130/how-to-assign-basic-authentication-header-to-xmlhttprequest
 * Rust actix example to help me with an user id extractor: https://github.com/emreyalvac/actix-web-jwt/blob/master/src/middlewares/auth.rs
+* Rust actix cookies documentation: https://docs.rs/actix-web/3.1.0/actix_web/http/struct.Cookie.html
+* Rust session crate: https://docs.rs/actix-session/0.4.0/actix_session/
+* Rust 

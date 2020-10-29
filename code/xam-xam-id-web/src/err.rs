@@ -42,6 +42,12 @@ impl From<actix_web::error::ParseError> for XamXamWebError {
     }
 }
 
+impl From<actix_web::Error> for XamXamWebError {
+    fn from(err: actix_web::Error) -> Self {
+        XamXamWebError::CustomError(err.to_string())
+    }
+}
+
 impl From<&str> for XamXamWebError { 
     fn from (err : &str) -> Self { XamXamWebError::CustomError(err.to_string()) } 
 }

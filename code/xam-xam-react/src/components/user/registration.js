@@ -1,7 +1,7 @@
 import React from 'react';
-import api_functions from '../api';
-import {InputWithButton} from './input';
-import email from '../email';
+import api_functions from '../../api';
+import {InputWithButton} from '../input';
+import email from '../../email';
 
 export default class Registration extends React.Component {
     constructor(props) {

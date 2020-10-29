@@ -1,7 +1,7 @@
 use crate::err::XamXamWebError;
 use crate::{PgPool, RedisPool};
 use crate::db::{get_pg_conn,get_redis_conn};
-use actix_identity::Identity;
+use actix_session::Session;
 use actix_web::{HttpRequest,HttpResponse,get,post, web::Data, web::Json};
 use actix_web_httpauth::headers::authorization::{Authorization,Basic};
 use actix_web::http::header::Header;
@@ -12,7 +12,6 @@ use xam_xam_id_bll::viewmodels::basic_info::UserInfo;
 use xam_xam_id_bll::auth_service;
 use xam_xam_id_bll::{PgCon,R2D2Con};
 use jwt_gang::claim_config::ClaimConfiguration;
-use crate::extractor::user_id::UserId;
 
 /**
  * Route that is used to request a token received on the email, this token is then used to make a new user.
@@ -39,7 +38,7 @@ pub async fn register(redis_db : Data<RedisPool>, pg : Data<PgPool>, model: Json
  * Function that controls the identity of someone by controlling its email and password. In return it will give the user a private cookie with a jwt token in it. And it will return a json in it will give you basic user information.
  */
 #[get("/login")]
-pub async fn login(req: HttpRequest,id : Identity,pg : Data<PgPool>, jwt_config : Data<ClaimConfiguration>) -> Result<HttpResponse,XamXamWebError> {
+pub async fn login(req: HttpRequest,session : Session,pg : Data<PgPool>, jwt_config : Data<ClaimConfiguration>) -> Result<HttpResponse,XamXamWebError> {
     let pg_conn : PgCon = get_pg_conn(pg)?;
     let credentials = match Authorization::<Basic>::parse(&req) {
         Ok(credentials_scheme) => credentials_scheme,
@@ -54,31 +53,28 @@ pub async fn login(req: HttpRequest,id : Identity,pg : Data<PgPool>, jwt_config 
             return Err(XamXamWebError::from(e))
         }
     };
-    let user_id = jwt_config.as_ref().decode_token(&jwt_token)?.claims.get_subject().parse().unwrap();
-    let basic_user_info = UserInfo::new(&match auth_service::get_basic_information(&pg_conn,user_id) {
-        Ok(info) => info,
-        Err(e) => {
-            error!("{}",e);
-            return Err(XamXamWebError::from(e))
-        }
-    });
-    id.remember(format!("Bearer {}",&jwt_token));
+    session.set("Authorization", format!("Bearer {}",&jwt_token))?;
     Ok(
-        HttpResponse::Ok()
-        .json(basic_user_info)
+        HttpResponse::Ok().finish()
     )
 }
 
 #[get("/logout")]
-pub async fn logout(id : Identity) -> HttpResponse {
-    id.forget();
+pub async fn logout(session : Session) -> HttpResponse {
+    session.remove("Authorization");
     HttpResponse::Ok().finish()
 }
 
 #[get("/basic/info")]
-pub async fn get_basic_info(user_id : UserId,pg : Data<PgPool>) -> Result<HttpResponse,XamXamWebError> {
+pub async fn get_basic_info(session : Session,pg : Data<PgPool>, jwt_config : Data<ClaimConfiguration>) -> Result<HttpResponse,XamXamWebError> {
     let pg_conn : PgCon = get_pg_conn(pg)?;
-    let user_id_token = match user_id.user_id().parse::<i32>() {
+    let user_id = match session.get::<String>("Authorization")? {
+        Some(token) => token,
+        None => return Err(XamXamWebError::CredentialsNotPresent)
+    };
+    let split : Vec<&str> = user_id.split("Bearer").collect();
+    let user_id_from_split = jwt_config.as_ref().decode_token(&split[1].trim())?.claims.get_subject().to_owned();
+    let user_id_token = match user_id_from_split.parse::<i32>() {
         Ok(id) => id,
         Err(_) => return Err(XamXamWebError::from("Could not parse string reference to i32"))
     };
@@ -92,5 +88,24 @@ pub async fn get_basic_info(user_id : UserId,pg : Data<PgPool>) -> Result<HttpRe
     Ok(
         HttpResponse::Ok()
         .json(basic_user_info)
+    )
+}
+
+#[get("/renew/token")]
+pub async fn renew_token(session : Session, jwt_config : Data<ClaimConfiguration>) ->  Result<HttpResponse,XamXamWebError> {
+    let user_id = match session.get::<String>("Authorization")? {
+        Some(token) => token,
+        None => return Err(XamXamWebError::CredentialsNotPresent)
+    };
+    let split : Vec<&str> = user_id.split("Bearer").collect();
+    let user_id_from_split = jwt_config.as_ref().decode_token(&split[1].trim())?.claims.get_subject().to_owned();
+    let user_id_token = match user_id_from_split.parse::<i32>() {
+        Ok(id) => id,
+        Err(_) => return Err(XamXamWebError::from("Could not parse string reference to i32"))
+    };
+    let jwt_claim = jwt_config.as_ref().create_claim(&user_id_token.to_string())?;
+    session.set("Authorization", format!("Bearer {}",jwt_config.as_ref().token_from_claim(&jwt_claim)?))?;
+    Ok(
+        HttpResponse::Ok().finish()
     )
 }

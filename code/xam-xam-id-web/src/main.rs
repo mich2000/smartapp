@@ -4,7 +4,6 @@ mod err;
 mod controller;
 mod db;
 mod web_config;
-mod extractor;
 
 use xam_xam_id_bll::{PgPool,get_pg_pool};
 use xam_xam_id_bll::{RedisPool,get_redis_pool};
@@ -21,15 +20,14 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     HttpServer::new(move|| {
         App::new()
-        .data(web::JsonConfig::default().limit(4096))
+        .wrap(web_config::identity())
+        .wrap(middleware::Logger::default())
+        .wrap(middleware::Compress::new(ContentEncoding::Gzip))
+        .wrap(web_config::cors())
         .data(pg_pool.clone())
         .data(redis_pool.clone())
         .data(mailgang::mailer_gang::Mailer::default())
         .data(jwt_config.clone())
-        .wrap(middleware::Logger::default())
-        .wrap(middleware::Compress::new(ContentEncoding::Gzip))
-        .wrap(web_config::identity())
-        .wrap(web_config::cors())
         .service(
             web::scope("/request")
                 .service(controller::request_new_user)
@@ -39,6 +37,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 .service(controller::register)
                 .service(controller::login)
                 .service(controller::logout)
+                .service(controller::renew_token)
         )
         .service(
             web::scope("/user")
