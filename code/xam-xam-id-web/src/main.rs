@@ -1,12 +1,11 @@
 use actix_web::{App, HttpServer, middleware,web,http::header::ContentEncoding};
 
 mod err;
-mod controller;
+mod controllers;
 mod db;
 mod web_config;
 
-use xam_xam_id_bll::{PgPool,get_pg_pool};
-use xam_xam_id_bll::{RedisPool,get_redis_pool};
+use xam_xam_id_bll::{PgPool,get_pg_pool,RedisPool,get_redis_pool};
 
 #[macro_use] extern crate log;
 
@@ -18,7 +17,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let redis_pool : RedisPool = get_redis_pool(&dotenv::var("REDIS_URL")?, dotenv::var("REDIS_URL_NUM")?.parse()?);
     let jwt_config = jwt_gang::from_env_config("Jwt.toml")?;
 
-    HttpServer::new(move|| {
+    HttpServer::new(move || {
         App::new()
         .wrap(web_config::identity())
         .wrap(middleware::Logger::default())
@@ -30,18 +29,19 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         .data(jwt_config.clone())
         .service(
             web::scope("/request")
-                .service(controller::request_new_user)
+                .service(controllers::request::request_new_user)
+                .service(controllers::request::request_pwd_change)
         )
         .service(
             web::scope("/auth")
-                .service(controller::register)
-                .service(controller::login)
-                .service(controller::logout)
-                .service(controller::renew_token)
+                .service(controllers::auth::register)
+                .service(controllers::auth::login)
+                .service(controllers::auth::logout)
+                .service(controllers::auth::renew_token)
         )
         .service(
             web::scope("/user")
-                .service(controller::get_basic_info)
+                .service(controllers::user::get_basic_info)
         )
         .default_service(web::route().to(web::HttpResponse::NotFound))
     })

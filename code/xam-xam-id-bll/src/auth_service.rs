@@ -141,7 +141,7 @@ pub fn change_pwd (db_conn : &PgCon, user_id : i32, model : &PasswordHolder)-> R
 /**
  * Function that sends a mail with a token that the user uses to change his forgotten password. The email associated with the user wanting to change is used as a key appended with the word ':pwd-token'.
 */
-pub fn send_token_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgCon, mailer : Mailer, model : EmailHolder) -> Result<(),XamXamServiceError> {
+pub fn send_token_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgCon, mailer : &Mailer, model : &EmailHolder) -> Result<(),XamXamServiceError> {
     if !control_email(model.get_email()) {
         return Err(XamXamError::EmailNotCorrectFormat.into())
     }

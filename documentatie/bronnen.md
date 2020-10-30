@@ -34,4 +34,3 @@ These are sources I used and researched to be able to make my project.
 * Rust actix example to help me with an user id extractor: https://github.com/emreyalvac/actix-web-jwt/blob/master/src/middlewares/auth.rs
 * Rust actix cookies documentation: https://docs.rs/actix-web/3.1.0/actix_web/http/struct.Cookie.html
 * Rust session crate: https://docs.rs/actix-session/0.4.0/actix_session/
-* Rust 
