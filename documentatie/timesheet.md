@@ -53,3 +53,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 6
 
 * Working on my web layer and meeting with instructor: 1h15
+* Working on my web layer and react app, focusing on retrieval of forgotten password: 2h45
