@@ -35,8 +35,8 @@ export default class UnauthenticatedHome extends React.Component {
             if(api_call.status === 200) {
                 this.props.login_callback(login_params.email);
             } else {
-                api_call.json()
-                .then(json => console.log(json));
+                api_call.text()
+                .then(err => this.log_error(err));
             }
         }).catch((e) => {
             this.log_error(`Could not send through the request. error: ${e}`);

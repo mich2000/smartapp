@@ -4,6 +4,7 @@ mod err;
 mod controllers;
 mod db;
 mod web_config;
+mod extractors;
 
 use xam_xam_id_bll::{PgPool,get_pg_pool,RedisPool,get_redis_pool};
 

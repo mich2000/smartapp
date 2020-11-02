@@ -8,10 +8,11 @@ export function ForgottenPassword(props) {
     const [token, setToken] = useState('');
     const [pwd, setPwd] = useState('');
     const [pwdConfirm, setPwdConfirm] = useState('');
+    const [msg,setMsg] = useState({ message : '', err : false});
 
     function send_request(input){
         if(!email.control_email(input)) {
-            this.log_error("Email is not in the correct format.");
+            setError("Email is not in the correct format.");
             return;
         }
         let options = api_functions.method_post();
@@ -22,11 +23,13 @@ export function ForgottenPassword(props) {
         .then((api_call) => {
             if(api_call.status === 200) {
                 setEmailInput(input);
+                setMessage('The request has been sent to your email.');
             } else {
-                console.log(api_call.body)
+                api_call.text()
+                .then(err => setError(err));
             }
         }).catch((e) => {
-            console.err(`Could not send through the request. error: ${e}`);
+            setError(`Could not send through the request. error: ${e}`)
         });
     }
 
@@ -34,7 +37,7 @@ export function ForgottenPassword(props) {
         event.preventDefault();
         event.stopPropagation();
         if(!email.control_email(emailInput)) {
-            this.log_error("Email is not in the correct format.");
+            setError("Email is not in the correct format.");
             return;
         }
         let options = api_functions.method_post();
@@ -47,22 +50,38 @@ export function ForgottenPassword(props) {
         fetch(api_functions.get_api() + "/auth/change/forgotten/pwd",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                alert('Password has been changed');
+                setMessage('Password has been changed');
+                setEmailInput('');
+                setPwd('');
+                setPwdConfirm('');
+                setToken('');
             } else {
-                console.log(api_call.body)
+                api_call.text()
+                .then(err => setError(err));
             }
         }).catch((e) => {
-            console.err(`Could not send through the request. error: ${e}`);
+            setError(`Could not send through the request. error: ${e}`);
         });
+    }
+
+    function setMessage(message) {
+        setMsg({message : message, err : false});
+    }
+
+    function setError(err) {
+        setMsg({message : err, err : true});
     }
 
     return (
         <form onSubmit={e => change_forgotten_pwd(e)}>
+            {
+                (msg.message !== '' && msg.err) && <span className="font-weight-bold text-danger">{msg.message}</span> || <span className="font-weight-bold text-success">{msg.message}</span>
+            }
             <div className="input-group m-3">
                 <p>Put your email under here and use the token we send you to change you password.</p>
                 <InputWithButton name="Retrieve password" valuePlaceholder="Enter your email" input_callback={(e) => send_request(e)}/>
             </div>
-            { emailInput != '' && 
+            { emailInput !== '' && 
             <div className="m-3">
                 <div className="form-group">
                     <input className="form-control" placeholder="Email" value={emailInput} contentEditable="false" />

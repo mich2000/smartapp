@@ -6,6 +6,7 @@ use crate::viewmodels::new_user::NewUser;
 use crate::viewmodels::email::EmailHolder;
 use crate::viewmodels::new_email::NewEmailHolder;
 use crate::viewmodels::password::PasswordHolder;
+use crate::viewmodels::emails::EmailsHolder;
 use crate::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_dal::models::user::{InsertableUser,User};
 use xam_xam_dal::repo::user;
@@ -36,21 +37,14 @@ pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgCo
     .cmd("SET").arg(&token).arg(email).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
     .query(redis_conn.deref_mut())?;
-    let _clear_text = format!(
+    let clear_text = format!(
         r#"
         Hello dear potential user
 
         Use this token to create your account: {}.
         "#,&token
     );
-    let html_text = format!(
-        r#"
-        <h1>Hello dear potential user</h1>
-        </br>
-        <p>Use this token to create your account: {}.</p>
-        "#,&token
-    );
-    mailer.send_email(Report::new(email,"", "Token for user account creation", &html_text)?)?;
+    mailer.send_email(Report::new(email,"", "Token for user account creation", &clear_text)?)?;
     Ok(())
 }
 
@@ -85,18 +79,29 @@ pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &NewUser
 /**
  * Introduces a demand to change email, to confirm this change a token is sent to the email you want to change to. The email the user wants to change to should not yet exist in the postgres or redis database or it will return an error.
  */
-pub fn introduce_email_change_demand(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &EmailHolder)-> Result<(),XamXamServiceError> {
-    if !control_email(model.get_email()) {
+pub fn request_email_change(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &EmailsHolder, mailer : &Mailer)-> Result<(),XamXamServiceError> {
+    if !(control_email(model.get_to_email()) && control_email(model.get_from_email())) {
         return Err(XamXamError::EmailNotCorrectFormat.into())
     }
-    if user::user_exists_by_email(db_conn, model.get_email())? {
-        return Err(XamXamError::UserAlreadyPresent.into())
+    if user::user_exists_by_email(db_conn, model.get_to_email())? {
+        return Err(XamXamError::EmailIsAlreadyTaken.into())
     }
-    let token = get_hash(4);
+    if !user::user_exists_by_email(db_conn, model.get_from_email())? {
+        return Err(XamXamError::UserNotFound.into())
+    }
+    let token = get_hash(5);
     redis::pipe()
-    .cmd("SET").arg(&token).arg(model.get_email()).ignore()
+    .cmd("SET").arg(&token).arg(model.get_to_email()).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
     .query(redis_conn.deref_mut())?;
+    let clear_text = format!(
+        r#"
+        Hello dear potential user
+
+        Use this token to change your user account email from {} to {}: {}.
+        "#,model.get_from_email(),model.get_to_email(),&token
+    );
+    mailer.send_email(Report::new(model.get_from_email(),"", "Token for changing emails", &clear_text)?)?;
     Ok(())
 }
 /** 
@@ -153,21 +158,14 @@ pub fn send_token_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgCon, mai
     .cmd("SET").arg(&token).arg(model.get_email()).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
     .query(redis_conn.deref_mut())?;
-    let _clear_text = format!(
+    let clear_text = format!(
         r#"
         Hello dear user
 
         Use this token to put in the form to change you're password you have forgotten: {}.
         "#,&token
     );
-    let html_text = format!(
-        r#"
-        <h1>Hello dear potential user</h1>
-        </br>
-        <p>Use this token to put in the form to change you're password you have forgotten: {}.</p>
-        "#,&token
-    );
-    mailer.send_email(Report::new(model.get_email(), "", "Token to change forgotten password", &html_text)?)?;
+    mailer.send_email(Report::new(model.get_email(), "", "Token to change forgotten password", &clear_text)?)?;
     Ok(())
 }
 
