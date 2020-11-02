@@ -2,6 +2,7 @@ import React from 'react';
 import Registration from './user/registration';
 import {Login} from './user/login';
 import api_functions from '../api';
+import {ForgottenPassword} from './user/forgotten_pwd';
 
 export function About() {
     return (
@@ -27,7 +28,7 @@ export default class UnauthenticatedHome extends React.Component {
     }
 
     login(login_params) {
-        let options =api_functions.method_get();
+        let options = api_functions.method_get();
         options.headers.Authorization = `Basic ${btoa(login_params.email + ':' + login_params.password)}`;
         fetch(api_functions.get_api() + "/auth/login",options)
         .then((api_call) => {
@@ -80,7 +81,7 @@ export default class UnauthenticatedHome extends React.Component {
                         </div>
                         <div id="collapseForgottenPwd" className="collapse" aria-labelledby="ForgottenPwd" data-parent="#accordion">
                             <div className="card-body">
-                                Unimplemented
+                                <ForgottenPassword/>
                             </div>
                         </div>
                     </div>

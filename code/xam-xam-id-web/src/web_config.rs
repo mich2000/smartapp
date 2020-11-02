@@ -13,6 +13,7 @@ use actix_session::CookieSession;
 pub fn identity() -> CookieSession {
     CookieSession::signed(&[0; 32])
         .name("Authorization")
+        .path("/")
         .max_age(3600)
         .secure(true)
         .http_only(true)

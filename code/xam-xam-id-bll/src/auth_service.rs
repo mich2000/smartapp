@@ -31,7 +31,7 @@ pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgCo
         info!("email {} already existed in the redis database", email);
         return Err(XamXamServiceError::UserAlreadyInRedisDB)
     }
-    let token = get_hash(4);
+    let token = get_hash(6);
     r2d2_redis::redis::pipe()
     .cmd("SET").arg(&token).arg(email).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
@@ -145,10 +145,10 @@ pub fn send_token_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgCon, mai
     if !control_email(model.get_email()) {
         return Err(XamXamError::EmailNotCorrectFormat.into())
     }
-    if user::user_exists_by_email(db_conn, model.get_email())? {
-        return Err(XamXamError::UserAlreadyPresent.into())
+    if !user::user_exists_by_email(db_conn, model.get_email())? {
+        return Err(XamXamError::UserNotFound.into())
     }
-    let token = get_hash(4);
+    let token = get_hash(5);
     redis::pipe()
     .cmd("SET").arg(&token).arg(model.get_email()).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
@@ -182,8 +182,8 @@ pub fn change_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgCon, model :
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
     }
     let person : User = user::get_user_by_mail(db_conn, model.get_email())?.ok_or_else(|| XamXamServiceError::from(XamXamError::UserIsNotPresent))?;
-    let token : String = redis::cmd("GET").arg(person.id).query::<String>(redis_conn.deref_mut())?;
-    if token != model.get_token() {
+    let email : String = redis::cmd("GET").arg(model.get_token()).query::<String>(redis_conn.deref_mut())?;
+    if email != model.get_email() {
         return Err(XamXamServiceError::TokenNotCorrectForForgottenPwd)
     }
     user::change_password(db_conn, person.id, model.get_password())?;

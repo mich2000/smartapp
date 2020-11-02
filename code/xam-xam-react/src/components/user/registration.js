@@ -42,11 +42,9 @@ export default class Registration extends React.Component {
         this.props.error_callback(err_msg);
     }
 
-    send_request(event,value) {
+    send_request(value) {
         if(!email.control_email(value)) {
             this.log_error("Email is not in the correct format.");
-            event.preventDefault();
-            event.stopPropagation();
             return;
         }
         let opties = api_functions.method_post();
@@ -66,8 +64,6 @@ export default class Registration extends React.Component {
         }).catch(() => {
             this.log_error("Could not send through the request.");
         });
-        event.preventDefault();
-        event.stopPropagation();
     }
 
     registration(submit_event) {

@@ -33,8 +33,8 @@ export default class UserContext extends React.Component {
     }
 
     logout() {
-        fetch(api_functions.get_api + "/user/logout")
-        .then(() => this.setState({logged_in : false,email:''}))
+        fetch(api_functions.get_api() + "/auth/logout")
+        .then(() => this.setState({logged_in : false,email : ''}))
         .catch((e) => console.error("Could not log out. Error: " + e));
     }
 

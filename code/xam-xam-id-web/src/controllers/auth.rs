@@ -6,6 +6,7 @@ use actix_web::{HttpRequest,HttpResponse,get,post, web::Data, web::Json};
 use actix_web_httpauth::headers::authorization::{Authorization,Basic};
 use actix_web::http::header::Header;
 use xam_xam_id_bll::viewmodels::new_user::NewUser;
+use xam_xam_id_bll::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_id_bll::auth_service;
 use xam_xam_id_bll::{PgCon,R2D2Con};
 use jwt_gang::claim_config::ClaimConfiguration;
@@ -46,7 +47,7 @@ pub async fn login(req: HttpRequest,session : Session,pg : Data<PgPool>, jwt_con
  */
 #[get("/logout")]
 pub async fn logout(session : Session) -> HttpResponse {
-    session.remove("Authorization");
+    session.purge();
     HttpResponse::Ok().finish()
 }
 
@@ -67,5 +68,16 @@ pub async fn renew_token(session : Session, jwt_config : Data<ClaimConfiguration
     };
     let jwt_claim = jwt_config.as_ref().create_claim(&user_id_token.to_string())?;
     session.set("Authorization", format!("Bearer {}",jwt_config.as_ref().token_from_claim(&jwt_claim)?))?;
+    Ok(HttpResponse::Ok().finish())
+}
+
+/**
+ * Function that is used to change the password of a user has forgotten, to change the password the user must exist and give the right token taht will be checked in the redis database.
+*/
+#[post("/change/forgotten/pwd")]
+pub async fn change_forgotten_pwd(redis_db : Data<RedisPool>, pg : Data<PgPool>, model: Json<ForgottenPassword>) -> Result<HttpResponse,XamXamWebError> {
+    let pg_conn : PgCon = get_pg_conn(pg)?;
+    let mut r_conn : R2D2Con = get_redis_conn(redis_db)?;
+    auth_service::change_forgotten_pwd(&mut r_conn,&pg_conn,&model)?;
     Ok(HttpResponse::Ok().finish())
 }
