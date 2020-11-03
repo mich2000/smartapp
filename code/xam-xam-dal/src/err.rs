@@ -22,6 +22,7 @@ pub enum XamXamError {
     UserNotVerified,
     //Storage related error
     StorageNameIsEmpty,
+    //Token related error
     // Storage related errors
     ProductNameIsEmpty,
     //Custom errors

@@ -6,7 +6,6 @@ use crate::viewmodels::new_user::NewUser;
 use crate::viewmodels::email::EmailHolder;
 use crate::viewmodels::new_email::NewEmailHolder;
 use crate::viewmodels::password::PasswordHolder;
-use crate::viewmodels::emails::EmailsHolder;
 use crate::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_dal::models::user::{InsertableUser,User};
 use xam_xam_dal::repo::user;
@@ -32,7 +31,7 @@ pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgCo
         info!("email {} already existed in the redis database", email);
         return Err(XamXamServiceError::UserAlreadyInRedisDB)
     }
-    let token = get_hash(6);
+    let token = get_hash(4);
     r2d2_redis::redis::pipe()
     .cmd("SET").arg(&token).arg(email).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
@@ -49,7 +48,7 @@ pub fn introduce_user_creation_demand(redis_conn : &mut R2D2Con, db_conn : &PgCo
 }
 
 /**
- * Function used to create an user in the database. It will check the given token that equal to the one found in the redis database. Passord and their confirmation needs to be equal to each other.
+ * Function used to create an user in the database. It will check the given token that equal to the one found in the redis database. Passord and their confirmation needs to be equal to each other. Also checks that the token has the lenght of 6.
 */
 pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &NewUser) -> Result<(),XamXamServiceError> {
     if user::user_exists_by_email(db_conn, model.get_email())? {
@@ -57,6 +56,9 @@ pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &NewUser
     }
     if model.get_password() != model.get_password_confirmed() {
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
+    }
+    if model.get_token().len() != 4 {
+        return Err(XamXamServiceError::TokenHasNotCorrectLength);
     }
     let email : Option<String> = match redis::cmd("GET").arg(model.get_token().to_owned()).query(redis_conn.deref_mut()) {
         Ok(res) => res,
@@ -79,19 +81,18 @@ pub fn create_user(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &NewUser
 /**
  * Introduces a demand to change email, to confirm this change a token is sent to the email you want to change to. The email the user wants to change to should not yet exist in the postgres or redis database or it will return an error.
  */
-pub fn request_email_change(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &EmailsHolder, mailer : &Mailer)-> Result<(),XamXamServiceError> {
-    if !(control_email(model.get_to_email()) && control_email(model.get_from_email())) {
+pub fn request_email_change(redis_conn : &mut R2D2Con, db_conn : &PgCon, model : &EmailHolder, user_id : i32, mailer : &Mailer)-> Result<(),XamXamServiceError> {
+    let current_email : String = user::get_email_by_id(db_conn, user_id)?;
+    info!("Email of current user has been asked");
+    if !control_email(model.get_email()) {
         return Err(XamXamError::EmailNotCorrectFormat.into())
     }
-    if user::user_exists_by_email(db_conn, model.get_to_email())? {
+    if user::user_exists_by_email(db_conn, model.get_email())? {
         return Err(XamXamError::EmailIsAlreadyTaken.into())
     }
-    if !user::user_exists_by_email(db_conn, model.get_from_email())? {
-        return Err(XamXamError::UserNotFound.into())
-    }
-    let token = get_hash(5);
+    let token = get_hash(4);
     redis::pipe()
-    .cmd("SET").arg(&token).arg(model.get_to_email()).ignore()
+    .cmd("SET").arg(&token).arg(model.get_email()).ignore()
     .cmd("EXPIRE").arg(&token).arg(600).ignore()
     .query(redis_conn.deref_mut())?;
     let clear_text = format!(
@@ -99,15 +100,19 @@ pub fn request_email_change(redis_conn : &mut R2D2Con, db_conn : &PgCon, model :
         Hello dear potential user
 
         Use this token to change your user account email from {} to {}: {}.
-        "#,model.get_from_email(),model.get_to_email(),&token
+        "#,&current_email,model.get_email(),&token
     );
-    mailer.send_email(Report::new(model.get_from_email(),"", "Token for changing emails", &clear_text)?)?;
+    mailer.send_email(Report::new(&model.get_email(),"", "Token for changing emails", &clear_text)?)?;
     Ok(())
 }
-/** 
+
+/**
  * Function used to change the email of the given user id. The email must comply with the email regex or it will be rejected. It will also need a token you get from your the email you want to change to.
 */
 pub fn change_email(redis_conn : &mut R2D2Con, db_conn : &PgCon, user_id : i32, model : &NewEmailHolder) -> Result<(),XamXamServiceError> {
+    if model.get_token().len() != 4 {
+        return Err(XamXamServiceError::TokenHasNotCorrectLength);
+    }
     let email = redis::cmd("GET").arg(model.get_token()).query::<String>(redis_conn.deref_mut())?;
     if email != model.get_email() {
         return Err(XamXamServiceError::TokenNotCorrectForChangingEmail)
@@ -179,6 +184,9 @@ pub fn change_forgotten_pwd(redis_conn : &mut R2D2Con, db_conn : &PgCon, model :
     if model.get_password() != model.get_password_confirmed() {
         return Err(XamXamError::PasswordAndPasswordConfirmedNotEqual.into())
     }
+    if model.get_token().len() != 5 {
+        return Err(XamXamServiceError::TokenHasNotCorrectLength);
+    }
     let person : User = user::get_user_by_mail(db_conn, model.get_email())?.ok_or_else(|| XamXamServiceError::from(XamXamError::UserIsNotPresent))?;
     let email : String = redis::cmd("GET").arg(model.get_token()).query::<String>(redis_conn.deref_mut())?;
     if email != model.get_email() {
@@ -203,8 +211,9 @@ pub fn authenthicate_get_token(db_conn : &PgCon, claim_config : &ClaimConfigurat
     if !person.verify_pwd(pwd)? {
         return Err(XamXamError::PasswordIsNotCorrect.into())
     }
-    info!("Person with email {} hast the good password.",email);
-    Ok(claim_config.token_from_claim(&claim_config.create_claim(&person.id.to_string())?)?)
+    info!("Person with email {} has the good password.",email);
+    let claim = claim_config.create_claim(&person.id.to_string())?;
+    Ok(claim_config.token_from_claim(&claim)?)
 }
 
 /**

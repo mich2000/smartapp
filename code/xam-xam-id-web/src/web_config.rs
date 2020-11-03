@@ -6,17 +6,18 @@ use log::LevelFilter;
 use log4rs::append::console::ConsoleAppender;
 use log4rs::encode::pattern::PatternEncoder;
 use log4rs::config::{Appender, Config, Root};
-use actix_session::CookieSession;
+use actix_identity::{CookieIdentityPolicy, IdentityService};
+
 /**
  * Function that initializes an IdentityService
  */
-pub fn identity() -> CookieSession {
-    CookieSession::signed(&[0; 32])
-        .name("Authorization")
-        .path("/")
-        .max_age(3600)
-        .secure(true)
-        .http_only(true)
+pub fn identity() -> IdentityService<CookieIdentityPolicy> {
+    IdentityService::new(
+        CookieIdentityPolicy::new(&[0; 32])
+              .name("Authorization")
+              .secure(true)
+              .http_only(true)
+    )
 }
 
 /**

@@ -32,6 +32,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             web::scope("/request")
                 .service(controllers::request::request_new_user)
                 .service(controllers::request::request_pwd_change)
+                .service(controllers::request::request_new_email)
         )
         .service(
             web::scope("/auth")
@@ -44,6 +45,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         .service(
             web::scope("/user")
                 .service(controllers::user::get_basic_info)
+                .service(controllers::user::change_email)
         )
         .default_service(web::route().to(web::HttpResponse::NotFound))
     })

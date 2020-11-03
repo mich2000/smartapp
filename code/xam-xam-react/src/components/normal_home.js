@@ -16,15 +16,15 @@ export default class UnauthenticatedHome extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
-            error : ""
+            msg : '',
+            error : false
         }
-        this.log_error = this.log_error.bind(this);
+        this.log_msg = this.log_msg.bind(this);
         this.login = this.login.bind(this);
     }
 
-    log_error(err_msg) {
-        console.error(err_msg);
-        this.setState({ error : err_msg });
+    log_msg(msg,err) {
+        this.setState({ msg : msg, error : err });
     }
 
     login(login_params) {
@@ -36,10 +36,10 @@ export default class UnauthenticatedHome extends React.Component {
                 this.props.login_callback(login_params.email);
             } else {
                 api_call.text()
-                .then(err => this.log_error(err));
+                .then(err => this.log_msg(err,true));
             }
         }).catch((e) => {
-            this.log_error(`Could not send through the request. error: ${e}`);
+            this.log_msg(`Could not send through the request. error: ${e}`,true);
         });
     }
 
@@ -47,7 +47,10 @@ export default class UnauthenticatedHome extends React.Component {
         return (
             <div>
                 <h1>xam-xam</h1>
-                <span className="font-weight-bold text-danger">{this.state.error}</span>
+                <span className="font-weight-bold text-danger">{this.state.msg}</span>
+                {
+                    (this.state.message !== '' && this.state.err) && <span className="font-weight-bold text-danger">{this.state.message}</span> || <span className="font-weight-bold text-success">{this.state.message}</span>
+                }
                 <div id="accordion" className="col-sm-8 m-3">
                     <div className="card">
                         <div className="card-header" id="UserRegistration">
@@ -57,7 +60,7 @@ export default class UnauthenticatedHome extends React.Component {
                         </div>
                         <div id="collapseUserRegistration" className="collapse" aria-labelledby="UserRegistration" data-parent="#accordion">
                             <div className="card-body">
-                                <Registration error_callback={(e) => this.log_error(e)}/>
+                                <Registration message_callback={(e,status) => this.log_msg(e,status)}/>
                             </div>
                         </div>
                     </div>
@@ -69,7 +72,7 @@ export default class UnauthenticatedHome extends React.Component {
                         </div>
                         <div id="collapseUserLogin" className="collapse" aria-labelledby="UserLogin" data-parent="#accordion">
                             <div className="card-body">
-                                <Login error_callback={(e) => this.log_error(e)} login_callback={(login) => this.login(login)}/>
+                                <Login message_callback={(e,s) => this.log_msg(e,s)} login_callback={(login) => this.login(login)}/>
                             </div>
                         </div>
                     </div>
@@ -81,7 +84,7 @@ export default class UnauthenticatedHome extends React.Component {
                         </div>
                         <div id="collapseForgottenPwd" className="collapse" aria-labelledby="ForgottenPwd" data-parent="#accordion">
                             <div className="card-body">
-                                <ForgottenPassword/>
+                                <ForgottenPassword message_callback={(e,s) => this.log_msg(e,s)}/>
                             </div>
                         </div>
                     </div>

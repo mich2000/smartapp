@@ -55,3 +55,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my web layer and meeting with instructor: 1h15
 * Working on my web layer and react app, focusing on retrieval of forgotten password: 2h45
 * Working on my react app, web layer and service layer: 2h30
+* Working on my react app, web layer. Solve problems related to middleware and jwt token in private cookies: 5h

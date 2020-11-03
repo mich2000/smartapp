@@ -12,7 +12,7 @@ export default class Registration extends React.Component {
             password : "",
             confirmed_password : ""
         }
-        this.log_error = this.log_error.bind(this);
+        this.log_msg = this.log_msg.bind(this);
         this.send_request = this.send_request.bind(this);
         this.change_handler = this.change_handler.bind(this);
         this.registration = this.registration.bind(this);
@@ -20,15 +20,15 @@ export default class Registration extends React.Component {
 
     registration_okay() {
         if(!email.control_email(this.state.email)) {
-            this.log_error("The email is not right.");
+            this.log_msg("The email is not right.",false);
             return false;
         }
         if(this.state.password === "") {
-            this.log_error("Password cannot be empty");
+            this.log_msg("Password cannot be empty",false);
             return false;
         }
         if(this.state.confirmed_password !== this.state.password) {
-            this.log_error("Password and confirm password aren't the same.");
+            this.log_msg("Password and confirm password aren't the same.",false);
             return false;
         }
         return true;
@@ -38,13 +38,13 @@ export default class Registration extends React.Component {
         this.setState({[event.target.name] : event.target.value});
     }
 
-    log_error(err_msg) {
-        this.props.error_callback(err_msg);
+    log_msg(message, isError) {
+        this.props.message_callback(message,isError);
     }
 
     send_request(value) {
         if(!email.control_email(value)) {
-            this.log_error("Email is not in the correct format.");
+            this.log_msg("Email is not in the correct format.",true);
             return;
         }
         let opties = api_functions.method_post();
@@ -56,13 +56,13 @@ export default class Registration extends React.Component {
             api_call.json()
             .then((json_obj) => {
                 if(api_call.status === 200) {
-                    alert("Token has been sent to your email account😀.");
+                    this.log_msg("Token has been sent to your email account😀.",false);
                 } else {
-                    this.log_error(json_obj.error);
+                    this.log_msg(json_obj.error,true);
                 }
             });
         }).catch(() => {
-            this.log_error("Could not send through the request.");
+            this.log_msg("Could not send through the request.");
         });
     }
 
@@ -84,13 +84,13 @@ export default class Registration extends React.Component {
             api_call.json()
             .then((json_obj) => {
                 if(api_call.status === 200) {
-                    alert("Your account has been created😀.");
+                    this.log_msg("Your account has been created😀.",false);
                 } else {
-                    this.log_error(json_obj.error);
+                    this.log_msg(json_obj.error,true);
                 }
             });
         }).catch((e) => {
-            this.log_error(`Could not send through the request. error: ${e}`);
+            this.log_msg(`Could not send through the request. error: ${e}`,true);
         });
         submit_event.preventDefault();
         submit_event.stopPropagation();

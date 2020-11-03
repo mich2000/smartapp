@@ -95,6 +95,7 @@ impl XamXamWebError {
                 XamXamServiceError::TokenNotCorrectForUserCreation => "Token that was given is not correct, to create a new user",
                 XamXamServiceError::TokenNotCorrectForForgottenPwd => "Token that was given is not right, to change the forgotten password",
                 XamXamServiceError::TokenNotCorrectForChangingEmail => "Token that was given is not right, to change the email",
+                XamXamServiceError::TokenHasNotCorrectLength => "Token that was given doesn't have the right lenght",
                 _ => "An internal error happened"
             }.to_string()
         }
@@ -121,6 +122,7 @@ impl error::ResponseError for XamXamWebError {
                 XamXamServiceError::TokenNotCorrectForUserCreation => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForForgottenPwd => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForChangingEmail => StatusCode::UNAUTHORIZED,
+                XamXamServiceError::TokenHasNotCorrectLength => StatusCode::UNAUTHORIZED,
                 // DAL errors
                 XamXamServiceError::XamXamDalError(_) => StatusCode::BAD_REQUEST,
                 // JWT errors

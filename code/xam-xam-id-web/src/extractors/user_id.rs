@@ -1,8 +1,8 @@
-use actix_web::{web::Data, dev, HttpRequest, FromRequest,cookie::Cookie};
+use actix_web::{web::Data, dev, HttpRequest, FromRequest};
 use futures_util::future::{ok, err, Ready};
 use jwt_gang::claim_config::ClaimConfiguration;
 use crate::err::XamXamWebError;
-use actix_web::HttpMessage;
+use actix_identity::RequestIdentity;
 
 pub struct UserId(i32);
 
@@ -22,12 +22,11 @@ impl FromRequest for UserId {
             Some(config) => config,
             None => return err(XamXamWebError::JwtConfigIsNotThere)
         };
-        let cookie : Cookie = match req.cookie("Authorization") {
+        let identity = match req.get_identity() {
             Some(cookie) => cookie,
             None => return err(XamXamWebError::CredentialsNotPresent)
         };
-        let split : Vec<&str> = cookie.value().split("Bearer").collect();
-        let id_of_token = match jwt_config.decode_token(&split[1].trim()) {
+        let id_of_token = match jwt_config.decode_token(&identity) {
             Ok(claim) => claim.claims.get_subject().to_owned(),
             Err(e) => return err(e.into())
         };

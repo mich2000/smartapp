@@ -15,12 +15,10 @@ use crate::claim_error::JwtCustomError;
  */
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Claim {
-    sub: String,
     iss: String,
+    sub: String,
     #[serde(with = "jwt_numeric_date")]
-    exp: DateTime<Utc>,
-    #[serde(with = "jwt_numeric_date")]
-    iat: DateTime<Utc>
+    exp: DateTime<Utc>
 }
 
 impl Claim {
@@ -42,8 +40,7 @@ impl Claim {
             Self {
                 sub: subject.to_string(),
                 iss: issuer.to_string(),
-                exp: today + chrono::Duration::seconds(expiration as i64),
-                iat: today
+                exp: today + chrono::Duration::seconds(expiration as i64)
             }
         )
     }

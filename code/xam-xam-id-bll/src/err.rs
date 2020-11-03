@@ -12,6 +12,7 @@ pub enum XamXamServiceError {
     TokenNotCorrectForUserCreation,
     TokenNotCorrectForForgottenPwd,
     TokenNotCorrectForChangingEmail,
+    TokenHasNotCorrectLength,
     // JWT errors
     JWTerror(JwtCustomError),
     //Custom errors
@@ -28,6 +29,7 @@ impl fmt::Display for XamXamServiceError {
             XamXamServiceError::TokenNotCorrectForUserCreation => write!(f,"Token that was given is not right, to create a new user"),
             XamXamServiceError::TokenNotCorrectForForgottenPwd => write!(f,"Token that was given is not right, to change the forgotten password"),
             XamXamServiceError::TokenNotCorrectForChangingEmail => write!(f,"Token that was given is not right, to change the email"),
+            XamXamServiceError::TokenHasNotCorrectLength => write!(f,"Given token has not the correct lenght."),
             // JWT errors
             XamXamServiceError::JWTerror(err) => write!(f,"{}",err),
             // Custom errors

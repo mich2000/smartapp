@@ -26,11 +26,26 @@ pub fn insert_user(conn : &PgCon, user : &InsertableUser) -> Result<(),XamXamErr
 }
 
 /**
+ * Function that is used to know if a user with a specific id exists.
+*/
+pub fn user_exists_by_id(conn : &PgCon, user_id : i32) -> Result<bool,XamXamError> {
+    Ok(
+        users.filter(id.eq(user_id)).select(diesel::dsl::count_star()).get_result::<i64>(conn)? > 0
+    )
+}
+
+/**
  * Function that is used to know if a user with a specific email exists.
 */
 pub fn user_exists_by_email(conn : &PgCon, user_email : &str) -> Result<bool,XamXamError> {
     Ok(
         users.filter(email.eq(user_email)).select(diesel::dsl::count_star()).get_result::<i64>(conn)? > 0
+    )
+}
+
+pub fn get_email_by_id(conn : &PgCon, user_id : i32) -> Result<String,XamXamError> {
+    Ok(
+        users.filter(id.eq(user_id)).select(email).get_result::<String>(conn)?
     )
 }
 

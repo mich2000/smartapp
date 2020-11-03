@@ -9,11 +9,11 @@ export function Login(props) {
         event.preventDefault();
         event.stopPropagation();
         if(!email.control_email(email_input)) {
-            props.error_callback("Email was not in the correct format.");
+            props.message_callback("Email was not in the correct format.",true);
             return;
         }
         if(password === "") {
-            props.error_callback("Given password was empty.");
+            props.message_callback("Given password was empty.",true);
             return;
         }
         props.login_callback({ email : email_input, password : password });
