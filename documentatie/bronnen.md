@@ -36,3 +36,6 @@ These are sources I used and researched to be able to make my project.
 * Rust session crate: https://docs.rs/actix-session/0.4.0/actix_session/
 * Rust post about handling request in a async manner: https://stackoverflow.com/questions/63308246/how-to-use-async-code-in-actix-web-extractors
 * Rust post about handling identity in middleware: https://users.rust-lang.org/t/actix-web-token-validation-in-middleware/38205
+* Javascript documentation to set an alert to an user: https://www.w3schools.com/jsref/met_win_alert.asp
+* Javascript documentation to set an confirm prompt to an user: https://www.w3schools.com/jsref/met_win_confirm.asp
+* Javascript documentation to set an input prompt to an user: https://www.w3schools.com/jsref/met_win_prompt.asp

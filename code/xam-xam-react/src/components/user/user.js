@@ -1,6 +1,8 @@
 import React, { useState }  from 'react';
 import {UserInfo} from './user_info';
 import {ChangeEmail} from './change_email';
+import {ChangePwd} from './change_pwd';
+import {DeleteProfile} from './delete_profile';
 
 export function User(props) {
     const [email,setEmail] = useState(props.email);
@@ -12,6 +14,10 @@ export function User(props) {
     
     function changeEmail(new_email) {
         setEmail(new_email);
+    }
+
+    function logout() {
+        props.logout();
     }
 
     return (
@@ -53,7 +59,7 @@ export function User(props) {
                     </div>
                     <div id="collapseChangePwd" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            Unimplemented
+                            <ChangePwd message_callback={(e,s) => set_message(e,s)} email={email}/>
                         </div>
                     </div>
                 </div>
@@ -65,7 +71,7 @@ export function User(props) {
                     </div>
                     <div id="collapseDeleteProfile" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            Unimplemented
+                            <DeleteProfile message_callback={(e,s) => set_message(e,s)} email={email} logout={logout()}/>
                         </div>
                     </div>
                 </div>

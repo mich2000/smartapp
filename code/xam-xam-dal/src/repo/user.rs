@@ -59,6 +59,15 @@ pub fn get_user_by_mail(conn : &PgCon, user_email : &str) -> Result<Option<User>
 }
 
 /**
+ * Returns a user based on his id
+ */
+pub fn get_user_by_id(conn : &PgCon, user_id : i32) -> Result<Option<User>,XamXamError> {
+    Ok(
+        users.find(user_id).get_result::<User>(conn).optional()?
+    )
+}
+
+/**
  * Function that is used to change the email of an user. The result can if succeeded return a boolean, true means a row has changed otherwhise a false will be given.
  */
 pub fn change_email(conn : &PgCon, user_id : i32, new_user_email : &str) -> Result<bool,XamXamError> {

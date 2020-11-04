@@ -104,7 +104,7 @@ export default class UserContext extends React.Component {
                         <About />
                     </Route>
                     <Route path="/">
-                        <User email={this.state.email}/>
+                        <User email={this.state.email} logout={this.logout}/>
                     </Route>
                 </Switch>
             </Router>

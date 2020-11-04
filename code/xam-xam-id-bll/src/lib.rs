@@ -22,7 +22,7 @@ pub fn get_pg_pool(url : &str, max_conn : u32) -> PgPool {
  * ======================= REDIS PART =======================
 */
 pub type RedisPool = Pool<RedisConnectionManager>;
-pub type R2D2Con = r2d2::PooledConnection<RedisConnectionManager>;
+pub type RCon = r2d2::PooledConnection<RedisConnectionManager>;
 
 pub fn get_redis_pool(url : &str, max_conn : u32) -> RedisPool {
     let manager = RedisConnectionManager::new(url).unwrap();

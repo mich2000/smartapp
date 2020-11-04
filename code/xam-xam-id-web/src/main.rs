@@ -46,6 +46,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             web::scope("/user")
                 .service(controllers::user::get_basic_info)
                 .service(controllers::user::change_email)
+                .service(controllers::user::change_password)
+                .service(controllers::user::delete_profile)
         )
         .default_service(web::route().to(web::HttpResponse::NotFound))
     })

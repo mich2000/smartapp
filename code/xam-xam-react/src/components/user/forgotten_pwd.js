@@ -39,7 +39,7 @@ export function ForgottenPassword(props) {
             setError("Email is not in the correct format.");
             return;
         }
-        let options = api_functions.method_post();
+        let options = api_functions.method_put();
         options.body = JSON.stringify({
             email : emailInput,
             token : token,
