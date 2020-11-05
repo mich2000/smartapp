@@ -85,6 +85,7 @@ export default class Registration extends React.Component {
             .then((json_obj) => {
                 if(api_call.status === 200) {
                     this.log_msg("Your account has been created😀.",false);
+                    this.setState({email : "",token : "",password : "",confirmed_password : ""});
                 } else {
                     this.log_msg(json_obj.error,true);
                 }

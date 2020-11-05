@@ -6,6 +6,7 @@ export function ChangePwd(props) {
     const [currentPwd,setCurrentPwd] = useState('');
     const [newPwd,setNewPwd] = useState('');
     const [newPwdConfirm,setNewPwdConfirm] = useState('');
+
     function delete_profile(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -13,7 +14,6 @@ export function ChangePwd(props) {
             setError("Email is not in the correct format.");
             return;
         }
-        var username = prompt("e");
         let options = api_functions.method_put();
         options.headers.Authorization = `Basic ${btoa(props.email + ':' + currentPwd)}`;
         options.body = JSON.stringify({
@@ -51,14 +51,14 @@ export function ChangePwd(props) {
                         <input className="form-control" type="password" placeholder="Enter current password" value={currentPwd} onChange={e => setCurrentPwd(e.target.value)} required/>
                 </div>
                 <div className="form-group">
-                    <input className="form-control" type="password" autocomplete="new-password" placeholder="New password" value={newPwd} onChange={e => setNewPwd(e.target.value)} required/>
+                    <input className="form-control" type="password" autoComplete="new-password" placeholder="New password" value={newPwd} onChange={e => setNewPwd(e.target.value)} required/>
                 </div>
                 <div className="form-group">
-                    <input className="form-control" type="password" autocomplete="new-password" placeholder="New confirmed password" value={newPwdConfirm} onChange={e => setNewPwdConfirm(e.target.value)} required/>
+                    <input className="form-control" type="password" autoComplete="new-password" placeholder="New confirmed password" value={newPwdConfirm} onChange={e => setNewPwdConfirm(e.target.value)} required/>
                 </div>
                 <div className="input-group-btn">
                     <button className="btn btn-default" type="submit">
-                        Delete profile
+                        Change password
                     </button>
                 </div>
             </div>

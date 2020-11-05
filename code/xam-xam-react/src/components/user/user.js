@@ -16,10 +16,6 @@ export function User(props) {
         setEmail(new_email);
     }
 
-    function logout() {
-        props.logout();
-    }
-
     return (
         <div>
             <h2>{email}</h2>
@@ -35,7 +31,7 @@ export function User(props) {
                     </div>
                     <div id="collapseUserInfo" className="collapse" aria-labelledby="UserInfo" data-parent="#accordion">
                         <div className="card-body">
-                            <UserInfo/>
+                            <UserInfo changeEmail={email => changeEmail(email)}/>
                         </div>
                     </div>
                 </div>
@@ -71,7 +67,7 @@ export function User(props) {
                     </div>
                     <div id="collapseDeleteProfile" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            <DeleteProfile message_callback={(e,s) => set_message(e,s)} email={email} logout={logout()}/>
+                            <DeleteProfile message_callback={(e,s) => set_message(e,s)} email={email} logout={props.logout}/>
                         </div>
                     </div>
                 </div>

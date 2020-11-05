@@ -55,8 +55,8 @@ pub async fn renew_token(session : Identity, jwt_config : Data<ClaimConfiguratio
         Some(token) => token,
         None => return Err(XamXamWebError::CredentialsNotPresent)
     };
-    let user_id_from_split = &jwt_config.decode_token(&jwt_token.split_whitespace().collect::<Vec<&str>>()[1].trim())?.claims.get_subject().to_owned();
-    let user_id_token = match user_id_from_split.parse::<i32>() {
+    let token_subject = &jwt_config.decode_token(&jwt_token)?.claims.get_subject().to_owned();
+    let user_id_token = match token_subject.parse::<i32>() {
         Ok(id) => id,
         Err(_) => return Err(XamXamWebError::from("Could not parse string reference to i32"))
     };
