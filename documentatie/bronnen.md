@@ -39,3 +39,4 @@ These are sources I used and researched to be able to make my project.
 * Javascript documentation to set an alert to an user: https://www.w3schools.com/jsref/met_win_alert.asp
 * Javascript documentation to set an confirm prompt to an user: https://www.w3schools.com/jsref/met_win_confirm.asp
 * Javascript documentation to set an input prompt to an user: https://www.w3schools.com/jsref/met_win_prompt.asp
+* Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182

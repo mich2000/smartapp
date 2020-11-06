@@ -58,3 +58,5 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my react app, web layer. Solve problems related to middleware and jwt token in private cookies: 5h
 * Working on my web, service layer and my react app. Trying to solve problems related to credential middleware and changing passwords: 3h30
 * Working a bit on my react app: 25min
+* Working on my api and react app, finish up the auth service: 1h30
+* Learning to use the context api from react: 2h
