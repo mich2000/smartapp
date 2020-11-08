@@ -7,7 +7,6 @@ import api_functions from '../../api';
 import {AppContext} from '../../state';
 
 export function User(props) {
-    const [email,setEmail] = useState(props.email);
     const [message,setMessage] = useState({msg : '', error : false});
     const [user,setUser] = useContext(AppContext);
 
@@ -16,15 +15,14 @@ export function User(props) {
     }
     
     function changeEmail(new_email) {
-        setEmail(new_email);
+        setUser({email : new_email,loggedIn : true});
     }
 
     useEffect(() =>{
-        let options = api_functions.method_get();
-        fetch(api_functions.get_api() + "/auth/renew/token",options)
+        fetch(api_functions.get_api() + "/auth/renew/token",api_functions.method_get())
         .then((api_call) => {
             if(api_call.status === 200) {
-                setUser({email : user.email, loggedIn: true})
+                console.log('Token has been renewed');
             } else {
                 console.log(api_call.body)
             }
@@ -34,7 +32,7 @@ export function User(props) {
 
     return (
         <div>
-            <h2>{email}</h2>
+            <h2>{user.email}</h2>
             {
                 (message.msg !== '' && message.error) && <span className="font-weight-bold text-danger">{message.msg}</span> || <span className="font-weight-bold text-success">{message.msg}</span>
             }
@@ -71,7 +69,7 @@ export function User(props) {
                     </div>
                     <div id="collapseChangePwd" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            <ChangePwd message_callback={(e,s) => set_message(e,s)} email={email}/>
+                            <ChangePwd message_callback={(e,s) => set_message(e,s)} email={user.email}/>
                         </div>
                     </div>
                 </div>
@@ -83,7 +81,7 @@ export function User(props) {
                     </div>
                     <div id="collapseDeleteProfile" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            <DeleteProfile message_callback={(e,s) => set_message(e,s)} email={email} logout={props.logout}/>
+                            <DeleteProfile message_callback={(e,s) => set_message(e,s)} email={user.email} logout={props.logout}/>
                         </div>
                     </div>
                 </div>

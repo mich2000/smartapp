@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {InputWithButton} from '../input';
 import email from '../../email';
 import api_functions from '../../api';
+import {AppContext} from '../../state';
 
 export function ChangeEmail(props) {
     const [emailInput,setEmailInput] = useState('');
     const [token, setToken] = useState('');
+    const [user,setUser] = useContext(AppContext);
 
     function send_request(input){
         if(!email.control_email(input)) {
@@ -46,7 +48,7 @@ export function ChangeEmail(props) {
         .then((api_call) => {
             if(api_call.status === 200) {
                 setMessage('Email has been changed');
-                props.changeEmail(emailInput);
+                setUser({email : emailInput, loggedIn : true});
                 setToken('');
                 setEmailInput('');
             } else {

@@ -41,6 +41,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                 .service(controllers::auth::logout)
                 .service(controllers::auth::renew_token)
                 .service(controllers::auth::change_forgotten_pwd)
+                .service(controllers::auth::validate)
         )
         .service(
             web::scope("/user")
@@ -53,7 +54,6 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     })
     .bind_rustls("0.0.0.0:8080",web_config::tls_config())?
     .workers(1)
-    .keep_alive(None)
     .run()
     .await?;
     Ok(())

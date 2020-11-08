@@ -1,5 +1,4 @@
-import React,{useState,createContext,useEffect} from 'react';
-import api_functions from './api';
+import React,{useState,createContext} from 'react';
 
 export const AppContext = createContext({
     email : '',

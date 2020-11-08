@@ -13,11 +13,25 @@ export default function UserContext() {
     }
 
     function logout() {
-        fetch(api_functions.get_api() + "/auth/logout")
+        fetch(api_functions.get_api() + "/auth/logout",api_functions.method_get())
         .then(() => setUser({email : '', loggedIn : false}))
         .catch((e) => console.error("Could not log out. Error: " + e));
     }
-    
+
+    useEffect(() => {
+        if(!user.loggedIn) {
+            fetch(api_functions.get_api() + "/auth/validate",api_functions.method_get())
+            .then((api_call) => {
+                if(api_call.status === 200) {
+                    setUser({email : user.email, loggedIn: true})
+                } else {
+                    console.log(api_call.body)
+                }
+            })
+            .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+        }
+    })
+
     function render() {
         if(!user.loggedIn) {
             return (

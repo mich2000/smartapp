@@ -46,6 +46,16 @@ pub async fn logout(id : Identity) -> HttpResponse {
     HttpResponse::Ok().finish()
 }
 
+#[get("/validate")]
+pub async fn validate(session : Identity, jwt_config : Data<ClaimConfiguration>) ->  Result<HttpResponse,XamXamWebError> {
+    let jwt_token = match session.identity() {
+        Some(token) => token,
+        None => return Err(XamXamWebError::CredentialsNotPresent)
+    };
+    jwt_config.decode_token(&jwt_token)?;
+    Ok(HttpResponse::Ok().finish())
+}
+
 /**
  * Function that is used to renew the token of a user. If the given token is not okay it will return an error.
  */
