@@ -10,15 +10,13 @@ export function InputWithButton(props) {
     }
 
     return (
-        <form onSubmit={(event) => input_press(event,input)}>
-            <div className="input-group">
-                <input type={props.type || "text"} className="form-control" value={input} name="input" onChange={(e) => setInput( e.target.value )} placeholder={props.valuePlaceholder || "" } required/>
-                <div className="input-group-btn">
-                    <button className="btn btn-default" type="submit">
-                        {props.name}
-                    </button>
-                </div>
+        <div className="input-group">
+            <input type={props.type || "text"} className="form-control" value={input} name="input" onChange={(e) => setInput( e.target.value )} placeholder={props.valuePlaceholder || "" } required/>
+            <div className="input-group-btn">
+                <button className="btn btn-default" type="submit" onSubmit={(event) => input_press(event,input)}>
+                    {props.name}
+                </button>
             </div>
-        </form>
+        </div>
     );
 }

@@ -1,49 +1,25 @@
-import React from 'react';
+import React,{useContext, useEffect} from 'react';
 import api_functions from '../api';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UnauthenticatedHome, {About} from './normal_home';
 import {User} from './user/user';
+import {AppContext} from '../state';
 
-export default class UserContext extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            logged_in : false,
-            email : ''
-        }
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
-        this.renew_token = this.renew_token.bind(this);
+export default function UserContext() {
+    const [user,setUser] = useContext(AppContext);
+
+    function login(email) {
+        setUser({email : email, loggedIn : true});
     }
 
-    renew_token() {
-        let options = api_functions.method_get();
-        fetch(api_functions.get_api() + "/auth/renew/token",options)
-        .then((api_call) => {
-            if(api_call.status === 200) {
-                this.login();
-            }
-        }).catch((e) => {
-            console.error(`Could not send through the request. error: ${e}`);
-        });
-    }
-
-    login(email) {
-        this.setState({logged_in : true, email : email});
-    }
-
-    logout() {
+    function logout() {
         fetch(api_functions.get_api() + "/auth/logout")
-        .then(() => this.setState({logged_in : false,email : ''}))
+        .then(() => setUser({email : '', loggedIn : false}))
         .catch((e) => console.error("Could not log out. Error: " + e));
     }
-
-    componentWillMount() {
-        this.renew_token();
-    }
     
-    render() {
-        if(!this.state.logged_in) {
+    function render() {
+        if(!user.loggedIn) {
             return (
                 <Router>
                     <div className="col-sm-10">
@@ -67,11 +43,10 @@ export default class UserContext extends React.Component {
                                 <About />
                             </Route>
                             <Route path="/">
-                                <UnauthenticatedHome login_callback={this.login}/>
+                                <UnauthenticatedHome login_callback={login}/>
                             </Route>
                         </Switch>
                     </div>
-                    <span className="font-weight-bold text-danger">{this.state.error}</span>
                 </Router>
             );
         }
@@ -94,7 +69,7 @@ export default class UserContext extends React.Component {
                         </div>
                     </nav>
                     <div className="div-inline-block">
-                        <button className="btn btn-primary" onClick={this.logout}>
+                        <button className="btn btn-primary" onClick={logout}>
                             Log Out
                         </button>
                     </div>
@@ -104,10 +79,12 @@ export default class UserContext extends React.Component {
                         <About />
                     </Route>
                     <Route path="/">
-                        <User email={this.state.email} logout={this.logout}/>
+                        <User email={user.email} logout={logout}/>
                     </Route>
                 </Switch>
             </Router>
         );
     }
+
+    return render();
 }

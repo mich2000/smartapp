@@ -60,3 +60,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working a bit on my react app: 25min
 * Working on my api and react app, finish up the auth service: 1h30
 * Learning to use the context api from react: 2h
+* Beginning to transition my session in my react app to more react hooks and context api management: 2h30

@@ -20,7 +20,6 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     HttpServer::new(move || {
         App::new()
-        .wrap(web_config::identity())
         .wrap(middleware::Logger::default())
         .wrap(middleware::Compress::new(ContentEncoding::Gzip))
         .wrap(web_config::cors())
@@ -28,6 +27,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         .data(redis_pool.clone())
         .data(mailgang::mailer_gang::Mailer::default())
         .data(jwt_config.clone())
+        .wrap(web_config::identity())
         .service(
             web::scope("/request")
                 .service(controllers::request::request_new_user)

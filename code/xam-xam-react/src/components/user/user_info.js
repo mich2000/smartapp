@@ -1,11 +1,13 @@
 import api_functions from '../../api';
-import React, { useState,useEffect }  from 'react';
+import React, { useState,useEffect,useContext }  from 'react';
+import {AppContext} from '../../state';
 
 export function UserInfo(props) {
     const [amount_prod,SetAmountProd] = useState(0);
     const [amount_stor,SetAmountStor] = useState(0);
     const [min_date,SetMinDate] = useState(null);
     const [max_date,SetMaxDate] = useState(null);
+    const [user,setUser] = useContext(AppContext);
 
     useEffect(() => {
         let options = api_functions.method_get();
@@ -19,6 +21,7 @@ export function UserInfo(props) {
                     SetMinDate(json.min_bederf);
                     SetMaxDate(json.max_bederf);
                     props.changeEmail(json.email);
+                    setUser({email:json.email, loggedIn : user.loggedIn})
                 })
                 .catch((e) => console.error(`Could not send through the request. error: ${e}`));
             } else {
@@ -26,7 +29,7 @@ export function UserInfo(props) {
             }
         })
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-    })
+    }, [])
 
     return (
         <div>
@@ -38,14 +41,18 @@ export function UserInfo(props) {
                 <dt>Amount of products</dt>
                 <dd>{amount_prod}</dd>
             </div>
-            <div>
-                <dt>Maximal peremption date</dt>
-                <dd>{max_date || "none"}</dd>
-            </div>
-            <div>
-                <dt>Minimal peremption date</dt>
-                <dd>{min_date || "none"}</dd>
-            </div>
+            { (amount_prod !== 0) && 
+                <div>
+                    <div>
+                        <dt>Maximal peremption date</dt>
+                        <dd>{max_date}</dd>
+                    </div>
+                    <div>
+                        <dt>Minimal peremption date</dt>
+                        <dd>{min_date}</dd>
+                    </div>
+                </div>
+            }
         </div>
     );
 }

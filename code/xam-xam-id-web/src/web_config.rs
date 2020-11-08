@@ -14,9 +14,10 @@ use actix_identity::{CookieIdentityPolicy, IdentityService};
 pub fn identity() -> IdentityService<CookieIdentityPolicy> {
     IdentityService::new(
         CookieIdentityPolicy::new(&[0; 32])
-              .name("Authorization")
-              .secure(true)
-              .http_only(true)
+            .name("Authorization")
+            .max_age(60)
+            .secure(true)
+            .http_only(true)
     )
 }
 

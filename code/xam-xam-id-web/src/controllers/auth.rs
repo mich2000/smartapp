@@ -62,7 +62,8 @@ pub async fn renew_token(session : Identity, jwt_config : Data<ClaimConfiguratio
     };
     let jwt_claim = jwt_config.as_ref().create_claim(&user_id_token.to_string())?;
     let token = jwt_config.token_from_claim(&jwt_claim)?;
-    session.remember(Bearer::new(token).token().to_owned().as_ref().to_string());
+    let new_token = Bearer::new(token).token().to_owned().as_ref().to_string();
+    session.remember(new_token.to_owned());
     Ok(HttpResponse::Ok().finish())
 }
 

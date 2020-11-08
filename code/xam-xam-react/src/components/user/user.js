@@ -1,12 +1,15 @@
-import React, { useState }  from 'react';
+import React, { useState,useContext, useEffect }  from 'react';
 import {UserInfo} from './user_info';
 import {ChangeEmail} from './change_email';
 import {ChangePwd} from './change_pwd';
 import {DeleteProfile} from './delete_profile';
+import api_functions from '../../api';
+import {AppContext} from '../../state';
 
 export function User(props) {
     const [email,setEmail] = useState(props.email);
     const [message,setMessage] = useState({msg : '', error : false});
+    const [user,setUser] = useContext(AppContext);
 
     function set_message(msg,error) {
         setMessage({msg:msg,error:error})
@@ -15,6 +18,19 @@ export function User(props) {
     function changeEmail(new_email) {
         setEmail(new_email);
     }
+
+    useEffect(() =>{
+        let options = api_functions.method_get();
+        fetch(api_functions.get_api() + "/auth/renew/token",options)
+        .then((api_call) => {
+            if(api_call.status === 200) {
+                setUser({email : user.email, loggedIn: true})
+            } else {
+                console.log(api_call.body)
+            }
+        })
+        .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+    },[])
 
     return (
         <div>
