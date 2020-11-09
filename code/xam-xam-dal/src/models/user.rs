@@ -1,22 +1,22 @@
-use crate::schema::*;
 use crate::err::XamXamError;
-use bcrypt::{DEFAULT_COST, hash, verify};
+use crate::schema::*;
+use bcrypt::{hash, verify, DEFAULT_COST};
 
 /**
  * Struct that represents the basic user. This form of user is very simple.
 */
-#[derive(Debug,Queryable, Identifiable,Insertable)]
+#[derive(Debug, Queryable, Identifiable, Insertable)]
 #[table_name = "users"]
 pub struct User {
     pub id: i32,
-    pub email : String,
-    pub password_hash : String,
+    pub email: String,
+    pub password_hash: String,
 }
 
 impl User {
-    pub fn verify_pwd(&self, pwd : &str) -> Result<bool, XamXamError> {
+    pub fn verify_pwd(&self, pwd: &str) -> Result<bool, XamXamError> {
         if pwd.is_empty() {
-            return Ok(false)
+            return Ok(false);
         }
         Ok(verify(pwd, &self.password_hash)?)
     }
@@ -25,11 +25,11 @@ impl User {
 /**
  * Struct that will be inserted in the database.
  */
-#[derive(Insertable,Debug)]
+#[derive(Insertable, Debug)]
 #[table_name = "users"]
 pub struct InsertableUser {
-    pub email : String,
-    pub password_hash : String
+    pub email: String,
+    pub password_hash: String,
 }
 
 impl InsertableUser {
@@ -40,25 +40,23 @@ impl InsertableUser {
      * * email isn't in the right format
      * * Hashing of password fails
      */
-    pub fn new(email : &str, pwd : &str) -> Result<InsertableUser, XamXamError> {
+    pub fn new(email: &str, pwd: &str) -> Result<InsertableUser, XamXamError> {
         if email.is_empty() {
-            return Err(XamXamError::EmailIsEmpty)
+            return Err(XamXamError::EmailIsEmpty);
         }
         if pwd.is_empty() {
-            return Err(XamXamError::PasswordIsEmpty)
+            return Err(XamXamError::PasswordIsEmpty);
         }
         if !xam_xam_common::util::control_email(email) {
-            return Err(XamXamError::EmailNotCorrectFormat)
+            return Err(XamXamError::EmailNotCorrectFormat);
         }
-        let hashed_pwd : String = match hash(pwd, DEFAULT_COST) {
+        let hashed_pwd: String = match hash(pwd, DEFAULT_COST) {
             Ok(hash) => hash,
-            Err(_) => return Err(XamXamError::PasswordCannotBeMade) 
+            Err(_) => return Err(XamXamError::PasswordCannotBeMade),
         };
-        Ok(
-            InsertableUser {
-                email : email.to_string(),
-                password_hash :  hashed_pwd,
-            }
-        )
+        Ok(InsertableUser {
+            email: email.to_string(),
+            password_hash: hashed_pwd,
+        })
     }
 }

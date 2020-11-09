@@ -1,12 +1,15 @@
-use rustls::{NoClientAuth, ServerConfig, internal::pemfile::{certs, pkcs8_private_keys}};
-use std::fs::File;
-use std::io::BufReader;
 use actix_cors::Cors;
+use actix_identity::{CookieIdentityPolicy, IdentityService};
 use log::LevelFilter;
 use log4rs::append::console::ConsoleAppender;
-use log4rs::encode::pattern::PatternEncoder;
 use log4rs::config::{Appender, Config, Root};
-use actix_identity::{CookieIdentityPolicy, IdentityService};
+use log4rs::encode::pattern::PatternEncoder;
+use rustls::{
+    internal::pemfile::{certs, pkcs8_private_keys},
+    NoClientAuth, ServerConfig,
+};
+use std::fs::File;
+use std::io::BufReader;
 
 /**
  * Function that initializes an IdentityService
@@ -17,7 +20,7 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
             .name("Authorization")
             .max_age(60)
             .secure(true)
-            .http_only(true)
+            .http_only(true),
     )
 }
 
@@ -26,8 +29,8 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
  */
 pub fn cors() -> Cors {
     Cors::permissive()
-    .max_age(60)
-    .allowed_methods(vec!["POST","PUT","DELETE","GET"])
+        .max_age(60)
+        .allowed_methods(vec!["POST", "PUT", "DELETE", "GET"])
 }
 
 /**
@@ -49,16 +52,19 @@ pub fn tls_config() -> ServerConfig {
 pub fn log_init() -> Result<(), Box<dyn std::error::Error>> {
     log4rs::init_config(
         Config::builder()
-        .appender(Appender::builder().build("stdout", Box::new(
-            ConsoleAppender::builder()
-                .encoder(Box::new(PatternEncoder::new("{l}: {d(%Y-%m-%d %H:%M:%S)} => {m}{n}")))
-                .build()
-        )))
-        .build(
-            Root::builder()
-                .appender("stdout")
-                .build(LevelFilter::Info)
-        )?
+            .appender(
+                Appender::builder().build(
+                    "stdout",
+                    Box::new(
+                        ConsoleAppender::builder()
+                            .encoder(Box::new(PatternEncoder::new(
+                                "{l}: {d(%Y-%m-%d %H:%M:%S)} => {m}{n}",
+                            )))
+                            .build(),
+                    ),
+                ),
+            )
+            .build(Root::builder().appender("stdout").build(LevelFilter::Info))?,
     )?;
     Ok(())
 }

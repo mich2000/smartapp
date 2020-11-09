@@ -35,8 +35,4 @@ table! {
 joinable!(products -> storages (storage_id));
 joinable!(storages -> users (user_id));
 
-allow_tables_to_appear_in_same_query!(
-    products,
-    storages,
-    users,
-);
+allow_tables_to_appear_in_same_query!(products, storages, users,);

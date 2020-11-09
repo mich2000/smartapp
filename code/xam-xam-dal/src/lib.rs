@@ -1,13 +1,15 @@
 mod enums;
 
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
-#[macro_use] pub extern crate diesel;
-pub mod schema;
-pub mod models;
-pub mod err;
-pub mod repo;
+#[macro_use]
+pub extern crate diesel;
 pub mod basic_user_info;
+pub mod err;
+pub mod models;
+pub mod repo;
+pub mod schema;
 
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager;
@@ -18,10 +20,10 @@ pub type PgCon = r2d2::PooledConnection<diesel::r2d2::ConnectionManager<diesel::
 
 /**
  * Code I got from this website: https://github.com/lucperkins/rust-graphql-juniper-actix-diesel-postgres/blob/master/src/db.rs
- * 
+ *
  * returns a pool that I can use, for my postgresql connections.
  */
-pub fn get_pool(url : &str, max_connections : u32) -> PostgresPool {
+pub fn get_pool(url: &str, max_connections: u32) -> PostgresPool {
     let mgr = ConnectionManager::<PgConnection>::new(url);
     r2d2::Pool::builder()
         .max_size(max_connections)
