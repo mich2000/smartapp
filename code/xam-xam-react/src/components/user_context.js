@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UnauthenticatedHome, {About} from './normal_home';
 import {User} from './user/user';
 import {AppContext} from '../state';
+import {Storage} from './storage/storage';
 
 export default function UserContext() {
     const [user,setUser] = useContext(AppContext);
@@ -23,9 +24,20 @@ export default function UserContext() {
             fetch(api_functions.get_api() + "/auth/validate",api_functions.method_get())
             .then((api_call) => {
                 if(api_call.status === 200) {
-                    setUser({email : user.email, loggedIn: true})
+                    setUser({email : user.email, loggedIn: true});
+                    fetch(api_functions.get_api() + "/auth/renew/token",api_functions.method_get())
+                    .then((api_call) => {
+                        if(api_call.status !== 200) {
+                            api_call.text()
+                            .then((text) => console.log(text))
+                            .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+                        }
+                    })
+                    .catch((e) => console.error(`Could not send through the request. error: ${e}`));
                 } else {
-                    console.log(api_call.body)
+                    api_call.text()
+                    .then((text) => console.log(text))
+                    .catch((e) => console.error(`Could not send through the request. error: ${e}`));
                 }
             })
             .catch((e) => console.error(`Could not send through the request. error: ${e}`));
@@ -77,6 +89,9 @@ export default function UserContext() {
                                     <Link className="nav-link" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
+                                    <Link className="nav-link" to="/storage">Storage</Link>
+                                </li>
+                                <li className="nav-item">
                                     <Link className="nav-link" to="/about">About</Link>
                                 </li>
                             </ul>
@@ -89,6 +104,9 @@ export default function UserContext() {
                     </div>
                 </div>
                 <Switch>
+                    <Route path="/storage">
+                        <Storage/>
+                    </Route>
                     <Route path="/about">
                         <About />
                     </Route>

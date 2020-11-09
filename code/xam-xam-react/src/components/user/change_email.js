@@ -7,7 +7,7 @@ import {AppContext} from '../../state';
 export function ChangeEmail(props) {
     const [emailInput,setEmailInput] = useState('');
     const [token, setToken] = useState('');
-    const [user,setUser] = useContext(AppContext);
+    const [,setUser] = useContext(AppContext);
 
     function send_request(input){
         if(!email.control_email(input)) {

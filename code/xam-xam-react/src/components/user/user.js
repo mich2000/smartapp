@@ -1,9 +1,8 @@
-import React, { useState,useContext, useEffect }  from 'react';
+import React, { useState, useContext }  from 'react';
 import {UserInfo} from './user_info';
 import {ChangeEmail} from './change_email';
 import {ChangePwd} from './change_pwd';
 import {DeleteProfile} from './delete_profile';
-import api_functions from '../../api';
 import {AppContext} from '../../state';
 
 export function User(props) {
@@ -18,23 +17,11 @@ export function User(props) {
         setUser({email : new_email,loggedIn : true});
     }
 
-    useEffect(() =>{
-        fetch(api_functions.get_api() + "/auth/renew/token",api_functions.method_get())
-        .then((api_call) => {
-            if(api_call.status === 200) {
-                console.log('Token has been renewed');
-            } else {
-                console.log(api_call.body)
-            }
-        })
-        .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-    },[])
-
     return (
         <div>
             <h2>{user.email}</h2>
             {
-                (message.msg !== '' && message.error) && <span className="font-weight-bold text-danger">{message.msg}</span> || <span className="font-weight-bold text-success">{message.msg}</span>
+                (message.msg !== '' && message.error)? <span className="font-weight-bold text-danger">{message.msg}</span> : <span className="font-weight-bold text-success">{message.msg}</span>
             }
             <div id="accordion" className="col-sm-8 m-3">
                 <div className="card">

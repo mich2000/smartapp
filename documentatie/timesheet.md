@@ -62,3 +62,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Learning to use the context api from react: 2h
 * Beginning to transition my session in my react app to more react hooks and context api management: 2h30
 * Working on state management within my react app, and working a bit on the cors side of my web api: 2h25
+* Working on my react app and converting a class to function: 50min

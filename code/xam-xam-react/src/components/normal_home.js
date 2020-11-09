@@ -1,4 +1,4 @@
-import React, {useState,useContext,useff} from 'react';
+import React, {useState,useContext} from 'react';
 import Registration from './user/registration';
 import {Login} from './user/login';
 import api_functions from '../api';
@@ -27,7 +27,7 @@ export default function UnauthenticatedHome() {
         fetch(api_functions.get_api() + "/auth/login",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                setUser({email : login_params.email, loggedIn : true});
+                setUser({email : login_params.email, loggedIn : user.loggedIn});
             } else {
                 api_call.text()
                 .then(err => setError(err,true));
@@ -40,7 +40,7 @@ export default function UnauthenticatedHome() {
             <h1>xam-xam</h1>
             <span className="font-weight-bold text-danger">{error.msg}</span>
             {
-                (error.msg !== '' && error.error) && <span className="font-weight-bold text-danger">{this.state.message}</span> || <span className="font-weight-bold text-success">{error.msg}</span>
+                (error.msg !== '' && error.error) ? <span className="font-weight-bold text-danger">{this.state.message}</span> : <span className="font-weight-bold text-success">{error.msg}</span>
             }
             <div id="accordion" className="col-sm-8 m-3">
                 <div className="card">
