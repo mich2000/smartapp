@@ -20,7 +20,7 @@ export default function Registration(props) {
             log_msg("Password cannot be empty",false);
             return false;
         }
-        if(registrationForm.confirmed_password !== registrationForm.password) {
+        if(registrationForm.password_confirm !== registrationForm.password) {
             log_msg("Password and confirm password aren't the same.",false);
             return false;
         }
@@ -42,14 +42,15 @@ export default function Registration(props) {
         });
         fetch(api_functions.get_api() + "/request/new/user", opties)
         .then((api_call) => {
-            api_call.json()
-            .then((json_obj) => {
-                if(api_call.status === 200) {
-                    log_msg("Token has been sent to your email account😀.",false);
-                } else {
-                    log_msg(json_obj.error,true);
-                }
-            });
+            if(api_call.status === 200) {
+                log_msg("Token has been sent to your email account😀.",false);
+            } else {
+                api_call.text()
+                .then(text =>log_msg(text,true))
+                .catch(() => {
+                    log_msg("Could not send through the request.");
+                });
+            }
         }).catch(() => {
             log_msg("Could not send through the request.");
         });
@@ -62,11 +63,12 @@ export default function Registration(props) {
             return;
         }
         let opties = api_functions.method_post();
+        opties.credentials='omit';
         opties.body = JSON.stringify({
-            email : registration.email,
-            token : registration.token,
-            password : registration.password,
-            password_confirm : registration.confirmed_password
+            email : registrationForm.email,
+            token : registrationForm.token,
+            password : registrationForm.password,
+            password_confirm : registrationForm.password_confirm
         });
         fetch(api_functions.get_api() + "/auth/register", opties)
         .then((api_call) => {
@@ -88,7 +90,7 @@ export default function Registration(props) {
         <div>
             <div className="m-3">
                 <h2>Send token creation😀</h2>
-                <InputWithButton name="Submit" type="email" valuePlaceholder="Email registration to get token" input_callback={(event,value) => send_request(event, value)}/>
+                <InputWithButton name="Submit" type="email" valuePlaceholder="Email registration to get token" input_callback={(value) => send_request(value)}/>
             </div>
             <form onSubmit={(e) => registration(e)}>
                 <h2>Registration</h2>

@@ -40,7 +40,7 @@ export default function UnauthenticatedHome() {
             <h1>xam-xam</h1>
             <span className="font-weight-bold text-danger">{error.msg}</span>
             {
-                (error.msg !== '' && error.error) ? <span className="font-weight-bold text-danger">{this.state.message}</span> : <span className="font-weight-bold text-success">{error.msg}</span>
+                (error.msg !== '' && error.error) ? <span className="font-weight-bold text-danger">{error.msg}</span> : <span className="font-weight-bold text-success">{error.msg}</span>
             }
             <div id="accordion" className="col-sm-8 m-3">
                 <div className="card">

@@ -15,6 +15,7 @@ export function ChangePwd(props) {
             return;
         }
         let options = api_functions.method_put();
+        console.log(props.email);
         options.headers.Authorization = `Basic ${btoa(props.email + ':' + currentPwd)}`;
         options.body = JSON.stringify({
             password : newPwd,
