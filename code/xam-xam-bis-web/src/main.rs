@@ -2,6 +2,7 @@ mod db;
 mod err;
 mod user_id;
 mod web_config;
+mod controllers;
 
 #[macro_use] extern crate log;
 
@@ -27,6 +28,9 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .data(pg_pool.clone())
             .data(jwt_config.clone())
             .wrap(web_config::identity())
+            .service(controllers::storage::add_storage)
+            .service(controllers::storage::delete_storage)
+            .service(controllers::storage::get_storages)
             .default_service(web::route().to(web::HttpResponse::NotFound))
     })
     .bind_rustls("0.0.0.0:8080", web_config::tls_config())?
