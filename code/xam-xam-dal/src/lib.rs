@@ -1,5 +1,3 @@
-mod enums;
-
 #[macro_use]
 extern crate log;
 
@@ -10,6 +8,7 @@ pub mod err;
 pub mod models;
 pub mod repo;
 pub mod schema;
+pub mod enums;
 
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager;

@@ -1,0 +1,14 @@
+[package]
+name = "xam-xam-bis-bll"
+version = "0.1.0"
+authors = ["Michael Hertsens <michael28072000@outlook.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4.0"
+xam-xam-dal = { path = "../xam-xam-dal" }
+xam-xam-common={ path="../xam-xam-common" }
+chrono = {version="0.4",features=["serde"]}
