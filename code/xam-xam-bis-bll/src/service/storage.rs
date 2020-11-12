@@ -23,7 +23,7 @@ pub fn add_storage(
 ) -> Result<(), XamXamServiceError> {
     storage::insert_storage(
         conn,
-        &InsertableStorage::new(user_id, model.get_name(), Some(model.get_kind()))?,
+        &InsertableStorage::new(user_id, model.get_name(), model.get_kind())?,
     )?;
     info!("A new storage has been added.");
     Ok(())

@@ -1,4 +1,6 @@
 let api = 'https://localhost:8080';
+let business_api = 'https://localhost:8081';
+
 //basic options for every api fetch call
 let basic_options = function() {
     return {
@@ -15,6 +17,9 @@ let basic_options = function() {
 const api_functions = {
     get_api() {
         return api.toString();
+    },
+    get_business_api() {
+        return business_api.toString();
     },
     method_get() {
         return basic_options();

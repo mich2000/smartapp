@@ -40,3 +40,7 @@ These are sources I used and researched to be able to make my project.
 * Javascript documentation to set an confirm prompt to an user: https://www.w3schools.com/jsref/met_win_confirm.asp
 * Javascript documentation to set an input prompt to an user: https://www.w3schools.com/jsref/met_win_prompt.asp
 * Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182
+* React modal package to make dialog windows: https://www.npmjs.com/package/react-modal
+* Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
+* React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
+* React popup article: https://react-popup.elazizi.com/react-modal/

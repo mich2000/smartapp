@@ -44,7 +44,7 @@ impl InsertableStorage {
     pub fn new(
         user_id: i32,
         storage_name: &str,
-        storage_kind: Option<StorageKind>,
+        new_storage_kind: StorageKind,
     ) -> Result<InsertableStorage, XamXamError> {
         if storage_name.is_empty() {
             return Err(XamXamError::StorageNameIsEmpty);
@@ -52,7 +52,7 @@ impl InsertableStorage {
         Ok(Self {
             user_id,
             name: storage_name.to_string(),
-            storage_kind: storage_kind.unwrap_or(StorageKind::Other),
+            storage_kind: new_storage_kind
         })
     }
 }

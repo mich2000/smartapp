@@ -4,7 +4,7 @@ use xam_xam_dal::enums::storage_kind::StorageKind;
 #[derive(Serialize, Deserialize)]
 pub struct NewStorage {
     name: String,
-    kind: Option<StorageKind>,
+    kind: StorageKind
 }
 
 impl NewStorage {
@@ -13,9 +13,6 @@ impl NewStorage {
     }
 
     pub fn get_kind(&self) -> StorageKind {
-        match self.kind.clone() {
-            Some(storage) => storage,
-            None => StorageKind::Other,
-        }
+        self.kind.clone()
     }
 }

@@ -10,5 +10,5 @@ pub enum StorageKind {
     Other,
     Closet,
     Fridge,
-    Freezer,
+    Freezer
 }
