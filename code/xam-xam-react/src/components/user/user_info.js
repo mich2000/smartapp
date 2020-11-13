@@ -15,8 +15,8 @@ export function UserInfo() {
             if(api_call.status === 200) {
                 api_call.json()
                 .then(json => {
-                    SetAmountProd(json.amount_storage);
-                    SetAmountStor(json.amount_product);
+                    SetAmountProd(json.amount_product);
+                    SetAmountStor(json.amount_storage);
                     SetMinDate(json.min_bederf);
                     SetMaxDate(json.max_bederf);
                     if(json.email !== user.email) { 

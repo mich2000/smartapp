@@ -44,3 +44,4 @@ These are sources I used and researched to be able to make my project.
 * Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
 * React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
 * React popup article: https://react-popup.elazizi.com/react-modal/
+* Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter

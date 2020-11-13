@@ -13,16 +13,15 @@ use crate::PgCon;
 pub fn insert_storage(conn: &PgCon, storage: &InsertableStorage) -> Result<(), XamXamError> {
     match diesel::insert_into(storages)
         .values(storage)
-        .get_result::<Storage>(conn)
+        .execute(conn)
     {
-        Ok(inserted_storage) => {
-            info!(
-                "The storage {} has been added to the user with id {}",
-                &inserted_storage.name, &inserted_storage.user_id
-            );
+        Ok(_) => {
             Ok(())
         }
-        Err(e) => Err(e.into()),
+        Err(e) => {
+            error!("{}",&e);
+            Err(e.into())
+        },
     }
 }
 

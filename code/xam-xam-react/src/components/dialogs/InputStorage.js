@@ -1,16 +1,31 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
 
-export function InputStorageDialog(props) {
+export const InputStorageDialog = (props) => {
     const types = Object.freeze({
-        Other : 'other',
-        Closet : 'closet',
-        Fridge : 'fridge',
-        Freezer : 'freezer'
+        Other : 'Other',
+        Closet : 'Closet',
+        Fridge : 'Fridge',
+        Freezer : 'Freezer'
     });
     const [name, setName] = useState('');
     const [type, setType] = useState(types.Other);
+
+    useEffect(() => {
+        fetch(api_functions.get_business_api() + '/storages', api_functions.method_get())
+        .then((api_call) => {
+            if(api_call.status === 200) {
+                api_call.json()
+                .then((json) => props.set_storage_list(json.storages))
+                .catch((e) => {
+                    console.error(`Could not send through the request. error: ${e}`);
+                });
+            }
+        }).catch((e) => {
+            console.error(`Could not send through the request. error: ${e}`);
+        });
+    },[])
 
     function add_storage(event) {
         event.preventDefault();
@@ -19,7 +34,6 @@ export function InputStorageDialog(props) {
             alert("A name cannot be empty.");
             return;
         }
-        console.log('buton');
         let options = api_functions.method_post();
         options.body = JSON.stringify({
             name: name,
@@ -28,15 +42,12 @@ export function InputStorageDialog(props) {
         fetch(api_functions.get_business_api() + '/storage', options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                console.log("A storage has been added");
                 props.add_storage({
                     name: name,
                     kind: type
                 });
-                setType({
-                    name: '',
-                    kind: types.Other
-                });
+                setType(types.Other);
+                setName('');
             }
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
@@ -44,7 +55,7 @@ export function InputStorageDialog(props) {
     }
 
     return (
-        <Popup trigger={<button className="button"> Open Modal </button>} modal nested>
+        <Popup trigger={<button className="btn btn-primary modal-input">Add storage</button>} modal nested>
             {
                 close => (
                     <div className="modal-dialog">

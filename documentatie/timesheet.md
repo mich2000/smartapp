@@ -67,3 +67,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my web layer and beginning with my business service and api for my storages and products: 1h15
 * Working on my business and web business micro service: 1h
 * Working on my storage logic and storage dialogs: 4h
+* Working on my react application, to add and remove storages: 4h

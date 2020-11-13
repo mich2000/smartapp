@@ -21,10 +21,10 @@ pub fn add_storage(
     user_id: i32,
     model: &NewStorage,
 ) -> Result<(), XamXamServiceError> {
-    storage::insert_storage(
+    error!("{:?}",storage::insert_storage(
         conn,
         &InsertableStorage::new(user_id, model.get_name(), model.get_kind())?,
-    )?;
+    )?);
     info!("A new storage has been added.");
     Ok(())
 }

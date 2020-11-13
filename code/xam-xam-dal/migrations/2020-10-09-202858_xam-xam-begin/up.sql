@@ -14,7 +14,7 @@ CREATE TABLE "storages" (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
-    storage_kind StorageKind NOT NULL DEFAULT 'other',
+    storage_kind StorageKind NOT NULL,
     UNIQUE (user_id,name)
 );
 
@@ -24,6 +24,6 @@ CREATE TABLE "products"(
     name TEXT NOT NULL,
     amount SMALLINT NOT NULL CHECK(amount > 0),
     peremption_date DATE NOT NULL,
-    product_kind ProductKind NOT NULL DEFAULT 'other',
+    product_kind ProductKind NOT NULL,
     UNIQUE (id,name)
 );
