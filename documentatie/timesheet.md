@@ -68,3 +68,7 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my business and web business micro service: 1h
 * Working on my storage logic and storage dialogs: 4h
 * Working on my react application, to add and remove storages: 4h
+
+## Week 7
+
+* Working on my react layout: 2h

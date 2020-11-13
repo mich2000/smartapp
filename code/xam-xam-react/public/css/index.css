@@ -1,0 +1,15 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size:1.6rem;
+}
+
+.btn,.form-control {
+    font-size:1.6rem;
+}
+
+.badge {
+    font-size: 1.8rem;
+}

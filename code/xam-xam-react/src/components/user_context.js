@@ -50,7 +50,8 @@ export default function UserContext() {
                 <Router>
                     <div className="col-sm-10">
                         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <button className="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNav">
@@ -79,7 +80,7 @@ export default function UserContext() {
         return (
             <Router>
                 <div className="col-sm-10">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
@@ -95,23 +96,25 @@ export default function UserContext() {
                                     <Link className="nav-link" to="/about">About</Link>
                                 </li>
                             </ul>
+                            <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <a className="nav-link" onClick={logout}>
+                                        Log Out {user.email}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </nav>
-                    <div className="div-inline-block">
-                        <button className="btn btn-primary" onClick={logout}>
-                            Log Out
-                        </button>
-                    </div>
                 </div>
                 <Switch>
                     <Route path="/storage">
-                        <Storage/>
+                        <Storage className="col-sm-10"/>
                     </Route>
                     <Route path="/about">
-                        <About />
+                        <About className="col-sm-10" />
                     </Route>
                     <Route path="/">
-                        <User email={user.email} logout={logout}/>
+                        <User className="col-sm-10" email={user.email} logout={logout}/>
                     </Route>
                 </Switch>
             </Router>

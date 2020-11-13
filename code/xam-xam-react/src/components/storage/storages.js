@@ -26,7 +26,7 @@ export const Storages = (props) => {
             <ul className="list-style-none d-flex flex-wrap mb-n2">
                 {props.storages.map((item, i) => {
                     return (
-                        <li className="mb-2 mr-2 tag-li-user badge badge-pill badge-info" key={i}>
+                        <li className="mb-2 mr-2 tag-li-user badge badge-pill badge-info big-text" key={i}>
                             {item[0]} - {item[1]}
                             <Popup trigger={<button className="badge badge-pill badge-danger m-2" value={item} type="button">X</button>}
                             modal nested>
