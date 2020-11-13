@@ -61,8 +61,8 @@ export const InputStorageDialog = (props) => {
                     <div className="modal-dialog">
                         <div className="modal-header">Add storage</div>
                         <div className="modal-content">
-                            <input className="modal-input" type="text" value={name} placeholder="Enter the storage name" onChange={(e) => setName(e.target.value)}/>
-                            <select className="modal-input" value={type} onChange={(e) => setType(e.target.value)}>
+                            <input className="modal-input form-control" type="text" value={name} placeholder="Enter the storage name" onChange={(e) => setName(e.target.value)}/>
+                            <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
                                 {Object.keys(types).map(key => (
                                     <option key={key} value={key}>
                                         {types[key]}

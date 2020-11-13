@@ -1,13 +1,11 @@
 import api_functions from '../../api';
-import React, { useState,useEffect,useContext }  from 'react';
-import {AppContext} from '../../state';
+import React, { useState,useEffect }  from 'react';
 
 export function UserInfo() {
     const [amount_prod,SetAmountProd] = useState(0);
     const [amount_stor,SetAmountStor] = useState(0);
     const [min_date,SetMinDate] = useState(null);
     const [max_date,SetMaxDate] = useState(null);
-    const [user,setUser] = useContext(AppContext);
 
     useEffect(() => {
         fetch(api_functions.get_api() + "/user/basic/info",api_functions.method_get())
@@ -19,17 +17,14 @@ export function UserInfo() {
                     SetAmountStor(json.amount_storage);
                     SetMinDate(json.min_bederf);
                     SetMaxDate(json.max_bederf);
-                    if(json.email !== user.email) { 
-                        setUser({email : json.email, loggedIn : user.loggedIn});
-                    }
                 })
                 .catch((e) => console.error(`Could not send through the request. error: ${e}`));
             } else {
                 console.log(api_call.body)
             }
-        },[setUser])
+        })
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-    })
+    },[])
 
     return (
         <div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import api_functions from '../../api';
-import Popup from 'reactjs-popup';
+import {DeleteStoragePopup} from './delete_storage';
 
 export const Storages = (props) => {
     function delete_storage(event) {
@@ -28,23 +28,7 @@ export const Storages = (props) => {
                     return (
                         <li className="mb-2 mr-2 tag-li-user badge badge-pill badge-info big-text" key={i}>
                             {item[0]} - {item[1]}
-                            <Popup trigger={<button className="badge badge-pill badge-danger m-2" value={item} type="button">X</button>}
-                            modal nested>
-                                {
-                                    close =>
-                                    <div className="modal-dialog">
-                                        <div className="modal-header">Are you sure to remove a storage? </div>
-                                        <div className="modal-content">
-                                            <button className="btn btn-primary modal-input" value={item[0]}
-                                            onClick={(e) => {
-                                                delete_storage(e);
-                                                close();}}>
-                                                Remove {item[0]}
-                                            </button>
-                                        </div>
-                                    </div>
-                                }
-                            </Popup>
+                            <DeleteStoragePopup delete_storage={(e) => delete_storage(e)} item={item}/>
                         </li>
                     );
                 })}

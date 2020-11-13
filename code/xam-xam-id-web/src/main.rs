@@ -48,7 +48,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
                     .service(controllers::auth::logout)
                     .service(controllers::auth::renew_token)
                     .service(controllers::auth::change_forgotten_pwd)
-                    .service(controllers::auth::validate),
+                    .service(controllers::auth::validate)
+                    .service(controllers::auth::get_email),
             )
             .service(
                 web::scope("/user")

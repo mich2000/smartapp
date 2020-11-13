@@ -72,3 +72,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 7
 
 * Working on my react layout: 2h
+* Working on my auth web service and my react app: 1h30

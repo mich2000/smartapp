@@ -8,6 +8,7 @@ use actix_web_httpauth::headers::authorization::Bearer;
 use jwt_gang::claim_config::ClaimConfiguration;
 use xam_xam_id_bll::auth_service;
 use xam_xam_id_bll::viewmodels::forgot_pwd::ForgottenPassword;
+use xam_xam_id_bll::viewmodels::email::EmailHolder;
 use xam_xam_id_bll::viewmodels::new_user::NewUser;
 use xam_xam_id_bll::{PgCon, RCon};
 
@@ -101,11 +102,9 @@ pub async fn renew_token(
         .to_owned();
     let user_id_token = match token_subject.parse::<i32>() {
         Ok(id) => id,
-        Err(_) => {
-            return Err(XamXamWebError::from(
-                "Could not parse string reference to i32",
-            ))
-        }
+        Err(_) => return Err(XamXamWebError::from(
+            "Could not parse string reference to i32",
+        ))
     };
     let jwt_claim = jwt_config
         .as_ref()
@@ -129,4 +128,29 @@ pub async fn change_forgotten_pwd(
     let mut r_conn: RCon = get_redis_conn(redis_db)?;
     auth_service::change_forgotten_pwd(&mut r_conn, &pg_conn, &model)?;
     Ok(HttpResponse::Ok().finish())
+}
+
+#[get("/email")]
+pub async fn get_email(
+    session: Identity,
+    pg: Data<PgPool>,
+    jwt_config: Data<ClaimConfiguration>
+) -> Result<HttpResponse, XamXamWebError> {
+    let jwt_token = match session.identity() {
+        Some(token) => token,
+        None => return Err(XamXamWebError::CredentialsNotPresent),
+    };
+    let token_subject = &jwt_config
+        .decode_token(&jwt_token)?
+        .claims
+        .get_subject()
+        .to_owned();
+    let user_id_token = match token_subject.parse::<i32>() {
+        Ok(id) => id,
+        Err(_) => return Err(XamXamWebError::from(
+            "Could not parse string reference to i32",
+        ))
+    };
+    let pg_conn: PgCon = get_pg_conn(pg)?;
+    Ok(HttpResponse::Ok().json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg_conn)?.into()))
 }

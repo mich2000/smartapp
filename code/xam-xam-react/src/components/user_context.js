@@ -20,29 +20,27 @@ export default function UserContext() {
     }
 
     useEffect(() => {
-        if(!user.loggedIn) {
-            fetch(api_functions.get_api() + "/auth/validate",api_functions.method_get())
-            .then((api_call) => {
-                if(api_call.status === 200) {
-                    setUser({email : user.email, loggedIn: true});
-                    fetch(api_functions.get_api() + "/auth/renew/token",api_functions.method_get())
-                    .then((api_call) => {
-                        if(api_call.status !== 200) {
-                            api_call.text()
-                            .then((text) => console.log(text))
-                            .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-                        }
-                    })
-                    .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-                } else {
-                    api_call.text()
-                    .then((text) => console.log(text))
-                    .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-                }
-            })
-            .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-        }
-    })
+        fetch(api_functions.get_api() + "/auth/validate",api_functions.method_get())
+        .then((api_call) => {
+            if(api_call.status === 200) {
+                setUser({email : user.email, loggedIn: true});
+                fetch(api_functions.get_api() + "/auth/renew/token",api_functions.method_get())
+                .then((api_call) => {
+                    if(api_call.status !== 200) {
+                        api_call.text()
+                        .then((text) => console.log(text))
+                        .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+                    }
+                })
+                .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+            } else {
+                api_call.text()
+                .then((text) => console.log(text))
+                .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+            }
+        })
+        .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+    },[])
 
     function render() {
         if(!user.loggedIn) {

@@ -236,6 +236,13 @@ pub fn get_basic_information(db_conn : &PgCon, user_id : i32) -> Result<BasicUse
 }
 
 /**
+ * ==================================================== GET EMAIL =============================================================
+*/
+pub fn get_email_from_id(user_id : i32, db_conn : &PgCon) -> Result<EmailHolder, XamXamServiceError> {
+    Ok(EmailHolder::from(user::get_email_by_id(db_conn, user_id)?))
+}
+
+/**
  * ================================================= DELETE PROFILE =======================================================s
  */
 pub fn delete_user(db_conn : &PgCon, email : &str, pwd : &str) -> Result<(),XamXamServiceError> {

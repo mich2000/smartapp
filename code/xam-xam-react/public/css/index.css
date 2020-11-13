@@ -13,3 +13,8 @@ body {
 .badge {
     font-size: 1.8rem;
 }
+
+.nav-link {
+    font-size: 2.3rem;
+    word-break: break-word;
+}
