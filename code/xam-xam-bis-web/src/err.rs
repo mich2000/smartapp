@@ -8,7 +8,6 @@ pub enum XamXamWebError {
     //Service related error
     ServiceError(XamXamServiceError),
     //DB related error
-    CouldNotGetRedisConnection,
     CouldNotGetPostGresConnection,
     //config related error
     JwtConfigIsNotThere,
@@ -24,9 +23,6 @@ impl fmt::Display for XamXamWebError {
             //Service
             XamXamWebError::ServiceError(err) => write!(f, "{}", err),
             //DB related error
-            XamXamWebError::CouldNotGetRedisConnection => {
-                write!(f, "Could not get the redis connection from the redis pool")
-            }
             XamXamWebError::CouldNotGetPostGresConnection => write!(
                 f,
                 "Could not get the postgres connection from the postgres pool"

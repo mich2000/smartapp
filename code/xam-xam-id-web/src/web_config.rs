@@ -1,5 +1,6 @@
 use actix_cors::Cors;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
+use xam_xam_common::util::get_value_from_key;
 use log::LevelFilter;
 use log4rs::append::console::ConsoleAppender;
 use log4rs::config::{Appender, Config, Root};
@@ -36,8 +37,8 @@ pub fn cors() -> Cors {
  * Tls configuration that is used to provide tls and https, this is important for security.
  */
 pub fn tls_config() -> ServerConfig {
-    let cert_file = &mut BufReader::new(File::open(dotenv::var("CERT_PATH").unwrap()).unwrap());
-    let key_file = &mut BufReader::new(File::open(dotenv::var("KEY_PATH").unwrap()).unwrap());
+    let cert_file = &mut BufReader::new(File::open(get_value_from_key("CERT_PATH").unwrap()).unwrap());
+    let key_file = &mut BufReader::new(File::open(get_value_from_key("KEY_PATH").unwrap()).unwrap());
     let cert_chain = certs(cert_file).unwrap();
     let mut keys = pkcs8_private_keys(key_file).unwrap();
     let mut config = ServerConfig::new(NoClientAuth::new());

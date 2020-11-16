@@ -111,7 +111,7 @@ pub async fn renew_token(
         .create_claim(&user_id_token.to_string())?;
     let token = jwt_config.token_from_claim(&jwt_claim)?;
     let new_token = Bearer::new(token).token().to_owned().as_ref().to_string();
-    session.remember(new_token.to_owned());
+    session.remember(new_token);
     Ok(HttpResponse::Ok().finish())
 }
 
@@ -152,5 +152,5 @@ pub async fn get_email(
         ))
     };
     let pg_conn: PgCon = get_pg_conn(pg)?;
-    Ok(HttpResponse::Ok().json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg_conn)?.into()))
+    Ok(HttpResponse::Ok().json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg_conn)?))
 }

@@ -6,8 +6,8 @@ pub struct EmailHolder {
 }
 
 impl From<String> for EmailHolder {
-    fn from(email : String) -> Self {
-        EmailHolder { email : email }
+    fn from(new_email : String) -> Self {
+        EmailHolder { email : new_email }
     }
 }
 

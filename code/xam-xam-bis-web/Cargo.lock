@@ -2446,7 +2446,6 @@ dependencies = [
  "actix-cors",
  "actix-identity",
  "actix-web",
- "dotenv",
  "futures-util",
  "jwt-gang",
  "log",
@@ -2460,6 +2459,7 @@ dependencies = [
 name = "xam-xam-common"
 version = "0.1.0"
 dependencies = [
+ "dotenv",
  "lazy_static",
  "rand",
  "regex",

@@ -16,3 +16,13 @@ static HEXA_ALPHABET : [char;16] = ['1', '2', '3', '4', '5', '6', '7', '8', '9',
 pub fn get_hash(amount : usize) -> String {
     (0..amount).map(|_| HEXA_ALPHABET[thread_rng().gen_range(0, HEXA_ALPHABET.len())] as char ).collect()
 }
+
+pub fn get_value_from_key(key : &str) -> Option<String> {
+    match dotenv::var(key){
+        Ok(value) => Some(value),
+        Err(_) => match std::env::var(key) {
+            Ok(env_value) => Some(env_value),
+            Err(_) => None
+        }
+    }
+}

@@ -8,15 +8,19 @@ mod controllers;
 
 use actix_web::{http::header::ContentEncoding, middleware, web, App, HttpServer};
 
-use xam_xam_bis_bll::{PgPool,PgCon,get_pg_pool};
+use xam_xam_bis_bll::{PgPool,get_pg_pool};
+
+use xam_xam_common::util::get_value_from_key;
+
+use crate::err::XamXamWebError;
 
 #[actix_web::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     web_config::log_init()?;
 
     let pg_pool: PgPool = get_pg_pool(
-        &dotenv::var("DATABASE_URL")?,
-        dotenv::var("DATABASE_NUM")?.parse()?,
+        &get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?,
+        get_value_from_key("DATABASE_NUM").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?.parse()?,
     );
     let jwt_config = jwt_gang::from_env_config("Jwt.toml")?;
 

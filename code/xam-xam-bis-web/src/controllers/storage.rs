@@ -1,8 +1,8 @@
 use crate::db::get_pg_conn;
 use crate::err::XamXamWebError;
 use crate::user_id::UserId;
-use crate::{PgPool,PgCon};
-use actix_web::{get, post, delete,put, web::Data, web::Json, HttpResponse};
+use crate::PgPool;
+use actix_web::{get, post, delete, web::Data, web::Json, HttpResponse};
 use xam_xam_bis_bll::viewmodels::new_storage::NewStorage;
 use xam_xam_bis_bll::viewmodels::storage_name::StorageName;
 use xam_xam_bis_bll::service::storage;
