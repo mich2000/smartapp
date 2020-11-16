@@ -28,7 +28,7 @@ export const AppProvider = (props) => {
             }
         })
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-    },[])
+    },[setUser])
 
     return <AppContext.Provider value ={[user,setUser]}>
         {props.children}

@@ -25,7 +25,7 @@ export const InputStorageDialog = (props) => {
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
         });
-    },[])
+    })
 
     function add_storage(event) {
         event.preventDefault();

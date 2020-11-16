@@ -45,3 +45,7 @@ These are sources I used and researched to be able to make my project.
 * React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
 * React popup article: https://react-popup.elazizi.com/react-modal/
 * Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+* Redis documentation for security: https://redis.io/topics/config
+* Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
+* Node development with HTTPS activated: https://create-react-app.dev/docs/using-https-in-development/
+* Service worker that is used to cache files: https://web.dev/offline-cookbook/

@@ -40,7 +40,7 @@ export default function UserContext() {
             }
         })
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-    },[])
+    },[user.email])
 
     function render() {
         if(!user.loggedIn) {
@@ -96,9 +96,9 @@ export default function UserContext() {
                             </ul>
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
-                                    <a className="nav-link" onClick={logout}>
+                                    <button className="btn btn-default" onClick={logout}>
                                         Log Out {user.email}
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

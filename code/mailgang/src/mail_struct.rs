@@ -10,7 +10,7 @@ pub struct Report {
 
 impl Report {
     pub fn new(recipient_email : &str, alias_name : &str, sub : &str, msg : &str) -> Result<Self, &'static str> {
-        if !crate::util::control_email(recipient_email) {
+        if !xam_xam_common::util::control_email(recipient_email) {
             warn!("Email does not have the correct format");
             return Err("Email does not have the correct format")
         }

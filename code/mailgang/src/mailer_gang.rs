@@ -1,8 +1,8 @@
 use lettre::{ SmtpTransport, Transport };
 use lettre::smtp::authentication::Credentials;
 use std::sync::Mutex;
+use xam_xam_common::util::get_value_from_key;
 use crate::mail_struct::Report;
-use crate::util::get_value_from_key;
 
 pub type MailTransport = Mutex<SmtpTransport>;
 
