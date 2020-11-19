@@ -20,8 +20,8 @@ export const Storage = () => {
     return (
         <div className="col-sm-10">
             <h2>Storages</h2>
-            <InputStorageDialog set_storage_list={(e) => add_storage_list(e)} add_storage={(e) => add_storage(e)}/>
-            <Storages storages={storages} remove_storage={(e) =>remove_storage(e)}/>
+            <InputStorageDialog set_storage_list={(e) => add_storage_list(e) } add_storage={(e) => add_storage(e) }/>
+            <Storages storages={storages} remove_storage={(e) => remove_storage(e)}/>
         </div>
     );
 }

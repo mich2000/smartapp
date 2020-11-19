@@ -3,7 +3,7 @@ use crate::viewmodels::new_storage::NewStorage;
 use crate::viewmodels::storage_name::StorageName;
 use crate::viewmodels::storages::Storages;
 use crate::PgCon;
-use xam_xam_dal::models::storage::{InsertableStorage, Storage, UpdateStorage};
+use xam_xam_dal::models::storage::{InsertableStorage, UpdateStorage};
 use xam_xam_dal::repo::storage;
 
 pub fn storage_list(

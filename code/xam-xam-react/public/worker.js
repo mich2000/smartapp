@@ -6,15 +6,13 @@ const CACHED_URLS = [
   './',
   '*.css',
   '*.js',
-  'favicon.ico',
-  'demo.js'
+  'favicon.ico'
 ];
 
 this.addEventListener('install',e => {
     e.waitUntil(
         caches.open(CACHE_NAME)
         .then(cache => cache.addAll(CACHED_URLS))
-        .then(this.skipWaiting())
     );
 });
 
@@ -30,7 +28,6 @@ this.addEventListener('activate', e => {
                 return caches.delete(cacheToDelete);
             }));
         })
-        .then(this.clients.claim())
     );
 });
 
@@ -46,12 +43,23 @@ this.addEventListener('fetch', e => {
                 .then(cache => {
                     return fetch(e.request)
                     .then(response => {
-                        return cache.put(e.request, response.clone()).then(() => {
+                        return cache.put(e.request, response.clone())
+                        .then(() => {
                             return response;
                         })
                     })
+                    .catch(notConnected)
                 })
             })
         );
     }
 });
+
+function notConnected() {
+    return new Response('Service Unavailable', {
+        status: 503,
+        headers: {
+            'Content-Type': 'text/html'
+        }
+    });
+}

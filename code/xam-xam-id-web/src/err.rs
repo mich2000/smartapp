@@ -135,7 +135,7 @@ impl error::ResponseError for XamXamWebError {
     fn error_response(&self) -> HttpResponse {
         error!("{}", self.show_public_error());
         HttpResponseBuilder::new(self.status_code())
-            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .set_header(header::CONTENT_TYPE, "text/plain")
             .body(self.show_public_error())
     }
 

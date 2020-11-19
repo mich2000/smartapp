@@ -49,3 +49,5 @@ These are sources I used and researched to be able to make my project.
 * Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
 * Node development with HTTPS activated: https://create-react-app.dev/docs/using-https-in-development/
 * Service worker that is used to cache files: https://web.dev/offline-cookbook/
+* Service worker used to cache files: https://css-tricks.com/serviceworker-for-offline/
+* Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle

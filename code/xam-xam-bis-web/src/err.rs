@@ -1,5 +1,4 @@
 use actix_web::{dev::HttpResponseBuilder, error, http::header, http::StatusCode, HttpResponse};
-use jwt_gang::claim_error::JwtCustomError;
 use std::{error::Error, fmt};
 use xam_xam_bis_bll::{err::XamXamServiceError, XamXamError};
 
@@ -107,7 +106,7 @@ impl error::ResponseError for XamXamWebError {
     fn error_response(&self) -> HttpResponse {
         error!("{}", self.show_public_error());
         HttpResponseBuilder::new(self.status_code())
-            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .set_header(header::CONTENT_TYPE, "text/plain")
             .body(self.show_public_error())
     }
 

@@ -20,6 +20,7 @@ export const Storages = (props) => {
             console.error(`Could not send through the request. error: ${e}`);
         });
     }
+    
     return (
         <>
             {props.storages.length !== 0 && 
