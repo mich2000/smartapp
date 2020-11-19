@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import email from '../../email';
+import email_util from '../../email';
 
 export function Login(props) {
     const [email_input, setEmail] = useState("");
@@ -8,7 +8,7 @@ export function Login(props) {
     function login(event) {
         event.preventDefault();
         event.stopPropagation();
-        if(!email.control_email(email_input)) {
+        if(!email_util.control_email(email_input)) {
             props.message_callback("Email was not in the correct format.",true);
             return;
         }

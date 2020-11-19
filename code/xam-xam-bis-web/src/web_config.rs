@@ -31,8 +31,7 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
  */
 pub fn cors() -> Cors {
     Cors::permissive()
-        .max_age(60)
-        .allowed_methods(vec!["POST", "PUT", "DELETE", "GET"])
+        .allowed_methods(vec!["POST", "PUT", "DELETE", "GET", "OPTIONS"])
 }
 
 /**

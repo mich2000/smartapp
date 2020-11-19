@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import api_functions from '../../api';
 import {InputWithButton} from '../input';
-import email from '../../email';
+import email_util from '../../email';
 
 export default function Registration(props) {
     const [registrationForm,setRegistrationForm] = useState({
@@ -12,7 +12,7 @@ export default function Registration(props) {
     });
 
     function registration_okay() {
-        if(!email.control_email(registrationForm.email)) {
+        if(!email_util.control_email(registrationForm.email)) {
             log_msg("The email is not right.",false);
             return false;
         }
@@ -32,7 +32,7 @@ export default function Registration(props) {
     }
 
     function send_request(value) {
-        if(!email.control_email(value)) {
+        if(!email_util.control_email(value)) {
             log_msg("Email is not in the correct format.",true);
             return;
         }

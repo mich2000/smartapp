@@ -75,3 +75,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my auth web service and my react app: 1h30
 * Working on my service worker: 2h15
 * Working on my service worker: 3h
+* Working on my service worker and working on updating storages: 3h30

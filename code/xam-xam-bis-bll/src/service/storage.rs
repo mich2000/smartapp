@@ -2,8 +2,9 @@ use crate::err::XamXamServiceError;
 use crate::viewmodels::new_storage::NewStorage;
 use crate::viewmodels::storage_name::StorageName;
 use crate::viewmodels::storages::Storages;
+use crate::viewmodels::edit_storage::EditStorage;
 use crate::PgCon;
-use xam_xam_dal::models::storage::{InsertableStorage, UpdateStorage};
+use xam_xam_dal::models::storage::InsertableStorage;
 use xam_xam_dal::repo::storage;
 
 pub fn storage_list(
@@ -21,11 +22,20 @@ pub fn add_storage(
     user_id: i32,
     model: &NewStorage,
 ) -> Result<(), XamXamServiceError> {
-    error!("{:?}",storage::insert_storage(
+    storage::insert_storage(
         conn,
         &InsertableStorage::new(user_id, model.get_name(), model.get_kind())?,
-    )?);
+    )?;
     info!("A new storage has been added.");
+    Ok(())
+}
+
+pub fn update_storage(
+    conn: &PgCon,
+    user_id: i32,
+    model: &EditStorage
+) -> Result<(), XamXamServiceError> {
+    storage::update_storage(conn, user_id, model.get_storage_name(), &model.into())?;
     Ok(())
 }
 

@@ -6,7 +6,8 @@ const CACHED_URLS = [
   './',
   '*.css',
   '*.js',
-  'favicon.ico'
+  'favicon.ico',
+  'manifest.json'
 ];
 
 this.addEventListener('install',e => {

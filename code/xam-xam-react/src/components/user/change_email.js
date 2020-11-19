@@ -1,6 +1,6 @@
 import React, {useState,useContext} from 'react';
 import {InputWithButton} from '../input';
-import email from '../../email';
+import email_util from '../../email';
 import api_functions from '../../api';
 import {AppContext} from '../../state';
 
@@ -10,7 +10,7 @@ export function ChangeEmail(props) {
     const [,setUser] = useContext(AppContext);
 
     function send_request(input){
-        if(!email.control_email(input)) {
+        if(!email_util.control_email(input)) {
             setError("Email is not in the correct format.");
             return;
         }
@@ -35,7 +35,7 @@ export function ChangeEmail(props) {
     function change_email(event) {
         event.preventDefault();
         event.stopPropagation();
-        if(!email.control_email(emailInput)) {
+        if(!email_util.control_email(emailInput)) {
             setError("Email is not in the correct format.");
             return;
         }

@@ -35,6 +35,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .service(controllers::storage::add_storage)
             .service(controllers::storage::delete_storage)
             .service(controllers::storage::get_storages)
+            .service(controllers::storage::edit_storage)
             .default_service(web::route().to(web::HttpResponse::NotFound))
     })
     .bind_rustls("0.0.0.0:8081", web_config::tls_config())?

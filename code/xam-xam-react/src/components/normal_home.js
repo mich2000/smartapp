@@ -22,7 +22,6 @@ export default function UnauthenticatedHome() {
     }
 
     function login(login_params) {
-        console.log(login_params);
         let options = api_functions.method_get();
         options.headers.Authorization = `Basic ${btoa(login_params.email + ':' + login_params.password)}`;
         fetch(api_functions.get_api() + "/auth/login",options)
