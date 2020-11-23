@@ -1,4 +1,4 @@
-use crate::db::{get_pg_conn, get_redis_conn};
+use crate::db::GetCon;
 use crate::err::XamXamWebError;
 use crate::extractors::{credentials::Cred, user_id::UserId};
 use crate::{PgPool, RedisPool};
@@ -8,13 +8,12 @@ use xam_xam_id_bll::auth_service;
 use xam_xam_id_bll::viewmodels::basic_info::UserInfo;
 use xam_xam_id_bll::viewmodels::new_email::NewEmailHolder;
 use xam_xam_id_bll::viewmodels::password::PasswordHolder;
-use xam_xam_id_bll::{PgCon, RCon};
+use xam_xam_id_bll::RCon;
 
 #[get("/basic/info")]
 pub async fn get_basic_info(id: UserId, pg: Data<PgPool>) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
     let basic_user_info = UserInfo::new(&match auth_service::get_basic_information(
-        &pg_conn,
+        &pg.conn()?,
         id.get_id(),
     ) {
         Ok(info) => info,
@@ -30,9 +29,8 @@ pub async fn change_email(
     model: Json<NewEmailHolder>,
     id: UserId,
 ) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
-    let mut r_conn: RCon = get_redis_conn(redis_db)?;
-    auth_service::change_email(&mut r_conn, &pg_conn, id.get_id(), &model.0)?;
+    let mut r_conn: RCon = redis_db.conn()?;
+    auth_service::change_email(&mut r_conn, &pg.conn()?, id.get_id(), &model.0)?;
     Ok(HttpResponse::Ok().finish())
 }
 
@@ -42,9 +40,8 @@ pub async fn change_password(
     pg: Data<PgPool>,
     model: Json<PasswordHolder>,
 ) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
     auth_service::change_pwd(
-        &pg_conn,
+        &pg.conn()?,
         &model.0,
         &credentials.get_name(),
         &credentials.get_password(),
@@ -58,9 +55,8 @@ pub async fn delete_profile(
     pg: Data<PgPool>,
     session: Identity,
 ) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
     auth_service::delete_user(
-        &pg_conn,
+        &pg.conn()?,
         &credentials.get_name(),
         &credentials.get_password(),
     )?;

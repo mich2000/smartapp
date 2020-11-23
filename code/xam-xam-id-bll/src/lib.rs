@@ -14,8 +14,8 @@ use r2d2_redis::{r2d2::Pool, RedisConnectionManager};
 pub type PgPool = xam_xam_dal::PostgresPool;
 pub type PgCon = xam_xam_dal::PgCon;
 
-pub fn get_pg_pool(url : &str, max_conn : u32) -> PgPool {
-    xam_xam_dal::get_pool(url,max_conn)
+pub fn get_pg_pool(url : &str) -> PgPool {
+    xam_xam_dal::get_pool(url)
 }
 
 /**
@@ -24,7 +24,7 @@ pub fn get_pg_pool(url : &str, max_conn : u32) -> PgPool {
 pub type RedisPool = Pool<RedisConnectionManager>;
 pub type RCon = r2d2::PooledConnection<RedisConnectionManager>;
 
-pub fn get_redis_pool(url : &str, max_conn : u32) -> RedisPool {
+pub fn get_redis_pool(url : &str) -> RedisPool {
     let manager = RedisConnectionManager::new(url).unwrap();
-    Pool::builder().max_size(max_conn).build(manager).unwrap()
+    Pool::builder().max_size(1).build(manager).unwrap()
 }

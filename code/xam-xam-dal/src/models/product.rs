@@ -7,7 +7,7 @@ use chrono::{NaiveDate, Utc};
 /**
  * Struct that represents a product, this product has to be linked to a specific storage from a user.
  */
-#[derive(Insertable, Queryable, Associations, Identifiable, Debug, PartialEq, Clone)]
+#[derive(Insertable, Queryable, Associations, Identifiable, Debug, PartialEq, Clone, QueryableByName)]
 #[belongs_to(Storage)]
 #[table_name = "products"]
 pub struct Product {

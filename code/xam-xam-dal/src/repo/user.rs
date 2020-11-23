@@ -1,10 +1,11 @@
 use crate::basic_user_info::BasicUserInfo;
-use crate::diesel::query_dsl::filter_dsl::FilterDsl;
-use crate::diesel::query_dsl::filter_dsl::FindDsl;
-use crate::diesel::query_dsl::select_dsl::SelectDsl;
-use crate::diesel::ExpressionMethods;
-use crate::diesel::OptionalExtension;
-use crate::diesel::RunQueryDsl;
+use diesel::query_dsl::filter_dsl::FilterDsl;
+use diesel::query_dsl::filter_dsl::FindDsl;
+use diesel::query_dsl::select_dsl::SelectDsl;
+use diesel::ExpressionMethods;
+use diesel::OptionalExtension;
+use diesel::RunQueryDsl;
+use diesel::sql_types::Integer;
 use crate::err::XamXamError;
 use crate::models::user::{InsertableUser, User};
 use crate::schema::users::dsl::*;
@@ -174,7 +175,8 @@ pub fn delete_user(conn: &PgCon, user_id: i32) -> Result<bool, XamXamError> {
  */
 pub fn get_information_from_id(conn: &PgCon, user_id: i32) -> Result<BasicUserInfo, XamXamError> {
     info!("id of basic user info {}", user_id);
-    let result : BasicUserInfo = diesel::sql_query(
-        format!("select count(s.id) as amount_storage, count(pi.id) as amount_product, min(pi.peremption_date) as min_bederf, max(pi.peremption_date) as max_bederf from storages s left join products pi on pi.storage_id = s.id where s.user_id = {}",user_id)).get_result(conn)?;
+    let result : BasicUserInfo = diesel::sql_query("select count(s.id) as amount_storage, count(pi.id) as amount_product, min(pi.peremption_date) as min_bederf, max(pi.peremption_date) as max_bederf from storages s left join products pi on pi.storage_id = s.id where s.user_id = $1")
+    .bind::<Integer,_>(user_id)
+    .get_result(conn)?;
     Ok(result)
 }

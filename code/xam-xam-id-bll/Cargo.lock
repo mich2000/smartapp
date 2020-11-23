@@ -610,11 +610,10 @@ dependencies = [
 name = "mailgang"
 version = "0.1.3"
 dependencies = [
- "dotenv",
  "lettre",
  "lettre_email",
  "log",
- "regex",
+ "xam-xam-common",
 ]
 
 [[package]]

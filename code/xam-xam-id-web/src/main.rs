@@ -21,11 +21,9 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     let pg_pool: PgPool = get_pg_pool(
         get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?.as_ref(),
-        get_value_from_key("DATABASE_NUM").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?.parse()?,
     );
     let redis_pool: RedisPool = get_redis_pool(
         &get_value_from_key("REDIS_URL").ok_or(XamXamWebError::CouldNotGetRedisConnection)?.as_ref(),
-        get_value_from_key("REDIS_URL_NUM").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?.parse()?,
     );
     let jwt_config = jwt_gang::from_env_config("Jwt.toml")?;
 

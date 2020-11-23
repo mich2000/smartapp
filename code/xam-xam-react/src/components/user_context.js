@@ -5,6 +5,7 @@ import UnauthenticatedHome, {About} from './normal_home';
 import {User} from './user/user';
 import {AppContext} from '../state';
 import {Storage} from './storage/storage';
+import {UserInfoPopup} from './user/user_info_popup';
 
 export default function UserContext() {
     const [user,setUser] = useContext(AppContext);
@@ -95,6 +96,9 @@ export default function UserContext() {
                                 </li>
                             </ul>
                             <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <UserInfoPopup/>
+                                </li>
                                 <li className="nav-item">
                                     <button className="btn btn-default" onClick={logout}>
                                         Log Out {user.email}

@@ -3,16 +3,18 @@ use crate::{PgPool, RedisPool};
 use actix_web::web::Data;
 use xam_xam_id_bll::{PgCon, RCon};
 
-pub fn get_pg_conn(pg: Data<PgPool>) -> Result<PgCon, XamXamWebError> {
-    match pg.get() {
-        Ok(conn) => Ok(conn),
-        Err(_) => Err(XamXamWebError::CouldNotGetPostGresConnection),
+pub trait GetCon<T> {
+    fn conn(&self) -> Result<T, XamXamWebError>;
+}
+
+impl GetCon<PgCon> for Data<PgPool> {
+    fn conn(&self) -> Result<PgCon, XamXamWebError> {
+        self.get().or(Err(XamXamWebError::CouldNotGetPostGresConnection))
     }
 }
 
-pub fn get_redis_conn(redis_db: Data<RedisPool>) -> Result<RCon, XamXamWebError> {
-    match redis_db.get() {
-        Ok(conn) => Ok(conn),
-        Err(_) => Err(XamXamWebError::CouldNotGetRedisConnection),
+impl GetCon<RCon> for Data<RedisPool> {
+    fn conn(&self) -> Result<RCon, XamXamWebError> {
+        self.get().or(Err(XamXamWebError::CouldNotGetRedisConnection))
     }
 }

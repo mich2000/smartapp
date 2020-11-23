@@ -27,7 +27,7 @@ export function UserInfo() {
     },[])
 
     return (
-        <div>
+        <>
             <div>
                 <dt>Amount of Storages</dt>
                 <dd>{amount_stor}</dd>
@@ -48,6 +48,6 @@ export function UserInfo() {
                     </div>
                 </div>
             }
-        </div>
+        </>
     );
 }

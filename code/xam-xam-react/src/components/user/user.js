@@ -1,5 +1,4 @@
 import React, { useState, useContext }  from 'react';
-import {UserInfo} from './user_info';
 import {ChangeEmail} from './change_email';
 import {ChangePwd} from './change_pwd';
 import {DeleteProfile} from './delete_profile';
@@ -23,17 +22,6 @@ export function User(props) {
                 (message.msg !== '' && message.error)? <span className="font-weight-bold text-danger">{message.msg}</span> : <span className="font-weight-bold text-success">{message.msg}</span>
             }
             <div id="accordion" className="col-sm-10 mt-5">
-                <div className="card text-center">
-                    <div className="card-header" id="UserInfo">
-                        <button className="btn btn-link" data-toggle="collapse" data-target="#collapseUserInfo"
-                        aria-expanded="true" aria-controls="collapseUserInfo">User statistics</button>
-                    </div>
-                    <div id="collapseUserInfo" className="collapse" aria-labelledby="UserInfo" data-parent="#accordion">
-                        <div className="card-body">
-                            <UserInfo changeEmail={email => changeEmail(email)}/>
-                        </div>
-                    </div>
-                </div>
                 <div className="card text-center">
                     <div className="card-header" id="UpdateEmail">
                         <button className="btn btn-link" data-toggle="collapse" data-target="#collapseUpdateEmail"

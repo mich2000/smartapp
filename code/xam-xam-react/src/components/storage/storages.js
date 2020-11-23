@@ -46,10 +46,10 @@ export const Storages = (props) => {
     return (
         <>
             {props.storages.length !== 0 && 
-            <ul className="list-style-none d-flex flex-wrap mb-n2">
+            <ul className="list-style-none d-flex flex-wrap">
                 {props.storages.map((item, i) => {
                     return (
-                        <li className="mb-2 mr-2 tag-li-user badge badge-pill badge-info big-text" key={i}>
+                        <li className="tag-li-user badge badge-pill badge-info big-text m-1" key={i}>
                             {item[0]} - {item[1]}
                             <EditStoragePopup edit_storage={(e) => edit_storage(e)} item={item}/>
                             <DeleteStoragePopup delete_storage={(e) => delete_storage(e)} item={item}/>

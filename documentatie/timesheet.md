@@ -76,3 +76,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my service worker: 2h15
 * Working on my service worker: 3h
 * Working on my service worker and working on updating storages: 3h30
+* Working on my react app, working on the DAL of my api to implement some CRUD features: 4h

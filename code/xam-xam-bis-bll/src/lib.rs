@@ -13,6 +13,6 @@ pub use xam_xam_dal::err::XamXamError;
 pub type PgPool = xam_xam_dal::PostgresPool;
 pub type PgCon = xam_xam_dal::PgCon;
 
-pub fn get_pg_pool(url: &str, max_conn: u32) -> PgPool {
-    xam_xam_dal::get_pool(url, max_conn)
+pub fn get_pg_pool(url: &str) -> PgPool {
+    xam_xam_dal::get_pool(url)
 }

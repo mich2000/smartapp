@@ -52,3 +52,4 @@ These are sources I used and researched to be able to make my project.
 * Service worker used to cache files: https://css-tricks.com/serviceworker-for-offline/
 * Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle
 * Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
+* Postgres article to help me out with Date datatype: https://www.postgresqltutorial.com/postgresql-date/

@@ -1,4 +1,3 @@
-use crate::db::{get_pg_conn, get_redis_conn};
 use crate::err::XamXamWebError;
 use crate::extractors::credentials::Cred;
 use crate::{PgPool, RedisPool};
@@ -10,7 +9,8 @@ use xam_xam_id_bll::auth_service;
 use xam_xam_id_bll::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_id_bll::viewmodels::email::EmailHolder;
 use xam_xam_id_bll::viewmodels::new_user::NewUser;
-use xam_xam_id_bll::{PgCon, RCon};
+use xam_xam_id_bll::RCon;
+use crate::db::GetCon;
 
 /**
  * Function that is used to take in the a token and user creation info, the token will be controlled on the redis database. If the token is okay and the user doesn't already exist he is inserted in the database or otherwhise an error is returned.
@@ -21,9 +21,8 @@ pub async fn register(
     pg: Data<PgPool>,
     model: Json<NewUser>,
 ) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
-    let mut r_conn: RCon = get_redis_conn(redis_db)?;
-    auth_service::create_user(&mut r_conn, &pg_conn, &model)?;
+    let mut r_conn: RCon = redis_db.conn()?;
+    auth_service::create_user(&mut r_conn, &pg.conn()?, &model)?;
     info!(
         "A new user with the email {} has been made",
         model.get_email()
@@ -41,9 +40,8 @@ pub async fn login(
     pg: Data<PgPool>,
     jwt_config: Data<ClaimConfiguration>,
 ) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
     let jwt_token: String = match auth_service::authenthicate_get_token(
-        &pg_conn,
+        &pg.conn()?,
         jwt_config.as_ref(),
         &credentials.get_name(),
         &credentials.get_password(),
@@ -124,9 +122,8 @@ pub async fn change_forgotten_pwd(
     pg: Data<PgPool>,
     model: Json<ForgottenPassword>,
 ) -> Result<HttpResponse, XamXamWebError> {
-    let pg_conn: PgCon = get_pg_conn(pg)?;
-    let mut r_conn: RCon = get_redis_conn(redis_db)?;
-    auth_service::change_forgotten_pwd(&mut r_conn, &pg_conn, &model)?;
+    let mut r_conn: RCon = redis_db.conn()?;
+    auth_service::change_forgotten_pwd(&mut r_conn, &pg.conn()?, &model)?;
     Ok(HttpResponse::Ok().finish())
 }
 
@@ -151,6 +148,5 @@ pub async fn get_email(
             "Could not parse string reference to i32",
         ))
     };
-    let pg_conn: PgCon = get_pg_conn(pg)?;
-    Ok(HttpResponse::Ok().json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg_conn)?))
+    Ok(HttpResponse::Ok().json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg.conn()?)?))
 }

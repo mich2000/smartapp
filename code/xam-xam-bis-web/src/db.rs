@@ -8,9 +8,6 @@ pub trait GetCon<T> {
 
 impl GetCon<PgCon> for Data<PgPool> {
     fn conn(&self) -> Result<PgCon, XamXamWebError> {
-        match self.get() {
-            Ok(conn) => Ok(conn),
-            Err(_) => Err(XamXamWebError::CouldNotGetPostGresConnection),
-        }
+        self.get().or(Err(XamXamWebError::CouldNotGetPostGresConnection))
     }
 }

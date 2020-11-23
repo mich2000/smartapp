@@ -22,10 +22,10 @@ pub type PgCon = r2d2::PooledConnection<diesel::r2d2::ConnectionManager<diesel::
  *
  * returns a pool that I can use, for my postgresql connections.
  */
-pub fn get_pool(url: &str, max_connections: u32) -> PostgresPool {
+pub fn get_pool(url: &str) -> PostgresPool {
     let mgr = ConnectionManager::<PgConnection>::new(url);
     r2d2::Pool::builder()
-        .max_size(max_connections)
+        .max_size(1)
         .build(mgr)
         .expect("could not build connection pool")
 }
