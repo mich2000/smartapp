@@ -19,3 +19,12 @@ rustls = "0.18.1"
 log="0.4.0"
 log4rs = "0.13.0"
 futures-util = "0.3.7"
+
+[profile.release]
+panic = "abort"
+lto = true
+codegen-units = 1
+opt-level = "z"
+
+[build]
+RUSTFLAGS="-C target-cpu=native"
