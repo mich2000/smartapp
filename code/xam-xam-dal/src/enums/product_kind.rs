@@ -1,10 +1,11 @@
 use diesel_derive_enum::DbEnum;
 use std::fmt;
+use serde::{Deserialize, Serialize};
 
 /**
  * Enumeration containing all the kind of food a product can be.
  */
-#[derive(DbEnum, Debug, PartialEq, Clone)]
+#[derive(DbEnum, Debug, PartialEq, Clone, Deserialize, Serialize)]
 #[DieselType = "Product_Kind"]
 pub enum ProductKind {
     Other,

@@ -22,6 +22,9 @@ pub fn add_storage(
     user_id: i32,
     model: &NewStorage,
 ) -> Result<(), XamXamServiceError> {
+    if model.get_name().is_empty() {
+        return Err(XamXamServiceError::StorageNameIsEmpty)
+    }
     storage::insert_storage(
         conn,
         &InsertableStorage::new(user_id, model.get_name(), model.get_kind())?,
@@ -44,6 +47,9 @@ pub fn remove_storage(
     user_id: i32,
     model : &StorageName
 ) -> Result<(), XamXamServiceError> {
+    if model.get_name().is_empty() {
+        return Err(XamXamServiceError::StorageNameIsEmpty)
+    }
     storage::delete_storage(conn, user_id, model.get_name())?;
     info!("A storage has been deleted.");
     Ok(())

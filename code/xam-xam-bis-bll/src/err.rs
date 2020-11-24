@@ -6,6 +6,8 @@ use xam_xam_dal::err::XamXamError;
 pub enum XamXamServiceError {
     //Dal error
     XamXamDalError(XamXamError),
+    //Storage specific
+    StorageNameIsEmpty,
     //Custom errors
     CustomError(String),
 }
@@ -15,6 +17,7 @@ impl fmt::Display for XamXamServiceError {
         match self {
             //Dal error
             XamXamServiceError::XamXamDalError(err) => write!(f, "{}", err),
+            XamXamServiceError::StorageNameIsEmpty => write!(f,"A storage name cannot be empty."),
             // Custom errors
             XamXamServiceError::CustomError(e) => write!(f, "{}", e),
         }
