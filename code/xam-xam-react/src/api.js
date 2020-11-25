@@ -1,5 +1,5 @@
-let api = 'https://localhost:8080';
-let business_api = 'https://localhost:8081';
+let api = 'https://localhost:8080/identity';
+let business_api = 'https://localhost:8081/business';
 
 //basic options for every api fetch call
 let basic_options = function() {

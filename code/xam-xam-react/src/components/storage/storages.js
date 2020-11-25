@@ -53,7 +53,8 @@ export const Storages = (props) => {
                         <li className="tag-li-user badge badge-pill badge-info big-text m-1" key={i}>
                             {item[0]} - {item[1]}
                             <Link to={{
-                                pathname: "/products" + "?storage=" + item[0]
+                                pathname: "/products",
+                                search : "?storage=" + item[0]
                             }}>products</Link>
                             <EditStoragePopup edit_storage={(e) => edit_storage(e)} item={item}/>
                             <DeleteStoragePopup delete_storage={(e) => delete_storage(e)} item={item}/>

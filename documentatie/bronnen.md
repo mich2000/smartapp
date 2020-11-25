@@ -4,7 +4,30 @@ These are sources I used and researched to be able to make my project.
 
 ## Links
 
+### React
+
 * React functional hooks: https://reactjs.org/docs/hooks-intro.html
+* React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
+* React hooks updating nested objects and using useEffects and mastering it to update state: https://stackoverflow.com/questions/53428291/react-hooks-modified-state-not-reflecting-immediately
+* Javascript documentation to set an alert to an user: https://www.w3schools.com/jsref/met_win_alert.asp
+* Javascript documentation to set an confirm prompt to an user: https://www.w3schools.com/jsref/met_win_confirm.asp
+* Javascript documentation to set an input prompt to an user: https://www.w3schools.com/jsref/met_win_prompt.asp
+* Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182
+* React modal package to make dialog windows: https://www.npmjs.com/package/react-modal
+* Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
+* React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
+* React popup article: https://react-popup.elazizi.com/react-modal/
+* Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+* Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
+* Service worker that is used to cache files: https://web.dev/offline-cookbook/
+* Service worker used to cache files: https://css-tricks.com/serviceworker-for-offline/
+* Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle
+* Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
+* React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
+* React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+
+### Rust
+
 * Rust web framework: https://actix.rs/
 * Rust orm for mysql/postgresql/sqlite: https://diesel.rs/
 * Rust library to use sparkpost api to send emails only: https://crates.io/crates/mailgang
@@ -25,33 +48,31 @@ These are sources I used and researched to be able to make my project.
 * Rust crate I am using for my private cookies: https://docs.rs/actix-identity/0.3.1/actix_identity/
 * Rust repo that is used to implement TLS on the web server: https://github.com/actix/examples/blob/master/rustls/src/main.rs
 * Rust crate I use to implement CORS, this is important for when I will start to send requests with React: https://docs.rs/actix-cors/0.5.0/actix_cors/
-* Let self-signed certificates through Firefox: https://www.starnet.com/xwin32kb/installing-a-self-signed-certificate-on-firefox/
-* CORS blog post helping me out with one of the headers: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
-* React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
-* React hooks updating nested objects and using useEffects and mastering it to update state: https://stackoverflow.com/questions/53428291/react-hooks-modified-state-not-reflecting-immediately
-* Post talking about Basic and Bearer HTTP header: https://stackoverflow.com/questions/34013299/web-api-authentication-basic-vs-bearer
-* Post about setting up authorization header for basic authentication: https://stackoverflow.com/questions/33505130/how-to-assign-basic-authentication-header-to-xmlhttprequest
 * Rust actix example to help me with an user id extractor: https://github.com/emreyalvac/actix-web-jwt/blob/master/src/middlewares/auth.rs
 * Rust actix cookies documentation: https://docs.rs/actix-web/3.1.0/actix_web/http/struct.Cookie.html
 * Rust session crate: https://docs.rs/actix-session/0.4.0/actix_session/
 * Rust post about handling request in a async manner: https://stackoverflow.com/questions/63308246/how-to-use-async-code-in-actix-web-extractors
 * Rust post about handling identity in middleware: https://users.rust-lang.org/t/actix-web-token-validation-in-middleware/38205
-* Javascript documentation to set an alert to an user: https://www.w3schools.com/jsref/met_win_alert.asp
-* Javascript documentation to set an confirm prompt to an user: https://www.w3schools.com/jsref/met_win_confirm.asp
-* Javascript documentation to set an input prompt to an user: https://www.w3schools.com/jsref/met_win_prompt.asp
-* Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182
-* React modal package to make dialog windows: https://www.npmjs.com/package/react-modal
-* Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
-* React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
-* React popup article: https://react-popup.elazizi.com/react-modal/
-* Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-* Redis documentation for security: https://redis.io/topics/config
-* Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
-* Node development with HTTPS activated: https://create-react-app.dev/docs/using-https-in-development/
-* Service worker that is used to cache files: https://web.dev/offline-cookbook/
-* Service worker used to cache files: https://css-tricks.com/serviceworker-for-offline/
-* Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle
-* Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
+
+### Postgres
+
 * Postgres article to help me out with Date datatype: https://www.postgresqltutorial.com/postgresql-date/
-* React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
-* React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+
+### Redis
+
+* Redis documentation for security: https://redis.io/topics/config
+
+### Nginx
+
+* Nginx reverse proxy documentation: https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+
+### Firefox
+
+* Let self-signed certificates through Firefox: https://www.starnet.com/xwin32kb/installing-a-self-signed-certificate-on-firefox/
+
+### HTTP protocol
+
+* CORS blog post helping me out with one of the headers: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
+* Post talking about Basic and Bearer HTTP header: https://stackoverflow.com/questions/34013299/web-api-authentication-basic-vs-bearer
+* Post about setting up authorization header for basic authentication: https://stackoverflow.com/questions/33505130/how-to-assign-basic-authentication-header-to-xmlhttprequest
+* Node development with HTTPS activated: https://create-react-app.dev/docs/using-https-in-development/

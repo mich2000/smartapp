@@ -111,8 +111,8 @@ export default function UserContext() {
                 <Route path="/about">
                     <About className="col-sm-10" />
                 </Route>
-                <Route path="/products" component={Product}>
-
+                <Route path="/products">
+                    <Product/>
                 </Route>
                 <Route path="/">
                     <User className="col-sm-10" email={user.email} logout={logout}/>

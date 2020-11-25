@@ -79,3 +79,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my react app, working on the DAL of my api to implement some CRUD features: 4h
 * Working on my DAL and business service layer for my api: 1h30
 * Working on my business api and react app for the products page: 1h45
+* Working on my routes within my backend api and repaire the product routing: 45min
