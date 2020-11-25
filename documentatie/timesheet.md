@@ -78,3 +78,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my service worker and working on updating storages: 3h30
 * Working on my react app, working on the DAL of my api to implement some CRUD features: 4h
 * Working on my DAL and business service layer for my api: 1h30
+* Working on my business api and react app for the products page: 1h45

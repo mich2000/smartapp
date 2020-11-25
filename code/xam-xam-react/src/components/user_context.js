@@ -6,6 +6,7 @@ import {User} from './user/user';
 import {AppContext} from '../state';
 import {Storage} from './storage/storage';
 import {UserInfoPopup} from './user/user_info_popup';
+import {Product} from './product/product';
 
 export default function UserContext() {
     const [user,setUser] = useContext(AppContext);
@@ -44,43 +45,12 @@ export default function UserContext() {
     },[user.email])
 
     function render() {
-        if(!user.loggedIn) {
-            return (
-                <Router>
-                    <div className="col-sm-10">
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                            <button className="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button>
-                            <div className="collapse navbar-collapse" id="navbarNav">
-                                <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/">Home</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/about">About</Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
-                        <Switch>
-                            <Route path="/about">
-                                <About />
-                            </Route>
-                            <Route path="/">
-                                <UnauthenticatedHome login_callback={login}/>
-                            </Route>
-                        </Switch>
-                    </div>
-                </Router>
-            );
-        }
-        return (
-            <Router>
+        if (!user.loggedIn) {
+            return (<Router>
                 <div className="col-sm-10">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
@@ -89,38 +59,66 @@ export default function UserContext() {
                                     <Link className="nav-link" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/storage">Storage</Link>
-                                </li>
-                                <li className="nav-item">
                                     <Link className="nav-link" to="/about">About</Link>
-                                </li>
-                            </ul>
-                            <ul className="navbar-nav ml-auto">
-                                <li className="nav-item">
-                                    <UserInfoPopup/>
-                                </li>
-                                <li className="nav-item">
-                                    <button className="btn btn-default" onClick={logout}>
-                                        Log Out {user.email}
-                                    </button>
                                 </li>
                             </ul>
                         </div>
                     </nav>
+                    <Switch>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="/">
+                            <UnauthenticatedHome login_callback={login}/>
+                        </Route>
+                    </Switch>
                 </div>
-                <Switch>
-                    <Route path="/storage">
-                        <Storage className="col-sm-10"/>
-                    </Route>
-                    <Route path="/about">
-                        <About className="col-sm-10" />
-                    </Route>
-                    <Route path="/">
-                        <User className="col-sm-10" email={user.email} logout={logout}/>
-                    </Route>
-                </Switch>
-            </Router>
-        );
+            </Router>);
+        }
+        return (<Router>
+            <div className="col-sm-10">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/">Home</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/storage">Storage</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/about">About</Link>
+                            </li>
+                        </ul>
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <UserInfoPopup/>
+                            </li>
+                            <li className="nav-item">
+                                <button className="btn btn-default" onClick={logout}>Log Out {user.email}</button>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <Switch>
+                <Route path="/storage">
+                    <Storage className="col-sm-10"/>
+                </Route>
+                <Route path="/about">
+                    <About className="col-sm-10" />
+                </Route>
+                <Route path="/products" component={Product}>
+
+                </Route>
+                <Route path="/">
+                    <User className="col-sm-10" email={user.email} logout={logout}/>
+                </Route>
+            </Switch>
+        </Router>);
     }
 
     return render();

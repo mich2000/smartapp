@@ -115,6 +115,8 @@ impl error::ResponseError for XamXamWebError {
             XamXamWebError::ServiceError(service_err) => match service_err {
                 // DAL errors
                 XamXamServiceError::XamXamDalError(_) => StatusCode::BAD_REQUEST,
+                //Storage errors
+                XamXamServiceError::StorageNameIsEmpty => StatusCode::BAD_REQUEST,
                 //Custom errors
                 XamXamServiceError::CustomError(_) => StatusCode::BAD_REQUEST,
             },

@@ -53,3 +53,5 @@ These are sources I used and researched to be able to make my project.
 * Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle
 * Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
 * Postgres article to help me out with Date datatype: https://www.postgresqltutorial.com/postgresql-date/
+* React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
+* React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
