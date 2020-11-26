@@ -8,13 +8,13 @@ use xam_xam_dal::models::product::Product;
  */
 #[derive(Serialize, Deserialize)]
 pub struct Products { 
-    products : Vec<(String, i16, NaiveDate, ProductKind)>
+    products : Vec<(i32,String, i16, NaiveDate, ProductKind)>
 }
 
 impl From<Vec<Product>> for Products {
     fn from(list : Vec<Product>) -> Products {
         Products {
-            products : list.iter().map(|product| (product.name.to_owned(), product.amount.to_owned(), product.peremption_date.to_owned(), product.product_kind.to_owned())).collect()
+            products : list.iter().map(|product| (product.id,product.name.to_owned(), product.amount.to_owned(), product.peremption_date.to_owned(), product.product_kind.to_owned())).collect()
         }
     }
 }

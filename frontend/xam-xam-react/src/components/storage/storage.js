@@ -1,13 +1,25 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {InputStorageDialog} from './input_storage';
 import {Storages} from './storages';
+import api_functions from '../../api';
 
 export const Storage = () => {
     const [storages, setStorages] = useState([]);
 
-    function add_storage_list(storage_list) {
-        setStorages(storage_list);
-    }
+    useEffect(() => {
+        fetch(api_functions.get_business_api() + '/storages', api_functions.method_get())
+        .then((api_call) => {
+            if(api_call.status === 200) {
+                api_call.json()
+                .then((json) => setStorages(json.storages))
+                .catch((e) => {
+                    console.error(`Could not send through the request. error: ${e}`);
+                });
+            }
+        }).catch((e) => {
+            console.error(`Could not send through the request. error: ${e}`);
+        });
+    },[])
 
     function add_storage(storage) {
         setStorages(storages.concat([[storage.name, storage.kind]]));
@@ -24,7 +36,7 @@ export const Storage = () => {
     return (
         <div className="col-sm-10">
             <h2>Storages</h2>
-            <InputStorageDialog set_storage_list={(e) => add_storage_list(e) } add_storage={(e) => add_storage(e) }/>
+            <InputStorageDialog add_storage={(e) => add_storage(e) }/>
             <Storages storages={storages} remove_storage={(e) => remove_storage(e)} edit_storage={(e) => edit_storage(e)}/>
         </div>
     );

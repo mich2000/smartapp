@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
 
@@ -12,33 +12,12 @@ export const InputStorageDialog = (props) => {
     const [name, setName] = useState('');
     const [type, setType] = useState(types.Other);
 
-    useEffect(() => {
-        fetch(api_functions.get_business_api() + '/storages', api_functions.method_get())
-        .then((api_call) => {
-            if(api_call.status === 200) {
-                api_call.json()
-                .then((json) => props.set_storage_list(json.storages))
-                .catch((e) => {
-                    console.error(`Could not send through the request. error: ${e}`);
-                });
-            }
-        }).catch((e) => {
-            console.error(`Could not send through the request. error: ${e}`);
-        });
-    },[])
-
     function add_storage(event) {
         event.preventDefault();
         event.stopPropagation();
-        if(name === '') {
-            alert("A name cannot be empty.");
-            return;
-        }
+        if(name === '') { return; }
         let options = api_functions.method_post();
-        options.body = JSON.stringify({
-            name: name,
-            kind: type
-        });
+        options.body = JSON.stringify({ name : name, kind : type });
         fetch(api_functions.get_business_api() + '/storage', options)
         .then((api_call) => {
             if(api_call.status === 200) {

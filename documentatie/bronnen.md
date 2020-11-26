@@ -4,7 +4,7 @@ These are sources I used and researched to be able to make my project.
 
 ## Links
 
-### React
+### React + Bootstrap + Javascript
 
 * React functional hooks: https://reactjs.org/docs/hooks-intro.html
 * React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
@@ -25,6 +25,8 @@ These are sources I used and researched to be able to make my project.
 * Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
 * React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
 * React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+* Bootstrap table layout: https://getbootstrap.com/docs/4.1/content/tables/
+* Javascript post about finding out the amount of days between 2 dates: https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates
 
 ### Rust
 
