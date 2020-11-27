@@ -51,11 +51,10 @@ export const Storages = (props) => {
                 {props.storages.map((item, i) => {
                     return (
                         <li className="tag-li-user badge badge-pill badge-info big-text m-1" key={i}>
-                            {item[0]} - {item[1]}
-                            <Link to={{
+                            <Link className="text-dark" to={{
                                 pathname: "/products",
                                 search : "?storage=" + item[0]
-                            }}>products</Link>
+                            }}>{item[0]} - {item[1]}</Link>
                             <EditStoragePopup edit_storage={(e) => edit_storage(e)} item={item}/>
                             <DeleteStoragePopup delete_storage={(e) => delete_storage(e)} item={item}/>
                         </li>

@@ -49,7 +49,7 @@ export function ChangePwd(props) {
         <form onSubmit={e => delete_profile(e)}>
             <div className="m-3">
                 <div className="form-group">
-                        <input className="form-control" type="password" placeholder="Enter current password" value={currentPwd} onChange={e => setCurrentPwd(e.target.value)} required/>
+                    <input className="form-control" type="password" placeholder="Enter current password" value={currentPwd} onChange={e => setCurrentPwd(e.target.value)} required/>
                 </div>
                 <div className="form-group">
                     <input className="form-control" type="password" autoComplete="new-password" placeholder="New password" value={newPwd} onChange={e => setNewPwd(e.target.value)} required/>

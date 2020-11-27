@@ -7,6 +7,7 @@ import {AppContext} from '../state';
 import {Storage} from './storage/storage';
 import {UserInfoPopup} from './user/user_info_popup';
 import {Product} from './product/product';
+import {Home} from './home';
 
 export default function UserContext() {
     const [user,setUser] = useContext(AppContext);
@@ -42,7 +43,7 @@ export default function UserContext() {
             }
         })
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-    },[user.email])
+    },[user.email,setUser])
 
     function render() {
         if (!user.loggedIn) {
@@ -98,7 +99,15 @@ export default function UserContext() {
                                 <UserInfoPopup/>
                             </li>
                             <li className="nav-item">
-                                <button className="btn btn-default" onClick={logout}>Log Out {user.email}</button>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropDownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Profile
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropDownProfile">
+                                        <Link className="dropdown-item" to="/profile">{user.email}</Link>
+                                        <a className="dropdown-item" to="#" onClick={logout}>Log out</a>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -114,8 +123,11 @@ export default function UserContext() {
                 <Route path="/products">
                     <Product/>
                 </Route>
-                <Route path="/">
+                <Route path="/profile">
                     <User className="col-sm-10" email={user.email} logout={logout}/>
+                </Route>
+                <Route path="/">
+                    <Home/>
                 </Route>
             </Switch>
         </Router>);

@@ -1,27 +1,30 @@
 import React from 'react';
 
 const ProductUnit = (item_info) => {
-    let difference_in_time = Math.abs(new Date() - new Date(item_info[2]));
+    let difference_in_time = Math.abs(new Date() - new Date(item_info[3]));
     let difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24));
 
     return (
         <tr>
             <th>
-                {item_info[0]}
+                {item_info[1]}
             </th>
             <th>
-                {item_info[1]}
+                {item_info[2]}
             </th>
             <th>
                 {difference_in_days}
             </th>
             <th>
-                {item_info[3]}
+                {item_info[4]}
+            </th>
+            <th>
+                <input hidden value={item_info[0]} name="product_id"/>
             </th>
         </tr>
     );
 }
-//(String, i16, NaiveDate, ProductKind)
+
 export const Products = (props) => {
     return (
         <>

@@ -25,7 +25,7 @@ export const Product = (props) => {
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
         });
-    },[])
+    },[storage])
 
     return (
         <div className="col-sm-10">

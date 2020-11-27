@@ -9,24 +9,31 @@ These are sources I used and researched to be able to make my project.
 * React functional hooks: https://reactjs.org/docs/hooks-intro.html
 * React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
 * React hooks updating nested objects and using useEffects and mastering it to update state: https://stackoverflow.com/questions/53428291/react-hooks-modified-state-not-reflecting-immediately
+* React modal package to make dialog windows: https://www.npmjs.com/package/react-modal
+* React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
+* React popup article: https://react-popup.elazizi.com/react-modal/
+* React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
+* React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+
+### Bootstrap
+
+* Bootstrap table layout: https://getbootstrap.com/docs/4.1/content/tables/
+* Bootstrap documentation about colors: https://getbootstrap.com/docs/4.0/utilities/colors/
+
+### Javascript
+
+* Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
+* Javascript post about finding out the amount of days between 2 dates: https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates
+* Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+* Service worker that is used to cache files: https://web.dev/offline-cookbook/
+* Service worker used to cache files: https://css-tricks.com/serviceworker-for-offline/
+* Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle
 * Javascript documentation to set an alert to an user: https://www.w3schools.com/jsref/met_win_alert.asp
 * Javascript documentation to set an confirm prompt to an user: https://www.w3schools.com/jsref/met_win_confirm.asp
 * Javascript documentation to set an input prompt to an user: https://www.w3schools.com/jsref/met_win_prompt.asp
 * Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182
-* React modal package to make dialog windows: https://www.npmjs.com/package/react-modal
 * Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
-* React article to generate an option tag from an enum: https://spectrum.chat/palmer/formik/generate-select-option-based-on-enum-type-using-typescript~150d00f7-66d9-40db-ad0d-2ebcae2ca905
-* React popup article: https://react-popup.elazizi.com/react-modal/
-* Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 * Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
-* Service worker that is used to cache files: https://web.dev/offline-cookbook/
-* Service worker used to cache files: https://css-tricks.com/serviceworker-for-offline/
-* Service worker used to cache files: https://www.digitalocean.com/community/tutorials/demystifying-the-service-worker-lifecycle
-* Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
-* React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
-* React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
-* Bootstrap table layout: https://getbootstrap.com/docs/4.1/content/tables/
-* Javascript post about finding out the amount of days between 2 dates: https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates
 
 ### Rust
 

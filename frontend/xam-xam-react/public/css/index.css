@@ -18,3 +18,7 @@ body {
     font-size: 2.3rem;
     word-break: break-word;
 }
+
+.dropdown-item {
+    font-size: 1.6rem;
+}
