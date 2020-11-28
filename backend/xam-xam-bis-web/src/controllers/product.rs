@@ -15,8 +15,8 @@ pub async fn get_product_list(id : UserId, pg : Data<PgPool>, path: web::Path<(S
 
 #[post("/product")]
 pub async fn add_product(id : UserId, pg : Data<PgPool>, model : Json<InsertProduct>) -> Result<HttpResponse,XamXamWebError> {
-    product::add_product(&pg.conn()?, id.get_id(), &model.0)?;
-    Ok(HttpResponse::Ok().finish())
+    info!("{:?}",&model.0);
+    Ok(HttpResponse::Ok().json(product::add_product(&pg.conn()?, id.get_id(), &model.0)?))
 }
 
 #[delete("/product")]

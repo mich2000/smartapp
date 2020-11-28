@@ -10,6 +10,8 @@ pub mod repo;
 pub mod schema;
 pub mod enums;
 
+mod product_id;
+
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager;
 use r2d2::Pool;

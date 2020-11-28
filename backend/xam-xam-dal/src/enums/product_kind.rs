@@ -15,7 +15,7 @@ pub enum ProductKind {
     Meat,
     Fish,
     Dairy,
-    FatAndSugar,
+    Unhealthy,
     Bean,
 }
 
@@ -30,7 +30,7 @@ impl std::fmt::Display for ProductKind {
                 ProductKind::Meat => "meat",
                 ProductKind::Fish => "fish",
                 ProductKind::Dairy => "diary",
-                ProductKind::FatAndSugar => "fat_and_sugar",
+                ProductKind::Unhealthy => "unhealthy",
                 ProductKind::Bean => "bean"
             }
         )

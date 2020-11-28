@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use xam_xam_dal::enums::product_kind::ProductKind;
 use chrono::NaiveDate;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize,Debug)]
 pub struct InsertProduct {
     storage_name: String,
     name: String,

@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import api_functions from '../../api';
 import {Products} from './products';
+import {InputProductDialog} from './input_product';
 
 function extract_storage_name() {
     let search = window.location.search;
@@ -29,8 +30,8 @@ export const Product = (props) => {
 
     return (
         <div className="col-sm-10">
-            <h2>Products from {storage}</h2>
-            <Products products={products}/>
+            <InputProductDialog storage={storage}/>
+            <Products products={products} storage={storage}/>
         </div>
     );
 }

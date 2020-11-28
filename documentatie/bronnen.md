@@ -66,6 +66,8 @@ These are sources I used and researched to be able to make my project.
 ### Postgres
 
 * Postgres article to help me out with Date datatype: https://www.postgresqltutorial.com/postgresql-date/
+* Postgres stackoverflow post about returning columns after inserting something: https://stackoverflow.com/questions/6560447/can-i-use-return-value-of-insert-returning-in-another-insert
+* Postgres alter type: https://blog.yo1.dog/updating-enum-values-in-postgresql-the-safe-and-easy-way/
 
 ### Redis
 

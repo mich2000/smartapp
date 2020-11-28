@@ -8,7 +8,7 @@ CREATE TABLE "users"
 );
 
 CREATE TYPE StorageKind AS ENUM ('other','closet','fridge','freezer');
-CREATE TYPE ProductKind AS ENUM ('other','vegetables','fruit','grain','meat','fish','dairy','fat_and_sugar','bean');
+CREATE TYPE ProductKind AS ENUM ('other','vegetables','fruit','grain','meat','fish','dairy','unhealthy','bean');
 
 CREATE TABLE "storages" (
     id SERIAL PRIMARY KEY,

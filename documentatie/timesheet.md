@@ -85,3 +85,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 8
 
 * Working on my react app and discussing with instructor: 1h30
+* Working on my react app and trying to solve problems related to date serialization: 3h15

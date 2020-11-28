@@ -1,16 +1,11 @@
 import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
+import {storage_type} from '../../enums';
 
 export const InputStorageDialog = (props) => {
-    const types = Object.freeze({
-        Other : 'Other',
-        Closet : 'Closet',
-        Fridge : 'Fridge',
-        Freezer : 'Freezer'
-    });
     const [name, setName] = useState('');
-    const [type, setType] = useState(types.Other);
+    const [type, setType] = useState(storage_type.Other);
 
     function add_storage(event) {
         event.preventDefault();
@@ -25,7 +20,7 @@ export const InputStorageDialog = (props) => {
                     name: name,
                     kind: type
                 });
-                setType(types.Other);
+                setType(storage_type.Other);
                 setName('');
             }
         }).catch((e) => {
@@ -42,9 +37,9 @@ export const InputStorageDialog = (props) => {
                         <div className="modal-content">
                             <input className="modal-input form-control" type="text" value={name} placeholder="Enter the storage name" onChange={(e) => setName(e.target.value)}/>
                             <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
-                                {Object.keys(types).map(key => (
+                                {Object.keys(storage_type).map(key => (
                                     <option key={key} value={key}>
-                                        {types[key]}
+                                        {storage_type[key]}
                                     </option>
                                     )
                                 )}
