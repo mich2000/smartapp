@@ -11,7 +11,6 @@ use rustls::{
 };
 use std::fs::File;
 use std::io::BufReader;
-use actix_web::cookie::SameSite;
 
 /**
  * Function that initializes an IdentityService
@@ -22,7 +21,6 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
             .name("Authorization")
             .secure(true)
             .http_only(true)
-            .same_site(SameSite::Lax)
     )
 }
 

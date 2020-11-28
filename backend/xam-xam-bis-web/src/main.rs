@@ -17,7 +17,6 @@ use crate::err::XamXamWebError;
 #[actix_web::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     web_config::log_init()?;
-
     let pg_pool: PgPool = get_pg_pool(
         &get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?
     );
@@ -31,16 +30,13 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .data(pg_pool.clone())
             .data(jwt_config.clone())
             .wrap(web_config::identity())
-            .service(
-                web::scope("/business")
-                .service(controllers::storage::add_storage)
-                .service(controllers::storage::delete_storage)
-                .service(controllers::storage::get_storages)
-                .service(controllers::storage::edit_storage)
-                .service(controllers::product::add_product)
-                .service(controllers::product::remove_product)
-                .service(controllers::product::get_product_list)
-            )
+            .service(controllers::product::add_product)
+            .service(controllers::product::remove_product)
+            .service(controllers::product::get_product_list)
+            .service(controllers::storage::add_storage)
+            .service(controllers::storage::delete_storage)
+            .service(controllers::storage::get_storages)
+            .service(controllers::storage::edit_storage)
             .default_service(web::route().to(web::HttpResponse::NotFound))
     })
     .bind_rustls("0.0.0.0:8081", web_config::tls_config())?

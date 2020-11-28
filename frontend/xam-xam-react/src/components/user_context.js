@@ -99,11 +99,11 @@ export default function UserContext() {
                                 <UserInfoPopup/>
                             </li>
                             <li className="nav-item">
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropDownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropDownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Profile
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropDownProfile">
+                                    <div className="dropdown-menu" aria-labelledby="dropDownProfile">
                                         <Link className="dropdown-item" to="/profile">{user.email}</Link>
                                         <Link className="dropdown-item" to="#" onClick={logout}>Log out</Link>
                                     </div>

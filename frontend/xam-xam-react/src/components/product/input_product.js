@@ -3,11 +3,6 @@ import Popup from 'reactjs-popup';
 import api_functions from '../../api';
 import {product_type} from '../../enums';
 
-function get_stringed_value(date) {
-    let received_date = new Date(date);
-    return `${received_date.getDate()}-${received_date.getMonth()}-${received_date.getFullYear()}`
-}
-
 export const InputProductDialog = (props) => {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState(0);
@@ -18,20 +13,12 @@ export const InputProductDialog = (props) => {
     function add_product(event) {
         event.preventDefault();
         event.stopPropagation();
-        if(name === '') { return; }
         let options = api_functions.method_post();
         options.body = JSON.stringify({
             storage_name: storage,
             name: name,
-            amount: amount,
-            peremption_date: get_stringed_value(date),
-            kind: type
-        });
-        console.log({
-            storage_name: storage,
-            name: name,
-            amount: amount,
-            peremption_date: get_stringed_value(date),
+            amount: parseInt(amount),
+            peremption_date: date,
             kind: type
         });
         fetch(api_functions.get_business_api() + '/product', options)

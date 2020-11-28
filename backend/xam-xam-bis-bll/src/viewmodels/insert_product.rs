@@ -1,14 +1,28 @@
 use serde::{Deserialize, Serialize};
 use xam_xam_dal::enums::product_kind::ProductKind;
 use chrono::NaiveDate;
+use crate::date_ser;
 
 #[derive(Serialize, Deserialize,Debug)]
 pub struct InsertProduct {
     storage_name: String,
     name: String,
-    amount: i16,
+    amount: i32,
+    #[serde(with = "date_ser")]
     peremption_date: NaiveDate,
-    kind: ProductKind
+    kind: Option<ProductKind>
+}
+use std::str::FromStr;
+impl Default for InsertProduct {
+    fn default() -> Self {
+        Self {
+            storage_name : "storage".to_owned(),
+            name : "name".to_owned(),
+            amount : 1,
+            peremption_date : NaiveDate::from_str("2020-11-11").unwrap(),
+            kind : Some(ProductKind::Other)
+        }
+    }
 }
 
 impl InsertProduct {
@@ -16,9 +30,9 @@ impl InsertProduct {
 
     pub fn get_name(&self) -> &str { &self.name }
     
-    pub fn get_amount(&self) -> i16 { self.amount }
+    pub fn get_amount(&self) -> i32 { self.amount }
 
     pub fn get_peremption_date(&self) -> &NaiveDate { &self.peremption_date }
 
-    pub fn get_kind(&self) -> ProductKind { self.kind.clone() }
+    pub fn get_kind(&self) -> ProductKind { self.kind.clone().unwrap_or(ProductKind::Other).clone() }
 }

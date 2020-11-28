@@ -9,13 +9,17 @@ use actix_web::{get, post, delete, web, web::Data, web::Json, HttpResponse};
 
 #[get("/products/{path}")]
 pub async fn get_product_list(id : UserId, pg : Data<PgPool>, path: web::Path<(String,)>) -> Result<HttpResponse,XamXamWebError> {
-    info!("\nquery storage param: {}\n",&path.0.0);
     Ok(HttpResponse::Ok().json(product::get_product_list(&pg.conn()?, id.get_id(),&path.0.0)?))
 }
 
 #[post("/product")]
 pub async fn add_product(id : UserId, pg : Data<PgPool>, model : Json<InsertProduct>) -> Result<HttpResponse,XamXamWebError> {
-    info!("{:?}",&model.0);
+    info!("{}",&model.0.get_storage_name());
+    info!("{}",&model.0.get_name());
+    info!("{}",&model.0.get_amount());
+    info!("{}",&model.0.get_peremption_date());
+    info!("{:?}",&model.0.get_kind());
+    info!("{}",&id.get_id());
     Ok(HttpResponse::Ok().json(product::add_product(&pg.conn()?, id.get_id(), &model.0)?))
 }
 

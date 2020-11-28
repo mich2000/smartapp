@@ -18,9 +18,6 @@ const ProductUnit = (item_info) => {
             <th>
                 {item_info[4]}
             </th>
-            <th>
-                <input hidden value={item_info[0]} name="product_id"/>
-            </th>
         </tr>
     );
 }
@@ -38,12 +35,11 @@ export const Products = (props) => {
                             <th>#</th>
                             <th>days until</th>
                             <th>Kind</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {props.products.map((item, i) => {
-                            return ( <ProductUnit {...item}/> );
+                            return ( <ProductUnit key={i} {...item}/> );
                         })}
                     </tbody>
                 </table>
