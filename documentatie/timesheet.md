@@ -86,4 +86,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 
 * Working on my react app and discussing with instructor: 1h30
 * Working on my react app and trying to solve problems related to date serialization: 3h15
-* 16:20 - 17:50 || 18:10 - 
+* Problem related to a custom sql query to try to solve an insert: 3h30
