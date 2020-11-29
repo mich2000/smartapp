@@ -77,6 +77,7 @@ These are sources I used and researched to be able to make my project.
 ### Nginx
 
 * Nginx reverse proxy documentation: https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+* Nginx routing configuration to https and setting up SSL certificats: https://serverfault.com/questions/934893/nginx-https-auto-redirect-to-specific-port
 
 ### Firefox
 
