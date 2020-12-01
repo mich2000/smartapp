@@ -32,10 +32,6 @@ this.addEventListener('activate', e => {
     );
 });
 
-this.addEventListener('offline',e => {
-
-});
-
 this.addEventListener('fetch', e => {
     if (e.request.url.startsWith(this.location.origin)) {
         e.respondWith(
@@ -48,7 +44,6 @@ this.addEventListener('fetch', e => {
                 .then(cache => {
                     return fetch(e.request)
                     .then(response => {
-                        console.log(response.clone());
                         return cache.put(e.request, response.clone())
                         .then(() => {
                             return response;

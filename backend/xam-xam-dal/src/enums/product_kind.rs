@@ -29,7 +29,7 @@ impl std::fmt::Display for ProductKind {
                 ProductKind::Grain => "grain",
                 ProductKind::Meat => "meat",
                 ProductKind::Fish => "fish",
-                ProductKind::Dairy => "diary",
+                ProductKind::Dairy => "dairy",
                 ProductKind::Unhealthy => "unhealthy",
                 ProductKind::Bean => "bean"
             }

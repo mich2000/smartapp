@@ -9,9 +9,17 @@ function extract_storage_name() {
     return params.get('storage');
 }
 
-export const Product = (props) => {
+export const Product = () => {
     const [products, setProducts] = useState([]);
     const storage = extract_storage_name();
+
+    function add_product(product) {
+        setProducts(products.concat([[product[0],product[1], product[2],product[3],product[4]]]));
+    }
+
+    function remove_product(product_id) {
+        setProducts(products.filter(product => product[0].toInt() !== product_id.toInt()));
+    }
 
     useEffect(() => {
         fetch(api_functions.get_business_api() + '/products/' + storage, api_functions.method_get())
@@ -26,12 +34,12 @@ export const Product = (props) => {
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
         });
-    },[storage])
+    },[])
 
     return (
         <div className="col-sm-10">
-            <InputProductDialog storage={storage}/>
-            <Products products={products} storage={storage}/>
+            <InputProductDialog storage={storage} add_product={(e) => add_product(e)}/>
+            <Products products={products} storage={storage} remove_product={(e) => remove_product(e)}/>
         </div>
     );
 }

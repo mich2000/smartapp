@@ -10,9 +10,11 @@ pub struct InsertProduct {
     amount: i32,
     #[serde(with = "date_ser")]
     peremption_date: NaiveDate,
-    kind: Option<ProductKind>
+    kind: ProductKind
 }
+
 use std::str::FromStr;
+
 impl Default for InsertProduct {
     fn default() -> Self {
         Self {
@@ -20,7 +22,7 @@ impl Default for InsertProduct {
             name : "name".to_owned(),
             amount : 1,
             peremption_date : NaiveDate::from_str("2020-11-11").unwrap(),
-            kind : Some(ProductKind::Other)
+            kind : ProductKind::Other
         }
     }
 }
@@ -34,5 +36,5 @@ impl InsertProduct {
 
     pub fn get_peremption_date(&self) -> &NaiveDate { &self.peremption_date }
 
-    pub fn get_kind(&self) -> ProductKind { self.kind.clone().unwrap_or(ProductKind::Other).clone() }
+    pub fn get_kind(&self) -> ProductKind { self.kind.clone() }
 }

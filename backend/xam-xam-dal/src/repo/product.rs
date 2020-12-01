@@ -47,6 +47,9 @@ pub fn get_products(conn: &PgCon, user_id : i32, storage_name : &str) -> Result<
 }
 
 pub fn delete_product(conn: &PgCon, user_id : i32, storage_name : &str, product_id : i32) -> Result<(), XamXamError> {
+    info!("{}", user_id);
+    info!("{}", storage_name);
+    info!("{}", product_id);
     diesel::sql_query("DELETE FROM products where storage_id = (select id from storages where name = $1 and user_id = $2) AND id = $3")
     .bind::<Text,_>(storage_name)
     .bind::<Integer,_>(user_id)

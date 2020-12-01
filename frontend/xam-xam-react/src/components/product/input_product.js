@@ -26,7 +26,7 @@ export const InputProductDialog = (props) => {
             if(api_call.status === 200) {
                 api_call.json()
                 .then(json => {
-                    props.add_storage([json.product_id, name, amount,date,type]);
+                    props.add_product([json.product_id, name, amount,date,type]);
                 });
                 setType(product_type.Other);
                 setDate(new Date());
@@ -37,7 +37,7 @@ export const InputProductDialog = (props) => {
             console.error(`Could not send through the request. error: ${e}`);
         });
     }
-    //dd - mm - yyyy
+    
     return (
         <Popup trigger={<button className="btn btn-primary modal-input">Add product</button>} modal nested>
             {

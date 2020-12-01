@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import {storage_type} from '../../enums';
 
 export function EditStoragePopup(props) {
-    const [name, setName] = useState('');
+    const [name, setName] = useState(props.item[0]);
     const [type, setType] = useState(props.item[1]);
 
     function edit_storage(event) {
