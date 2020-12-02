@@ -1,13 +1,13 @@
 import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
-import {product_type} from '../../enums';
+import {ProductType} from '../../enums';
 
 export const InputProductDialog = (props) => {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState(0);
     const [date, setDate] = useState(new Date());
-    const [type, setType] = useState(product_type.Other);
+    const [type, setType] = useState(ProductType.Other);
     const storage = props.storage;
 
     function add_product(event) {
@@ -28,7 +28,7 @@ export const InputProductDialog = (props) => {
                 .then(json => {
                     props.add_product([json.product_id, name, amount,date,type]);
                 });
-                setType(product_type.Other);
+                setType(ProductType.Other);
                 setDate(new Date());
                 setName('');
                 setAmount(0);
@@ -49,9 +49,9 @@ export const InputProductDialog = (props) => {
                             <input className="modal-input form-control" type="number" value={amount} placeholder="Enter the amount" onChange={(e) => setAmount(e.target.value)}/>
                             <input className="modal-input form-control" type="date" value={date} placeholder="Enter the expiration date" onChange={(e) => setDate(e.target.value)}/>
                             <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
-                                {Object.keys(product_type).map(key => (
+                                {Object.keys(ProductType).map(key => (
                                     <option key={key} value={key}>
-                                        {product_type[key]}
+                                        {ProductType[key]}
                                     </option>
                                     )
                                 )}

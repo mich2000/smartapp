@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import Popup from 'reactjs-popup';
-import {storage_type} from '../../enums';
+import {StorageType} from '../../enums';
 
 export function EditStoragePopup(props) {
     const [name, setName] = useState(props.item[0]);
@@ -26,9 +26,9 @@ export function EditStoragePopup(props) {
                     <div className="modal-content">
                         <input className="modal-input form-control" type="text" value={name} placeholder="Enter the storage name" onChange={(e) => setName(e.target.value)}/>
                         <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
-                            {Object.keys(storage_type).map(key => (
+                            {Object.keys(StorageType).map(key => (
                                 <option key={key} value={key}>
-                                    {storage_type[key]}
+                                    {StorageType[key]}
                                 </option>
                                 )
                             )}

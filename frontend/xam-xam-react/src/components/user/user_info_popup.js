@@ -2,9 +2,9 @@ import Popup from 'reactjs-popup';
 import {UserInfo} from './user_info';
 import React from 'react';
 
-export function UserInfoPopup() {
+export function UserInfoPopup(props) {
     return (
-        <Popup trigger={<button className="btn btn-default">Overview</button>} modal nested>
+        <Popup trigger={props.trigger} modal nested>
             {
                 <div className="modal-dialog">
                     <div className="modal-header">Overview</div>

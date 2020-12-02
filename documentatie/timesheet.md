@@ -89,3 +89,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Problem related to a custom sql query to try to solve an insert: 3h30
 * Making dockerfiles for my services and nginx: 10m
 * Working on delete and add feature for products in my api and frontend: 1h30
+* Working on my react app, the home page of an authenticated user and the nav bar: 1h
