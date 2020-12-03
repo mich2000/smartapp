@@ -18,7 +18,7 @@ export const Product = () => {
     }
 
     function remove_product(product_id) {
-        setProducts(products.filter(product => product[0].toInt() !== product_id.toInt()));
+        setProducts(products.filter(product => parseInt(product[0]) !== parseInt(product_id)));
     }
 
     useEffect(() => {

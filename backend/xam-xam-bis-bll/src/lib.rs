@@ -1,7 +1,6 @@
 pub mod err;
 pub mod service;
 pub mod viewmodels;
-pub mod date_ser;
 
 #[macro_use]
 extern crate log;

@@ -32,6 +32,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .wrap(web_config::identity())
             .service(controllers::product::add_product)
             .service(controllers::product::remove_product)
+            .service(controllers::product::update_product)
             .service(controllers::product::get_product_list)
             .service(controllers::storage::add_storage)
             .service(controllers::storage::delete_storage)

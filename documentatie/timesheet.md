@@ -90,3 +90,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Making dockerfiles for my services and nginx: 10m
 * Working on delete and add feature for products in my api and frontend: 1h30
 * Working on my react app, the home page of an authenticated user and the nav bar: 1h
+* Working on bugs in my react app having to do with crud operations not resulting in proper UI changes and I worked on my backend to be able to update products: 1h

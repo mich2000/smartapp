@@ -1,6 +1,7 @@
 use crate::viewmodels::insert_product::InsertProduct;
 use crate::viewmodels::id_product::IdProduct;
 use crate::viewmodels::product_id::ProductId;
+use crate::viewmodels::update_product::UpdateProduct;
 use crate::viewmodels::products::Products;
 use crate::err::XamXamServiceError;
 use crate::PgCon;
@@ -20,6 +21,14 @@ pub fn get_product_list(conn : &PgCon, user_id : i32, storage_name : &str) -> Re
         return Err(XamXamServiceError::StorageNameIsEmpty)
     }
     Ok(product::get_products(conn, user_id, storage_name)?.into())
+}
+
+pub fn update_product(conn : &PgCon, user_id : i32, model : &UpdateProduct) -> Result<(),XamXamServiceError> {
+    if model.get_storage_name().is_empty() {
+        return Err(XamXamServiceError::StorageNameIsEmpty)
+    }
+    product::update_product(conn, user_id, model.get_storage_name(), &model.into())?;
+    Ok(())
 }
 
 pub fn remove_product(conn : &PgCon, user_id : i32, model : &IdProduct) -> Result<(),XamXamServiceError> {

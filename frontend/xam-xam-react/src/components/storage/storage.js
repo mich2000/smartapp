@@ -26,7 +26,7 @@ export const Storage = () => {
     }
 
     function edit_storage(edited_storage) {
-        setStorages(storages.filter(storage => storage[0] !== edited_storage.storage_name).concat([[edited_storage.new_storage_name || edited_storage.storage_name, edited_storage.new_kind]]));
+        setStorages(storages.map(stor => (stor[0] !== edited_storage.storage_name) ? stor : [edited_storage.new_storage_name || edited_storage.storage_name, edited_storage.new_kind]));
     }
 
     function remove_storage(storage_name) {

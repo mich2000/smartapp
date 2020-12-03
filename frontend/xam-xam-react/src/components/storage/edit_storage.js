@@ -1,10 +1,15 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import Popup from 'reactjs-popup';
 import {StorageType} from '../../enums';
 
 export function EditStoragePopup(props) {
     const [name, setName] = useState(props.item[0]);
     const [type, setType] = useState(props.item[1]);
+    
+    useEffect(() => {
+        setName(props.item[0]);
+        setType(props.item[1]);
+    },[]);
 
     function edit_storage(event) {
         event.preventDefault();
