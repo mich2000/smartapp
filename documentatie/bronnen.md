@@ -89,3 +89,7 @@ These are sources I used and researched to be able to make my project.
 * Post talking about Basic and Bearer HTTP header: https://stackoverflow.com/questions/34013299/web-api-authentication-basic-vs-bearer
 * Post about setting up authorization header for basic authentication: https://stackoverflow.com/questions/33505130/how-to-assign-basic-authentication-header-to-xmlhttprequest
 * Node development with HTTPS activated: https://create-react-app.dev/docs/using-https-in-development/
+
+### AndroidVectorDrawable to SVG
+
+* Link to npm package that converts the android drawables to svg: https://github.com/neworld/vd2svg
