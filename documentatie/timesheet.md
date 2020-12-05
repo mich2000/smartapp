@@ -95,3 +95,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 9
 
 * Convert android drawables from the previous android project to svg icons: 10m
+* Updating feature for products in storages: 1h30

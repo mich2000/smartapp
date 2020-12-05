@@ -1,5 +1,6 @@
 import React from 'react';
 import {DeleteProductPopup} from './delete_product';
+import {EditProductDialog} from './edit_product';
 import api_functions from '../../api';
 
 const ProductUnit = (props) => {
@@ -22,6 +23,7 @@ const ProductUnit = (props) => {
             </th>
             <th>
                 <DeleteProductPopup item={props.item_info} delete_product={(id) => props.delete_product(id)}/>
+                <EditProductDialog item_info={props.item_info} storage={props.storage} edit_product={(e) => props.edit_product(e)}/>
             </th>
         </tr>
     );
@@ -38,6 +40,32 @@ export const Products = (props) => {
         .then((api_call) => {
             if(api_call.status === 200) {
                 props.remove_product(id);
+            }
+        }).catch((e) => {
+            console.error(`Could not send through the request. error: ${e}`);
+        });
+    }
+
+    function edit_product(product) {
+        let options = api_functions.method_put();
+        options.body = JSON.stringify({
+            id : product.id,
+            storage_name: props.storage,
+            name: product.name,
+            amount: product.amount,
+            peremption_date: product.date,
+            kind: product.kind
+        });
+        fetch(api_functions.get_business_api() + '/product', options)
+        .then((api_call) => {
+            if(api_call.status === 200) {
+                props.edit_product({
+                    id : product.id,
+                    name : product.name,
+                    amount : product.amount,
+                    date : product.date,
+                    kind : product.kind
+                });
             }
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
@@ -61,7 +89,7 @@ export const Products = (props) => {
                     </thead>
                     <tbody>
                         {props.products.map((item, i) => {
-                            return ( <ProductUnit key={i} item_info={item} delete_product={(id) => delete_product(id)}/> );
+                            return ( <ProductUnit key={i} item_info={item} delete_product={(id) => delete_product(id)} storage={props.storage} edit_product={(e) => edit_product(e)}/> );
                         })}
                     </tbody>
                 </table>

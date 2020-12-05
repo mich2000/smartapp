@@ -17,6 +17,10 @@ export const Product = () => {
         setProducts(products.concat([[product[0],product[1], product[2],product[3],product[4]]]));
     }
 
+    function edit_product(product) {
+        setProducts(products.map(prod => (parseInt(prod[0]) !== parseInt(product.id)) ? prod : [product.id,product.name,parseInt(product.amount), product.date,product.kind]));
+    }
+
     function remove_product(product_id) {
         setProducts(products.filter(product => parseInt(product[0]) !== parseInt(product_id)));
     }
@@ -39,7 +43,7 @@ export const Product = () => {
     return (
         <div className="col-sm-10">
             <InputProductDialog storage={storage} add_product={(e) => add_product(e)}/>
-            <Products products={products} storage={storage} remove_product={(e) => remove_product(e)}/>
+            <Products products={products} storage={storage} remove_product={(e) => remove_product(e)} edit_product={(e) => edit_product(e)}/>
         </div>
     );
 }

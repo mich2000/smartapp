@@ -62,6 +62,7 @@ These are sources I used and researched to be able to make my project.
 * Rust session crate: https://docs.rs/actix-session/0.4.0/actix_session/
 * Rust post about handling request in a async manner: https://stackoverflow.com/questions/63308246/how-to-use-async-code-in-actix-web-extractors
 * Rust post about handling identity in middleware: https://users.rust-lang.org/t/actix-web-token-validation-in-middleware/38205
+* Rust ORM manner to embed migrations into application at its start: https://docs.rs/diesel_migrations/1.4.0/diesel_migrations/macro.embed_migrations.html
 
 ### Postgres
 
