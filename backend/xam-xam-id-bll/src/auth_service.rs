@@ -15,6 +15,7 @@ use crate::err::XamXamServiceError;
 use xam_xam_dal::err::XamXamError;
 use crate::{RCon,PgCon};
 use std::ops::DerefMut;
+use crate::viewmodels::product_unit::ProductUnits;
 
 /**
  * ============================================================ USER CREATION ============================================================
@@ -236,14 +237,21 @@ pub fn get_basic_information(db_conn : &PgCon, user_id : i32) -> Result<BasicUse
 }
 
 /**
- * ==================================================== GET EMAIL =============================================================
+ * ==================================================== RECENT PRODUCTS ==================================
+ */
+pub fn get_five_first_products(conn : &PgCon, user_id : i32) -> Result<ProductUnits, XamXamServiceError> {
+    Ok(user::get_five_first_products(conn, user_id)?.into())
+}
+
+/**
+ * ==================================================== GET EMAIL ==============================================
 */
 pub fn get_email_from_id(user_id : i32, db_conn : &PgCon) -> Result<EmailHolder, XamXamServiceError> {
     Ok(EmailHolder::from(user::get_email_by_id(db_conn, user_id)?))
 }
 
 /**
- * ================================================= DELETE PROFILE =======================================================s
+ * ================================================= DELETE PROFILE =======================================================
  */
 pub fn delete_user(db_conn : &PgCon, email : &str, pwd : &str) -> Result<(),XamXamServiceError> {
     if pwd.is_empty() {

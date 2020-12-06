@@ -9,6 +9,7 @@ pub mod models;
 pub mod repo;
 pub mod schema;
 pub mod enums;
+pub mod product_description;
 
 mod product_id;
 

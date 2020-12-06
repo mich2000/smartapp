@@ -56,6 +56,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .service(
                 web::scope("/user")
                     .service(controllers::user::get_basic_info)
+                    .service(controllers::user::get_five_first_products)
                     .service(controllers::user::change_email)
                     .service(controllers::user::change_password)
                     .service(controllers::user::delete_profile),

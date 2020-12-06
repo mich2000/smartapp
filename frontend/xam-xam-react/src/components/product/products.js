@@ -5,7 +5,7 @@ import api_functions from '../../api';
 
 const ProductUnit = (props) => {
     let difference_in_time = new Date(props.item_info[3]) - new Date();
-    let difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24));
+    let difference_in_days = Math.ceil(difference_in_time / (1000 * 3600 * 24));
 
     return (
         <tr>

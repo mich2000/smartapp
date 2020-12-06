@@ -8,9 +8,9 @@ pub struct Storages {
 }
 
 impl From<Vec<Storage>> for Storages {
-    fn from(vec_storages : Vec<Storage>) -> Storages {
+    fn from(storages : Vec<Storage>) -> Storages {
         Storages {
-            storages : vec_storages.iter().map(|storage| (storage.name.to_owned(),storage.storage_kind.clone())).collect()
+            storages : storages.iter().map(|storage| (storage.name.to_owned(),storage.storage_kind.clone())).collect()
         }
     }
 }

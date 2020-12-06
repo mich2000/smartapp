@@ -83,7 +83,9 @@ export default function UserContext() {
                             <Link className="nav-link" to="/about">About</Link>
                         </ul>
                         <ul className="navbar-nav ml-auto">
-                            <UserInfoPopup trigger={<a className="nav-link">Overview</a>}/>
+                            <UserInfoPopup trigger={<a className="nav-link">
+                                <img src="icons/ic_statistics.svg"/>
+                            </a>}/>
                             <li className="nav-item">
                                 <div className="dropdown">
                                     <button className="btn btn-secondary dropdown-toggle nav-link" type="button" id="dropDownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

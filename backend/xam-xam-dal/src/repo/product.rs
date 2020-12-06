@@ -39,7 +39,7 @@ pub fn update_product(conn: &PgCon, user_id : i32, storage_name : &str, model : 
 
 pub fn get_products(conn: &PgCon, user_id : i32, storage_name : &str) -> Result<Vec<Product>,XamXamError> {
     Ok(
-        diesel::sql_query("SELECT * FROM products WHERE storage_id = (SELECT id FROM storages WHERE name = $1 AND user_id = $2)")
+        diesel::sql_query("SELECT * FROM products WHERE storage_id = (SELECT id FROM storages WHERE name = $1 AND user_id = $2) order by peremption_date asc")
         .bind::<Text,_>(storage_name)
         .bind::<Integer,_>(user_id)
         .get_results::<Product>(conn)?

@@ -51,7 +51,7 @@ export const InputProductDialog = (props) => {
                             <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
                                 {Object.keys(ProductType).map(key => (
                                     <option key={key} value={key}>
-                                        {ProductType[key]}
+                                        {key}
                                     </option>
                                     )
                                 )}

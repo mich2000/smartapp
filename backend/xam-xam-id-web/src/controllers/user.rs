@@ -12,14 +12,22 @@ use xam_xam_id_bll::RCon;
 
 #[get("/basic/info")]
 pub async fn get_basic_info(id: UserId, pg: Data<PgPool>) -> Result<HttpResponse, XamXamWebError> {
-    let basic_user_info = UserInfo::new(&match auth_service::get_basic_information(
-        &pg.conn()?,
-        id.get_id(),
-    ) {
-        Ok(info) => info,
-        Err(e) => return Err(XamXamWebError::from(e)),
-    });
-    Ok(HttpResponse::Ok().json(basic_user_info))
+    Ok(HttpResponse::Ok().json(
+        UserInfo::new(&auth_service::get_basic_information(
+            &pg.conn()?,
+            id.get_id(),
+        )?)
+    ))
+}
+
+#[get("/recent/products")]
+pub async fn get_five_first_products(id: UserId, pg: Data<PgPool>) -> Result<HttpResponse, XamXamWebError> {
+    Ok(HttpResponse::Ok().json(
+        &auth_service::get_five_first_products(
+            &pg.conn()?,
+            id.get_id(),
+        )?
+    ))
 }
 
 #[put("/change/email")]
