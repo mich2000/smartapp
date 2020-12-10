@@ -26,3 +26,11 @@ body {
 .center-info-user {
     border: none;
 }
+
+svg {
+    font-size: 2rem;
+}
+
+.svg-plus, .svg-info {
+    font-size: 3rem;
+}

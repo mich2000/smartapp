@@ -97,3 +97,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Convert android drawables from the previous android project to svg icons: 10m
 * Updating feature for products in storages: 1h30
 * Working on my react app and backend to show the 5 oldest products of an user: 3h
+* Working on setting icons on my web app: 30min

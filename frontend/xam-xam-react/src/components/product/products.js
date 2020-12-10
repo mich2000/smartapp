@@ -22,8 +22,8 @@ const ProductUnit = (props) => {
                 {props.item_info[4]}
             </th>
             <th>
-                <DeleteProductPopup item={props.item_info} delete_product={(id) => props.delete_product(id)}/>
                 <EditProductDialog item_info={props.item_info} storage={props.storage} edit_product={(e) => props.edit_product(e)}/>
+                <DeleteProductPopup item={props.item_info} delete_product={(id) => props.delete_product(id)}/>
             </th>
         </tr>
     );

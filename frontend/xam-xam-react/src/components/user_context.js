@@ -84,12 +84,16 @@ export default function UserContext() {
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <UserInfoPopup trigger={<a className="nav-link">
-                                <img src="icons/ic_statistics.svg"/>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-info-circle-fill svg-info" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
                             </a>}/>
                             <li className="nav-item">
                                 <div className="dropdown">
                                     <button className="btn btn-secondary dropdown-toggle nav-link" type="button" id="dropDownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Profile
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-file-person-fill svg-info" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"/>
+                                        </svg>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropDownProfile">
                                         <Link className="dropdown-item" to="/profile">{user.email}</Link>

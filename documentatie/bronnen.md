@@ -19,6 +19,7 @@ These are sources I used and researched to be able to make my project.
 
 * Bootstrap table layout: https://getbootstrap.com/docs/4.1/content/tables/
 * Bootstrap documentation about colors: https://getbootstrap.com/docs/4.0/utilities/colors/
+* Bootstrap icons I use to make icons for my website: https://icons.getbootstrap.com/icons
 
 ### Javascript
 
