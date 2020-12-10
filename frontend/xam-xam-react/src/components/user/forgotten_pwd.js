@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {InputWithButton} from '../input';
 import email from '../../email';
 import api_functions from '../../api';
+import { show_error, show_info } from '../../toast';
 
 export function ForgottenPassword(props) {
     const [emailInput,setEmailInput] = useState('');
@@ -64,11 +65,11 @@ export function ForgottenPassword(props) {
     }
 
     function setMessage(message) {
-        props.message_callback(message,false);
+        show_info(message);
     }
 
     function setError(err) {
-        props.message_callback(err,true);
+        show_error(err);
     }
 
     return (

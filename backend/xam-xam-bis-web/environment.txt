@@ -1,0 +1,4 @@
+DATABASE_URL = ""
+
+CERT_PATH = ""
+KEY_PATH = ""

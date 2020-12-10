@@ -2,6 +2,7 @@ import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
 import {ProductType} from '../../enums';
+import {show_error} from '../../toast';
 
 export const InputProductDialog = (props) => {
     const [name, setName] = useState('');
@@ -32,9 +33,12 @@ export const InputProductDialog = (props) => {
                 setDate(new Date());
                 setName('');
                 setAmount(0);
+            } else {
+                api_call.text()
+                .then(err => show_error(err));
             }
         }).catch((e) => {
-            console.error(`Could not send through the request. error: ${e}`);
+            show_error(`Could not send through the request. error: ${e}`);
         });
     }
     

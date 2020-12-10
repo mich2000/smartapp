@@ -1,9 +1,10 @@
-import React, {useState,useContext} from 'react';
+import React, {useContext} from 'react';
 import Registration from './user/registration';
 import {Login} from './user/login';
 import api_functions from '../api';
 import {ForgottenPassword} from './user/forgotten_pwd';
 import {AppContext} from '../state';
+import { show_error } from '../toast';
 
 export function About() {
     return (
@@ -14,12 +15,7 @@ export function About() {
 }
 
 export default function UnauthenticatedHome() {
-    const [error,setError] = useState({msg : '',error : false});
     const [user,setUser] = useContext(AppContext);
-
-    function log_msg(msg,err) {
-        setError({ msg : msg, error : err });
-    }
 
     function login(login_params) {
         let options = api_functions.method_get();
@@ -30,18 +26,14 @@ export default function UnauthenticatedHome() {
                 setUser({email : login_params.email, loggedIn : user.loggedIn});
             } else {
                 api_call.text()
-                .then(err => setError(err,true));
+                .then(err => show_error(err));
             }
-        }).catch((e) => setError(`Could not send through the request. error: ${e}`,true));
+        }).catch((e) => show_error(`Could not send through the request. error: ${e}`));
     }
 
     return (
         <>
             <h1>xam-xam</h1>
-            <span className="font-weight-bold text-danger">{error.msg}</span>
-            {
-                (error.msg !== '' && error.error) ? <span className="font-weight-bold text-danger">{error.msg}</span> : <span className="font-weight-bold text-success">{error.msg}</span>
-            }
             <div id="accordion" className="m-3">
                 <div className="card text-center">
                     <div className="card-header" id="UserRegistration">
@@ -49,7 +41,7 @@ export default function UnauthenticatedHome() {
                     </div>
                     <div id="collapseUserRegistration" className="collapse" aria-labelledby="UserRegistration" data-parent="#accordion">
                         <div className="card-body">
-                            <Registration message_callback={(e,status) => log_msg(e,status)}/>
+                            <Registration/>
                         </div>
                     </div>
                 </div>
@@ -59,7 +51,7 @@ export default function UnauthenticatedHome() {
                     </div>
                     <div id="collapseUserLogin" className="collapse" aria-labelledby="UserLogin" data-parent="#accordion">
                         <div className="card-body">
-                            <Login message_callback={(e,s) => log_msg(e,s)} login_callback={(email) => login(email)}/>
+                            <Login login_callback={(email) => login(email)}/>
                         </div>
                     </div>
                 </div>
@@ -69,7 +61,7 @@ export default function UnauthenticatedHome() {
                     </div>
                     <div id="collapseForgottenPwd" className="collapse" aria-labelledby="ForgottenPwd" data-parent="#accordion">
                         <div className="card-body">
-                            <ForgottenPassword message_callback={(e,s) => log_msg(e,s)}/>
+                            <ForgottenPassword/>
                         </div>
                     </div>
                 </div>

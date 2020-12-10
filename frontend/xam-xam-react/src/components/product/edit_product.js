@@ -1,6 +1,5 @@
 import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
-import api_functions from '../../api';
 import {ProductType} from '../../enums';
 
 export const EditProductDialog = (props) => {

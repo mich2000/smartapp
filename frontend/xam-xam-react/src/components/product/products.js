@@ -2,6 +2,7 @@ import React from 'react';
 import {DeleteProductPopup} from './delete_product';
 import {EditProductDialog} from './edit_product';
 import api_functions from '../../api';
+import {show_error} from '../../toast';
 
 const ProductUnit = (props) => {
     let difference_in_time = new Date(props.item_info[3]) - new Date();
@@ -40,9 +41,12 @@ export const Products = (props) => {
         .then((api_call) => {
             if(api_call.status === 200) {
                 props.remove_product(id);
+            } else {
+                api_call.text()
+                .then(err => show_error(err));
             }
         }).catch((e) => {
-            console.error(`Could not send through the request. error: ${e}`);
+            show_error(`Could not send through the request. error: ${e}`);
         });
     }
 
@@ -66,9 +70,12 @@ export const Products = (props) => {
                     date : product.date,
                     kind : product.kind
                 });
+            } else {
+                api_call.text()
+                .then(err => show_error(err));
             }
         }).catch((e) => {
-            console.error(`Could not send through the request. error: ${e}`);
+            show_error(`Could not send through the request. error: ${e}`);
         });
     }
 

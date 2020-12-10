@@ -35,6 +35,7 @@ These are sources I used and researched to be able to make my project.
 * Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182
 * Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
 * Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
+* React show toast: https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
 
 ### Rust
 

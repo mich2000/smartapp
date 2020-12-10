@@ -1,5 +1,7 @@
 import api_functions from '../../api';
 import React, { useState,useEffect }  from 'react';
+import {ToastContainer} from 'react-toastify';
+import {show_error} from '../../toast';
 
 export function UserInfo() {
     const [amount_prod,SetAmountProd] = useState(0);
@@ -18,12 +20,12 @@ export function UserInfo() {
                     SetMinDate(json.min_bederf);
                     SetMaxDate(json.max_bederf);
                 })
-                .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+                .catch((e) => show_error(`Could not send through the request. error: ${e}`));
             } else {
                 console.log(api_call.body)
             }
         })
-        .catch((e) => console.error(`Could not send through the request. error: ${e}`));
+        .catch((e) => show_error(`Could not send through the request. error: ${e}`));
     },[])
 
     return (
@@ -48,6 +50,7 @@ export function UserInfo() {
                     </div>
                 </div>
             }
+            <ToastContainer/>
         </>
     );
 }

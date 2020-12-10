@@ -1,5 +1,6 @@
 import React, { useState }  from 'react';
 import email_util from '../../email';
+import {show_error} from '../../toast';
 
 export function Login(props) {
     const [email_input, setEmail] = useState("");
@@ -9,11 +10,11 @@ export function Login(props) {
         event.preventDefault();
         event.stopPropagation();
         if(!email_util.control_email(email_input)) {
-            props.message_callback("Email was not in the correct format.",true);
+            show_error("Email was not in the correct format.");
             return;
         }
         if(password === "") {
-            props.message_callback("Given password was empty.",true);
+            show_error("Given password was empty.");
             return;
         }
         props.login_callback({ email : email_input, password : password });

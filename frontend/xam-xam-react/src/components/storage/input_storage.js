@@ -2,6 +2,7 @@ import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
 import {StorageType} from '../../enums';
+import {show_error} from '../../toast';
 
 export const InputStorageDialog = (props) => {
     const [name, setName] = useState('');
@@ -10,7 +11,6 @@ export const InputStorageDialog = (props) => {
     function add_storage(event) {
         event.preventDefault();
         event.stopPropagation();
-        if(name === '') { return; }
         let options = api_functions.method_post();
         options.body = JSON.stringify({ name : name, kind : type });
         fetch(api_functions.get_business_api() + '/storage', options)
@@ -22,10 +22,11 @@ export const InputStorageDialog = (props) => {
                 });
                 setType(StorageType.Other);
                 setName('');
+            } else {
+                api_call.text()
+                .then(err => show_error(err));
             }
-        }).catch((e) => {
-            console.error(`Could not send through the request. error: ${e}`);
-        });
+        }).catch((e) =>  show_error(`Could not send through the request. error: ${e}`));
     }
 
     return (
