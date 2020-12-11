@@ -34,3 +34,19 @@ svg {
 .svg-plus, .svg-info {
     font-size: 3rem;
 }
+
+.user-info {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.container,.col-sm-10 {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    justify-content: space-evenly;
+}

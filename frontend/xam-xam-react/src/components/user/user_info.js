@@ -29,28 +29,30 @@ export function UserInfo() {
     },[])
 
     return (
-        <>
+        <div className="user-info">
             <div>
-                <dt>Amount of Storages</dt>
-                <dd>{amount_stor}</dd>
-            </div>
-            <div>
-                <dt>Amount of products</dt>
-                <dd>{amount_prod}</dd>
+                <div>
+                    <dt>Amount of Storages</dt>
+                    <dd>{amount_stor}</dd>
+                </div>
+                <div>
+                    <dt>Amount of products</dt>
+                    <dd>{amount_prod}</dd>
+                </div>
             </div>
             { (amount_prod !== 0) && 
                 <div>
                     <div>
-                        <dt>Maximal peremption date</dt>
+                        <dt>Maximum expiration date</dt>
                         <dd>{max_date}</dd>
                     </div>
                     <div>
-                        <dt>Minimal peremption date</dt>
+                        <dt>Minimal expiration date</dt>
                         <dd>{min_date}</dd>
                     </div>
                 </div>
             }
             <ToastContainer/>
-        </>
+        </div>
     );
 }

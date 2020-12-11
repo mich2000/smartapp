@@ -99,3 +99,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on my react app and backend to show the 5 oldest products of an user: 3h
 * Working on setting icons on my web app: 30min
 * Working react app: 2h30
+* Working on the usability of my app: 20min
