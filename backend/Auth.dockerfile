@@ -17,4 +17,6 @@ ARG JWT_FILE_PATH=xam-xam-id-web/Jwt.toml
 COPY $ENV_FILE_PATH ./env
 COPY $JWT_FILE_PATH ./Jwt.toml
 EXPOSE 8000
+EXPOSE 6379
+EXPOSE 5432
 CMD ["./xam-xam-id-web"]

@@ -4,5 +4,37 @@ services:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
+      environment:
+        POSTGRES_DB : xam-xam
+        POSTGRES_USER : xam-xam
+        POSTGRES_PASSWORD : password
+  redis:
+    image: "alpine/redis"
+    command: redis-server --requirepass password
+    ports:
+      - "6379:6379"
+  id:
+    image: "xam-xam-id"
+    depends_on: 
+      - db
+      - redis
+    ports: 
+      - "8000:8000"
+    volumes: 
+      - "/:/etc/letsencrypt/live/xam-xam.xyz/"
+  bis:
+    image: "xam-xam-bis"
+    depends_on: 
+      - db
+      - id
+    ports: 
+      - "8001:8001"
+    volumes: 
+      - "/:/etc/letsencrypt/live/xam-xam.xyz/"
+  web:
+    image: "xam-xam-web"
+    depends_on: 
+      - "bis"
+      - "id"
+    ports: 
+      - "443:443"

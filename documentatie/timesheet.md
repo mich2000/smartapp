@@ -100,3 +100,7 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on setting icons on my web app: 30min
 * Working react app: 2h30
 * Working on the usability of my app: 20min
+
+## Week 10
+
+* Working on my production config, in my react app and docker-compose.yml: 2h20

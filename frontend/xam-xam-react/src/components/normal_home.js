@@ -10,6 +10,9 @@ export function About() {
     return (
         <div className="col-sm-10">
             <h1>About</h1>
+            <p>
+                This is an application you can use to manage your food products in places where you store them. The food can be categorized by these places, for example fridge or a drawer where you hide cookies from your family.
+            </p>
         </div>
     );
 }

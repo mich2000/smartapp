@@ -36,6 +36,8 @@ These are sources I used and researched to be able to make my project.
 * Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
 * Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
 * React show toast: https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
+* Deploying react application: https://create-react-app.dev/docs/deployment/
+* .env file doesn't work in react app, prefixing with REACT_APP_ to make it work: https://stackoverflow.com/questions/48378337/create-react-app-not-picking-up-env-files
 
 ### Rust
 

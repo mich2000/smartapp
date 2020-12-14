@@ -1,5 +1,7 @@
-let api = 'https://localhost:8080';
-let business_api = 'https://localhost:8081';
+let api = process.env.REACT_APP_ID_API_URL || 'https://localhost:8080';
+let business_api = process.env.REACT_APP_BIS_API_URL || 'https://localhost:8081';
+console.log(process.env.REACT_APP_ID_API_URL);
+console.log(process.env.REACT_APP_BIS_API_URL);
 
 //basic options for every api fetch call
 let basic_options = function() {
