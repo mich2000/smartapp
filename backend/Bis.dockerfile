@@ -12,8 +12,8 @@ RUN cargo build --release && strip target/release/xam-xam-bis-web
 # Final stage
 FROM debian:stretch-slim
 COPY --from=cargoer xam-xam-bis-web/target/release/xam-xam-bis-web .
-ARG ENV_FILE_PATH=xam-xam-bis-web/.env
-ARG JWT_FILE_PATH=xam-xam-bis-web/Jwt.toml
+ARG ENV_FILE_PATH
+ARG JWT_FILE_PATH
 COPY $ENV_FILE_PATH ./env
 COPY $JWT_FILE_PATH ./Jwt.toml
 EXPOSE 8001

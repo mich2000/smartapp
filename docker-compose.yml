@@ -4,6 +4,7 @@ services:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+      - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/up.sql:/docker-entrypoint-initdb.d/
       environment:
         POSTGRES_DB : xam-xam
         POSTGRES_USER : xam-xam
@@ -13,7 +14,7 @@ services:
     command: redis-server --requirepass password
     ports:
       - "6379:6379"
-  id:
+  xam-id:
     image: "xam-xam-id"
     depends_on: 
       - db
@@ -22,19 +23,19 @@ services:
       - "8000:8000"
     volumes: 
       - "/:/etc/letsencrypt/live/xam-xam.xyz/"
-  bis:
+  xam-bis:
     image: "xam-xam-bis"
     depends_on: 
       - db
-      - id
+      - xam-id
     ports: 
       - "8001:8001"
     volumes: 
       - "/:/etc/letsencrypt/live/xam-xam.xyz/"
-  web:
+  xam-web:
     image: "xam-xam-web"
     depends_on: 
-      - "bis"
-      - "id"
+      - "xam-bis"
+      - "xam-id"
     ports: 
       - "443:443"

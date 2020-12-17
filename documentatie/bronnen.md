@@ -79,6 +79,10 @@ These are sources I used and researched to be able to make my project.
 
 * Redis documentation for security: https://redis.io/topics/config
 
+### Docker
+
+* Stackoverflow article about how to execute startup script: https://gist.github.com/onjin/2dd3cc52ef79069de1faa2dfd456c945
+
 ### Nginx
 
 * Nginx reverse proxy documentation: https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
