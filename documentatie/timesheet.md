@@ -104,4 +104,15 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 10
 
 * Working on my production config, in my react app and docker-compose.yml: 2h20
-* Trying to deploy my app: 4h
+* Trying to deploy my app with docker and docker-compose, didn't succeed problems with ports, volumes and build of rust app: 8h
+
+## Deployment problems
+
+Errors I had:
+* Cannot deploy a volume on the root of a container.
+* Cannot deploy a container whose port is already being listened to.
+* Rust build of the authentication service fails on my vps but not on my linux desktop.
+* Rust building of Authentication service error message: 
+```process didn't exit successfully: `rustc --crate-name xam_xam_id_web --edition=2018 src/main.rs --error-format=json --json=diagnostic-rendered-ansi --crate-type bin --emit=dep-info,link -C opt-level=z -C panic=abort -C lto -C codegen-units=1 -C metadata=1de7fef8615bf336 -C extra-filename=-1de7fef8615bf336 --out-dir /xam-xam-id-web/target/release/deps -L dependency=/xam-xam-id-web/target/release/deps --extern actix_cors=/xam-xam-id-web/target/release/deps/libactix_cors-d9df84cc0c22cf5b.rlib --extern actix_identity=/xam-xam-id-web/target/release/deps/libactix_identity-679ab82e63f83f3d.rlib --extern actix_web=/xam-xam-id-web/target/release/deps/libactix_web-02e91e66f8948eb7.rlib --extern actix_web_httpauth=/xam-xam-id-web/target/release/deps/libactix_web_httpauth-a31192eda17bb5b4.rlib --extern futures_util=/xam-xam-id-web/target/release/deps/libfutures_util-51c5483afad7606b.rlib --extern jwt_gang=/xam-xam-id-web/target/release/deps/libjwt_gang-ef8c9d7b564d53ef.rlib --extern log=/xam-xam-id-web/target/release/deps/liblog-9f954c959ce6348b.rlib --extern log4rs=/xam-xam-id-web/target/release/deps/liblog4rs-561ae4aa8ca33383.rlib --extern mailgang=/xam-xam-id-web/target/release/deps/libmailgang-c317905a00803e87.rlib --extern rustls=/xam-xam-id-web/target/release/deps/librustls-02e9145bfe52ad91.rlib --extern xam_xam_common=/xam-xam-id-web/target/release/deps/libxam_xam_common-378dec558d999979.rlib --extern xam_xam_id_bll=/xam-xam-id-web/target/release/deps/libxam_xam_id_bll-ee123005831b19df.rlib -L native=/xam-xam-id-web/target/release/build/ring-287f767d5dbcec7c/out -L native=/xam-xam-id-web/target/release/build/brotli-sys-69dd56223ff5bb19/out -L native=/usr/lib/x86_64-linux-gnu` (signal: 9, SIGKILL: kill)```
+* Another docker compose error linked to SSL certificates: `error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory`
+* Open ports on the linux instance.

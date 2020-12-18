@@ -1,5 +1,5 @@
 # Build stage
-FROM rust:slim-stretch as cargoer
+FROM rust:slim-stretch as cargoer    
 COPY jwt-gang/ ./jwt-gang
 COPY mailgang/ ./mailgang
 COPY xam-xam-common/ ./xam-xam-common
@@ -12,6 +12,7 @@ RUN cargo build --release && strip target/release/xam-xam-bis-web
 
 # Final stage
 FROM debian:stretch-slim
+RUN apt-get update && apt-get install libpq libssl-dev
 COPY --from=cargoer xam-xam-bis-web/target/release/xam-xam-bis-web .
 ARG ENV_FILE_PATH
 ARG JWT_FILE_PATH
