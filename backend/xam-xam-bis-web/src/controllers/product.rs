@@ -10,7 +10,7 @@ use actix_web::{get, post, put, delete, web, web::Data, web::Json, HttpResponse}
 
 #[get("/products/{path}")]
 pub async fn get_product_list(id : UserId, pg : Data<PgPool>, path: web::Path<(String,)>) -> Result<HttpResponse,XamXamWebError> {
-    Ok(HttpResponse::Ok().json(product::get_product_list(&pg.conn()?, id.get_id(),&path.0.0)?))
+    Ok(HttpResponse::Ok().json(product::get_product_list(&pg.conn()?, id.get_id(),&(path.0).0)?))
 }
 
 #[post("/product")]

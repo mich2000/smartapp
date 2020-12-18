@@ -104,3 +104,4 @@ Timesheet to demonstrate my learning and making to complete my project.
 ## Week 10
 
 * Working on my production config, in my react app and docker-compose.yml: 2h20
+* Trying to deploy my app: 4h

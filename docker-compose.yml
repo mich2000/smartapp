@@ -1,41 +1,46 @@
-version: "3.8"
+version: "3.3"
 services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-      - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/up.sql:/docker-entrypoint-initdb.d/
-      environment:
-        POSTGRES_DB : xam-xam
-        POSTGRES_USER : xam-xam
-        POSTGRES_PASSWORD : password
+      - ./db-data:/var/lib/postgresql/data
+      - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/:/docker-entrypoint-initdb.d/
+    environment:
+      POSTGRES_DB : xam-xam
+      POSTGRES_USER : xam-xam
+      POSTGRES_PASSWORD : xam-xam-pwd-pg
   redis:
-    image: "alpine/redis"
-    command: redis-server --requirepass password
+    image: sickp/alpine-redis
+    command: redis-server --requirepass xam-xam-pwd-r
     ports:
       - "6379:6379"
   xam-id:
-    image: "xam-xam-id"
-    depends_on: 
+    image: xam-id:staging
+    depends_on:
       - db
       - redis
-    ports: 
+    ports:
       - "8000:8000"
-    volumes: 
-      - "/:/etc/letsencrypt/live/xam-xam.xyz/"
+      - "6379:6379"
+      - "5432:5432"
+    volumes:
+      - "/etc/letsencrypt/live/xam-xam.xyz/:/production"
   xam-bis:
-    image: "xam-xam-bis"
-    depends_on: 
+    image: xam-bis:staging
+    depends_on:
       - db
       - xam-id
-    ports: 
+    ports:
       - "8001:8001"
-    volumes: 
-      - "/:/etc/letsencrypt/live/xam-xam.xyz/"
+      - "5432:5432"
+    volumes:
+      - "/etc/letsencrypt/live/xam-xam.xyz/:/production"
   xam-web:
-    image: "xam-xam-web"
-    depends_on: 
+    image: xam-web:staging
+    depends_on:
       - "xam-bis"
       - "xam-id"
-    ports: 
+    ports:
       - "443:443"
+    volumes:
+      - "/etc/letsencrypt/live/xam-xam.xyz/:/production"
