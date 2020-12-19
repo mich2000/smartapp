@@ -118,3 +118,4 @@ Errors I had:
 * Open ports on the linux instance.
 * Make sure you map correctly ports to the ports of your api.
 * Make sure the smtp domain that you configure is right, an error I overlooked quite easily.
+* Make sure you SSL certificates are changes: `error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed:../ssl/statem/statem_clnt.c:1245: (unable to get local issuer certificate)`
