@@ -3,7 +3,6 @@ use lettre::smtp::authentication::Credentials;
 use std::sync::Mutex;
 use xam_xam_common::util::get_value_from_key;
 use crate::mail_struct::Report;
-use lettre::ClientSecurity;
 
 pub type MailTransport = Mutex<SmtpTransport>;
 
@@ -12,7 +11,7 @@ pub struct Mailer(MailTransport,String);
 fn get_transport(domain : &str, email : &str, pwd : &str) -> MailTransport {
     info!("Transport has been created.");
     Mutex::new(
-        lettre::SmtpClient::new(&domain.to_string(),ClientSecurity::None)
+        lettre::SmtpClient::new_simple(&domain.to_string())
         .expect("stmp domain is not good")
         .credentials(Credentials::new(email.to_string(),pwd.to_string()))
         .transport()
