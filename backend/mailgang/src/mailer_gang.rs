@@ -52,8 +52,8 @@ impl Mailer {
     pub fn send_email(&self, report : Report) -> Result<(),&'static str> {
         let mail = match report.email().from(self.1.clone()).build() {
             Ok(mail) => mail,
-            Err(_) => {
-                warn!("Faulthy report structure.");
+            Err(err) => {
+                warn!("Faulthy report structure. error: {}",err);
                 return Err("Faulthy report structure.")
             }
         };
@@ -62,8 +62,8 @@ impl Mailer {
                 info!("Email has been sent through the SMTP transport bus.");
                 Ok(())
             },
-            Err(_) => {
-                warn!("The email could not be send this is related to the smtp transport");
+            Err(err) => {
+                warn!("The email could not be send this is related to the smtp transport. error: {}",err);
                 Err("The email could not be send this is related to the smtp transport")
             }
         }

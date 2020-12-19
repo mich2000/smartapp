@@ -39,21 +39,31 @@ impl fmt::Display for XamXamServiceError {
 }
 
 impl From<XamXamError> for XamXamServiceError {
-    fn from(err : XamXamError) -> Self { XamXamServiceError::XamXamDalError(err) }
+    fn from(err : XamXamError) -> Self { 
+        error!("{}",err);
+        XamXamServiceError::XamXamDalError(err)
+    }
 }
 
 impl From<r2d2_redis::redis::RedisError> for XamXamServiceError {
     fn from (err : r2d2_redis::redis::RedisError) -> Self {
+        error!("{}",err);
         XamXamServiceError::CustomError(format!("{}",err))
     }
 }
 
 impl From<&str> for XamXamServiceError { 
-    fn from (err : &str) -> Self { XamXamServiceError::CustomError(err.to_string()) } 
+    fn from (err : &str) -> Self {
+        error!("{}",err);
+        XamXamServiceError::CustomError(err.to_string())
+    } 
 }
 
 impl From<JwtCustomError> for XamXamServiceError {
-    fn from(err : JwtCustomError) -> Self { XamXamServiceError::JWTerror(err) }
+    fn from(err : JwtCustomError) -> Self { 
+        error!("{}",err);
+        XamXamServiceError::JWTerror(err)
+    }
 }
 
 impl Error for XamXamServiceError { }

@@ -83,6 +83,7 @@ These are sources I used and researched to be able to make my project.
 
 * Stackoverflow article about how to execute startup script: https://gist.github.com/onjin/2dd3cc52ef79069de1faa2dfd456c945
 * Docker documentation to help me with volumes within docker compose: https://docs.docker.com/storage/volumes/
+* Stackoverflow article to mount a single file: https://stackoverflow.com/questions/42248198/how-to-mount-a-single-file-in-a-volume
 
 ### Nginx
 
