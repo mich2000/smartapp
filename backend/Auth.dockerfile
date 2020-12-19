@@ -13,11 +13,10 @@ RUN cargo build --release && strip target/release/xam-xam-id-web
 
 # Final stage
 FROM debian:stretch-slim
-RUN apt-get update && apt-get install libpq libssl-dev
 COPY --from=cargoer xam-xam-id-web/target/release/xam-xam-id-web .
-ARG ENV_FILE_PATH
 ARG JWT_FILE_PATH
-COPY $ENV_FILE_PATH ./env
 COPY $JWT_FILE_PATH ./Jwt.toml
+RUN apt-get update && apt-get -y install pkg-config libssl-dev libpq-dev
+RUN echo "/usr/local/lib64" > /etc/ld.so.conf.d/openssl.conf && ldconfig
 EXPOSE 8000
 CMD ["./xam-xam-id-web"]

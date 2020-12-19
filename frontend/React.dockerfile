@@ -3,11 +3,12 @@ WORKDIR /app
 COPY ./xam-xam-react/package*.json /app/
 RUN npm install
 COPY ./xam-xam-react/ /app/
-RUN npm run build --prod
+RUN npm run build
 
 # Final build state
 FROM nginx:alpine
 EXPOSE 443
+EXPOSE 80
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf

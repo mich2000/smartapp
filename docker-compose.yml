@@ -6,12 +6,14 @@ services:
       - ./db-data:/var/lib/postgresql/data
       - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/:/docker-entrypoint-initdb.d/
     environment:
-      POSTGRES_DB : xam-xam
-      POSTGRES_USER : xam-xam
-      POSTGRES_PASSWORD : xam-xam-pwd-pg
+      POSTGRES_DB: ""
+      POSTGRES_USER: ""
+      POSTGRES_PASSWORD: ""
+    ports:
+      - "5432:5432"
   redis:
     image: sickp/alpine-redis
-    command: redis-server --requirepass xam-xam-pwd-r
+    command: redis-server --requirepass ""
     ports:
       - "6379:6379"
   xam-id:
@@ -21,8 +23,19 @@ services:
       - redis
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_URL: ""
+      REDIS_URL: ""
+      CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
+      KEY_PATH: /production/live/xam-xam.xyz/privkey.pem
+      PERSON_SMTP_USERNAME: ""
+      PERSON_SMTP_PASSWORD: ""
+      PERSON_SMTP_DOMAIN: smtp.google.com
     volumes:
-      - "/etc/letsencrypt/live/xam-xam.xyz/:/production"
+      - /etc/letsencrypt:/production
+    links:
+      - "db"
+      - "redis"
   xam-bis:
     image: xam-bis:staging
     depends_on:
@@ -31,7 +44,13 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - "/etc/letsencrypt/live/xam-xam.xyz/:/production"
+      - /etc/letsencrypt:/production
+    environment:
+      DATABASE_URL: ""
+      CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
+      KEY_PATH: /production/live/xam-xam.xyz/privkey.pem
+    links:
+      - "db"
   xam-web:
     image: xam-web:staging
     depends_on:
@@ -41,4 +60,4 @@ services:
       - "443:443"
       - "80:443"
     volumes:
-      - "/etc/letsencrypt/live/xam-xam.xyz/:/production"
+      - /etc/letsencrypt:/production
