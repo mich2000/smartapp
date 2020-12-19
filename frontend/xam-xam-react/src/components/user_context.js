@@ -26,7 +26,12 @@ export default function UserContext() {
         fetch(api_functions.get_api() + "/auth/validate",api_functions.method_get())
         .then((api_call) => {
             if(api_call.status === 200) {
-                setUser({email : user.email, loggedIn: true});
+                api_call.text()
+                .then(text => {
+                    if(text == "authenticated") {
+                        setUser({email : user.email, loggedIn: true});
+                    }
+                })
                 fetch(api_functions.get_api() + "/auth/renew/token",api_functions.method_get())
                 .then((api_call) => {
                     if(api_call.status !== 200) {

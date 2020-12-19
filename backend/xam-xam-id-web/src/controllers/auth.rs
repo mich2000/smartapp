@@ -56,7 +56,7 @@ pub async fn login(
             .as_ref()
             .to_string(),
     );
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().body("authenticated"))
 }
 
 /**
@@ -78,7 +78,7 @@ pub async fn validate(
         None => return Err(XamXamWebError::CredentialsNotPresent),
     };
     jwt_config.decode_token(&jwt_token)?;
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().body("authenticated"))
 }
 
 /**

@@ -26,7 +26,9 @@ export default function UnauthenticatedHome() {
         fetch(api_functions.get_api() + "/auth/login",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                setUser({email : login_params.email, loggedIn : user.loggedIn});
+                if(text == "authenticated") {
+                    setUser({email : login_params.email, loggedIn : user.loggedIn});
+                }
             } else {
                 api_call.text()
                 .then(err => show_error(err));
