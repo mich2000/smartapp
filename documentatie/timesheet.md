@@ -119,3 +119,4 @@ Errors I had:
 * Make sure you map correctly ports to the ports of your api.
 * Make sure the smtp domain that you configure is right, an error I overlooked quite easily.
 * Make sure you SSL certificates are changes: `error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed:../ssl/statem/statem_clnt.c:1245: (unable to get local issuer certificate)`
+* Make sure that the timezone and ntp server is okay on your VPS to not get certificate errors.

@@ -4,7 +4,7 @@ services:
     image: postgres
     volumes:
       - ./db-data:/var/lib/postgresql/data
-      - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/:/docker-entrypoint-initdb.d/
+      - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/up.sql:/docker-entrypoint-initdb.d/up.sql
     environment:
       POSTGRES_DB: ""
       POSTGRES_USER: ""
@@ -22,7 +22,7 @@ services:
       - db
       - redis
     ports:
-      - "8000:8000"
+      - "8000:8080"
     environment:
       DATABASE_URL: ""
       REDIS_URL: ""
@@ -30,9 +30,9 @@ services:
       KEY_PATH: /production/live/xam-xam.xyz/privkey.pem
       PERSON_SMTP_USERNAME: ""
       PERSON_SMTP_PASSWORD: ""
-      PERSON_SMTP_DOMAIN: smtp.google.com
+      PERSON_SMTP_DOMAIN: smtp.gmail.com
     volumes:
-      - /etc/letsencrypt:/production
+      - /etc/letsencrypt:/production:ro
     links:
       - "db"
       - "redis"
@@ -42,9 +42,9 @@ services:
       - db
       - xam-id
     ports:
-      - "8001:8001"
+      - "8001:8081"
     volumes:
-      - /etc/letsencrypt:/production
+      - /etc/letsencrypt:/production:ro
     environment:
       DATABASE_URL: ""
       CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
@@ -57,7 +57,7 @@ services:
       - "xam-bis"
       - "xam-id"
     ports:
-      - "443:443"
-      - "80:80"
+      - 443:443
+      - 80:80
     volumes:
-      - /etc/letsencrypt:/production
+      - /etc/letsencrypt:/production:ro
