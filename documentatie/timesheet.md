@@ -105,7 +105,7 @@ Timesheet to demonstrate my learning and making to complete my project.
 
 * Working on my production config, in my react app and docker-compose.yml: 2h20
 * Trying to deploy my app with docker and docker-compose, didn't succeed problems with ports, volumes and build of rust app: 23h20
-* Solving bugs related to the deployment to production of the webapp and api: 4h
+* Solving bugs related to the deployment to production of the webapp and api: 6h
 
 ## Deployment problems
 
