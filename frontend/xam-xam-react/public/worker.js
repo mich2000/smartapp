@@ -1,13 +1,9 @@
 const CACHE_NAME = 'v1';
-const RUNTIME = 'runtime';
 
 const CACHED_URLS = [
-  'index.html',
-  '*.css',
-  '*.js',
-  '*.img',
-  'favicon.ico',
-  'manifest.json',
+  '/index.html',
+  '/favicon.ico',
+  '/manifest.json',
   '/'
 ];
 
@@ -19,34 +15,29 @@ this.addEventListener('install',e => {
 });
 
 this.addEventListener('activate', e => {
-    const currentCaches = [CACHE_NAME,RUNTIME];  
     e.waitUntil(
         caches.keys()
         .then(cacheNames => {
-            return cacheNames.filter(cacheName => !currentCaches.includes(cacheName))
-        })
-        .then(cachesToDelete => {
-            return Promise.all(cachesToDelete.map(cacheToDelete => {
-                return caches.delete(cacheToDelete);
-            }));
+            cacheNames.map(cacheName => {
+                if(cacheName.indexOf(CACHE_NAME) < 0) {
+                    return caches.delete(cacheName);
+                }
+            });
         })
     );
 });
 
 this.addEventListener('fetch', e => {
-        e.respondWith(
-                caches.match(e.request)
-                .then(response => {
-                        if(response) {
-                                return response;
-                        }
-                        fetch(e.request)
-                        .then(response => {
-                                return response;
-                        })
-                        .catch(notConnected);
-                })
-        );
+    e.respondWith(
+        caches.match(e.request)
+        .then(response => {
+            return response || fetch(e.request)
+            .then(fetchResponse => {
+                return fetchResponse
+            })
+            .catch(notConnected);
+        })
+    );
 });
 
 //status code => important http status
