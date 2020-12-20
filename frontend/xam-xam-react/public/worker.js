@@ -5,8 +5,10 @@ const CACHED_URLS = [
   'index.html',
   '*.css',
   '*.js',
+  '*.img',
   'favicon.ico',
-  'manifest.json'
+  'manifest.json',
+  '/'
 ];
 
 this.addEventListener('install',e => {
@@ -17,10 +19,10 @@ this.addEventListener('install',e => {
 });
 
 this.addEventListener('activate', e => {
-    const currentCaches = [CACHE_NAME,RUNTIME];
+    const currentCaches = [CACHE_NAME,RUNTIME];  
     e.waitUntil(
         caches.keys()
-        .then(cacheNames => { 
+        .then(cacheNames => {
             return cacheNames.filter(cacheName => !currentCaches.includes(cacheName))
         })
         .then(cachesToDelete => {
@@ -32,26 +34,19 @@ this.addEventListener('activate', e => {
 });
 
 this.addEventListener('fetch', e => {
-    if (e.request.url.startsWith(this.location.origin)) {
         e.respondWith(
-            caches.match(e.request)
-            .then(cachedResponse => {
-                if(cachedResponse) {
-                    return cachedResponse;
-                }
-                return caches.open(RUNTIME)
-                .then(cache => {
-                    return fetch(e.request)
-                    .then(response => {
-                        cache.put(e.request.url, response.clone());
-                        console.log(e.request.url);
-                        return response;
-                    })
-                    .catch(notConnected)
+                caches.match(e.request)
+                .then(response => {
+                        if(response) {
+                                return response;
+                        }
+                        fetch(e.request)
+                        .then(response => {
+                                return response;
+                        })
+                        .catch(notConnected);
                 })
-            })
         );
-    }
 });
 
 //status code => important http status

@@ -34,22 +34,22 @@ export function UserInfo() {
         <div className="user-info">
             <div>
                 <div>
-                    <dt>Amount of Storages</dt>
+                    <dt># Storages</dt>
                     <dd>{amount_stor}</dd>
                 </div>
                 <div>
-                    <dt>Amount of products</dt>
+                    <dt># products</dt>
                     <dd>{amount_prod}</dd>
                 </div>
             </div>
-            { (amount_prod !== 0) && 
+            { (amount_prod !== 0) &&
                 <div>
                     <div>
-                        <dt>Maximum expiration date</dt>
+                        <dt>Max. expiration date</dt>
                         <dd>{max_date}</dd>
                     </div>
                     <div>
-                        <dt>Minimal expiration date</dt>
+                        <dt>Min. expiration date</dt>
                         <dd>{min_date}</dd>
                     </div>
                 </div>
