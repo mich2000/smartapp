@@ -3,7 +3,6 @@ const RUNTIME = 'runtime';
 
 const CACHED_URLS = [
   'index.html',
-  './',
   '*.css',
   '*.js',
   'favicon.ico',
@@ -44,10 +43,9 @@ this.addEventListener('fetch', e => {
                 .then(cache => {
                     return fetch(e.request)
                     .then(response => {
-                        return cache.put(e.request, response.clone())
-                        .then(() => {
-                            return response;
-                        })
+                        cache.put(e.request.url, response.clone());
+                        console.log(e.request.url);
+                        return response;
                     })
                     .catch(notConnected)
                 })
