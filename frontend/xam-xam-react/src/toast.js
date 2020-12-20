@@ -11,10 +11,10 @@ let options = {
     progress: undefined,
 };
 
-export const show_error = (msg) => {
+export const showError = (msg) => {
     toast.error(msg, options);
 };
 
-export const show_info = (msg) => {
+export const showInfo = (msg) => {
     toast.info(msg,options);
 }

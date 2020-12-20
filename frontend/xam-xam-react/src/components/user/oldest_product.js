@@ -33,10 +33,7 @@ export function OldestProduct() {
     useEffect(() => {
         fetch(api_functions.get_api() + '/user/recent/products', api_functions.method_get())
         .then(request => request.json())
-        .then(body_json => {
-            console.log(body_json.units);
-            setOldestProducts(body_json.units);
-        })
+        .then(body_json => setOldestProducts(body_json.units))
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
     },[])
 

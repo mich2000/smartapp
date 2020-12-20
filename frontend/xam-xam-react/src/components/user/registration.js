@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import api_functions from '../../api';
 import {InputWithButton} from '../input';
 import email_util from '../../email';
-import { show_error, show_info } from '../../toast';
+import { showError, showInfo } from '../../toast';
 
 export default function Registration(props) {
     const [registrationForm,setRegistrationForm] = useState({
@@ -14,15 +14,15 @@ export default function Registration(props) {
 
     function registration_okay() {
         if(!email_util.control_email(registrationForm.email)) {
-            show_error("The email is not right.");
+            showError("The email is not right.");
             return false;
         }
         if(registrationForm.password === "") {
-            show_error("Password cannot be empty");
+            showError("Password cannot be empty");
             return false;
         }
         if(registrationForm.password_confirm !== registrationForm.password) {
-            show_error("Password and confirm password aren't the same.");
+            showError("Password and confirm password aren't the same.");
             return false;
         }
         return true;
@@ -30,7 +30,7 @@ export default function Registration(props) {
 
     function send_request(value) {
         if(!email_util.control_email(value)) {
-            show_error("Email is not in the correct format.");
+            showError("Email is not in the correct format.");
             return;
         }
         let opties = api_functions.method_post();
@@ -40,16 +40,16 @@ export default function Registration(props) {
         fetch(api_functions.get_api() + "/request/new/user", opties)
         .then((api_call) => {
             if(api_call.status === 200) {
-                show_info("Token has been sent to your email account😀.");
+                showInfo("Token has been sent to your email account😀.");
             } else {
                 api_call.text()
-                .then(text =>show_info(text))
+                .then(text =>showInfo(text))
                 .catch(() => {
-                    show_error("Could not send through the request.");
+                    showError("Could not send through the request.");
                 });
             }
         }).catch(() => {
-            show_error("Could not send through the request.");
+            showError("Could not send through the request.");
         });
     }
 
@@ -72,14 +72,14 @@ export default function Registration(props) {
             api_call.json()
             .then((json_obj) => {
                 if(api_call.status === 200) {
-                    show_info("Your account has been created😀.");
+                    showInfo("Your account has been created😀.");
                     setRegistrationForm({email : "",token : "",password : "",confirmed_password : ""});
                 } else {
-                    show_error(json_obj.error);
+                    showError(json_obj.error);
                 }
             });
         }).catch((e) => {
-            show_error(`Could not send through the request. error: ${e}`);
+            showError(`Could not send through the request. error: ${e}`);
         });
     }
 

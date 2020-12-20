@@ -4,7 +4,7 @@ import {Login} from './user/login';
 import api_functions from '../api';
 import {ForgottenPassword} from './user/forgotten_pwd';
 import {AppContext} from '../state';
-import { show_error } from '../toast';
+import {showError} from '../toast';
 
 export function About() {
     return (
@@ -28,15 +28,15 @@ export default function UnauthenticatedHome() {
             if(api_call.status === 200) {
                 api_call.text()
                 .then(text => {
-                    if(text == "authenticated") {
+                    if(text === "authenticated") {
                         setUser({email : login_params.email, loggedIn : user.loggedIn});
                     }
                 });
             } else {
                 api_call.text()
-                .then(err => show_error(err));
+                .then(err => showError(err));
             }
-        }).catch((e) => show_error(`Could not send through the request. error: ${e}`));
+        }).catch((e) => showError(`Could not send through the request. error: ${e}`));
     }
 
     return (

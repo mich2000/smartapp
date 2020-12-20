@@ -183,7 +183,7 @@ pub fn get_information_from_id(conn: &PgCon, user_id: i32) -> Result<BasicUserIn
 }
 
 pub fn get_five_first_products(conn : &PgCon, user_id : i32) -> Result<Vec<ProductDescription>, XamXamError> {
-    let result = diesel::sql_query("select pi.name as name, pi.amount as amount, pi.peremption_date as date, pi.product_kind as kind,s.name as storage_name from storages s left join products pi on pi.storage_id = s.id where s.user_id = $1 order by pi.peremption_date asc limit 5")
+    let result = diesel::sql_query("select pi.name as name, pi.amount as amount, pi.peremption_date as date, pi.product_kind as kind,s.name as storage_name from storages s right join products pi on pi.storage_id = s.id where s.user_id = $1 order by pi.peremption_date asc limit 5")
     .bind::<Integer,_>(user_id)
     .load(conn)?;
     Ok(result)

@@ -2,7 +2,7 @@ import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import api_functions from '../../api';
 import {StorageType} from '../../enums';
-import {show_error} from '../../toast';
+import {showError} from '../../toast';
 
 export const InputStorageDialog = (props) => {
     const [name, setName] = useState('');
@@ -24,9 +24,9 @@ export const InputStorageDialog = (props) => {
                 setName('');
             } else {
                 api_call.text()
-                .then(err => show_error(err));
+                .then(err => showError(err));
             }
-        }).catch((e) =>  show_error(`Could not send through the request. error: ${e}`));
+        }).catch((e) =>  showError(`Could not send through the request. error: ${e}`));
     }
 
     return (

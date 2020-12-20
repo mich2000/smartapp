@@ -9,7 +9,7 @@ export function EditStoragePopup(props) {
     useEffect(() => {
         setName(props.item[0]);
         setType(props.item[1]);
-    },[]);
+    },[props.item]);
 
     function edit_storage(event) {
         event.preventDefault();

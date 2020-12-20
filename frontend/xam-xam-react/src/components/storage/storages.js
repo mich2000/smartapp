@@ -3,7 +3,7 @@ import api_functions from '../../api';
 import {DeleteStoragePopup} from './delete_storage';
 import {EditStoragePopup} from './edit_storage';
 import {Link} from "react-router-dom";
-import {show_error} from '../../toast';
+import {showError} from '../../toast';
 
 export const Storages = (props) => {
     function delete_storage(event) {
@@ -20,7 +20,7 @@ export const Storages = (props) => {
                 props.remove_storage(name_storage);
             }
         }).catch((e) => {
-            show_error(`Could not send through the request. error: ${e}`);
+            showError(`Could not send through the request. error: ${e}`);
         });
     }
 
@@ -41,10 +41,10 @@ export const Storages = (props) => {
                 });
             } else {
                 api_call.text()
-                .then(err => show_error(err));
+                .then(err => showError(err));
             }
         }).catch((e) => {
-            show_error(`Could not send through the request. error: ${e}`);
+            showError(`Could not send through the request. error: ${e}`);
         });
     }
 

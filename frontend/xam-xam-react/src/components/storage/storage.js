@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import {InputStorageDialog} from './input_storage';
 import {Storages} from './storages';
 import api_functions from '../../api';
-import {show_error} from '../../toast';
+import {showError} from '../../toast';
 
 export const Storage = () => {
     const [storages, setStorages] = useState([]);
@@ -18,7 +18,7 @@ export const Storage = () => {
                 });
             } else {
                 api_call.text()
-                .then(err => show_error(err));
+                .then(err => showError(err));
             }
         }).catch((e) => {
             console.error(`Could not send through the request. error: ${e}`);
