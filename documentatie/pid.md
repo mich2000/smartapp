@@ -38,7 +38,7 @@ Other values, like the nutritive values are not registered in the database.
 
 ## Services
 
-For this project I am going to try to seperate the small monolith into microservices.
+For this project I am going to try to seperate the small monolith into microservices. My nginx and my microservices all enable compression for their requests to make transferring lighter. The microservices because off their size will only pool 1 connection to their respective data sources(Postgresq, Redis). If scaling is needed you can tune the service which is loaded a lot.
 
 ### Authentication service(Rust actix-web)
 
@@ -58,8 +58,15 @@ This service will manage business related side of the application, this will onl
 
 * CRUD operations of storages
 * CRUD operations of products
-* Move products between storages
 
 ### Frontend service(Nginx)
 
-Service used to serve react app to the users.
+Service used to serve react app to the users. Will send out static assets under only https to be fully compatible with service workers. Will also reroute http requests to https.
+
+### Postgres
+
+Database that is used to store all the data that is permanent.
+
+### Redis
+
+Database that temporarily stores the tokens needed to create a user, change their email or is used for passwords that the user forgot to reset these. These tokens will after a time not be good anymore after 10 minutes.

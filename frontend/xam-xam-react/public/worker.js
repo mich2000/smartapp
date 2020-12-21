@@ -42,10 +42,5 @@ this.addEventListener('fetch', e => {
 
 //status code => important http status
 function notConnected() {
-    return new Response('No internet connection', {
-        status: 200,
-        headers: {
-            'Content-Type': 'text/html'
-        }
-    });
+    return new Response('No internet connection', {status: 200,headers: {'Content-Type': 'text/html'}});
 }

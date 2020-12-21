@@ -38,6 +38,7 @@ These are sources I used and researched to be able to make my project.
 * React show toast: https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
 * Deploying react application: https://create-react-app.dev/docs/deployment/
 * .env file doesn't work in react app, prefixing with REACT_APP_ to make it work: https://stackoverflow.com/questions/48378337/create-react-app-not-picking-up-env-files
+* Youtube video about service workers: https://www.youtube.com/watch?v=ksXwaWHCW6k
 
 ### Rust
 
