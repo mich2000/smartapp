@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./db-data:/var/lib/postgresql/data
+      - ../db-data:/var/lib/postgresql/data
       - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/up.sql:/docker-entrypoint-initdb.d/up.sql
     environment:
       POSTGRES_DB: ""
