@@ -3,10 +3,22 @@ import ReactDOM from 'react-dom';
 import UserContext from './components/user_context';
 import {AppProvider} from './state';
 import {ToastContainer} from 'react-toastify';
+import {showError, showInfo} from './toast';
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./worker.js');
 }
+
+const controlConnection = (e) => {
+    if(navigator.onLine) {
+        showInfo("You're back online.");
+    } else if(!navigator.onLine) {
+        showError("You're are offline");
+    }
+}
+
+window.addEventListener('online', controlConnection);
+window.addEventListener('offline', controlConnection);
 
 ReactDOM.render(<AppProvider>
     <UserContext/>
