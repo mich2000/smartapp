@@ -4,7 +4,7 @@ import email from '../../email';
 import api_functions from '../../api';
 import { showError, showInfo } from '../../toast';
 
-export function ForgottenPassword(props) {
+export function ForgottenPassword() {
     const [emailInput,setEmailInput] = useState('');
     const [token, setToken] = useState('');
     const [pwd, setPwd] = useState('');
@@ -12,7 +12,7 @@ export function ForgottenPassword(props) {
 
     function send_request(input){
         if(!email.control_email(input)) {
-            setError("Email is not in the correct format.");
+            showError("Email is not in the correct format.");
             return;
         }
         let options = api_functions.method_post();
@@ -22,22 +22,31 @@ export function ForgottenPassword(props) {
         fetch(api_functions.get_api() + "/request/forgotten/pwd",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                setEmailInput(input);
-                setMessage('The request has been sent to your email.');
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        setEmailInput(input);
+                        showInfo('The request has been sent to your email.');
+                        setEmailInput('');
+                        setToken('');
+                        setPwd('');
+                        setPwdConfirm('');
+                    } else {
+                        showError(text);
+                    }
+                });
             } else {
                 api_call.text()
-                .then(err => setError(err));
+                .then(err => showError(err));
             }
-        }).catch((e) => {
-            setError(`Could not send through the request. error: ${e}`)
-        });
+        }).catch(() => showError('No internet connection'));
     }
 
     function change_forgotten_pwd(event) {
         event.preventDefault();
         event.stopPropagation();
         if(!email.control_email(emailInput)) {
-            setError("Email is not in the correct format.");
+            showError("Email is not in the correct format.");
             return;
         }
         let options = api_functions.method_put();
@@ -50,26 +59,23 @@ export function ForgottenPassword(props) {
         fetch(api_functions.get_api() + "/auth/change/forgotten/pwd",options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                setMessage('Password has been changed');
-                setEmailInput('');
-                setPwd('');
-                setPwdConfirm('');
-                setToken('');
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        showInfo('Password has been changed');
+                        setEmailInput('');
+                        setPwd('');
+                        setPwdConfirm('');
+                        setToken('');
+                    } else {
+                        showError(text);
+                    }
+                });
             } else {
                 api_call.text()
-                .then(err => setError(err));
+                .then(err => showError(err));
             }
-        }).catch((e) => {
-            setError(`Could not send through the request. error: ${e}`);
-        });
-    }
-
-    function setMessage(message) {
-        showInfo(message);
-    }
-
-    function setError(err) {
-        showError(err);
+        }).catch(() => showError('No internet connection'));
     }
 
     return (

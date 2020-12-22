@@ -17,11 +17,16 @@ export const Storages = (props) => {
         fetch(api_functions.get_business_api() + '/storage',options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                props.remove_storage(name_storage);
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        props.remove_storage(name_storage);
+                    } else {
+                        showError(text);
+                    }
+                });
             }
-        }).catch((e) => {
-            showError(`Could not send through the request. error: ${e}`);
-        });
+        }).catch(() => showError('No internet connection'));
     }
 
     function edit_storage(edited_storage) {
@@ -34,18 +39,23 @@ export const Storages = (props) => {
         fetch(api_functions.get_business_api() + '/storage',options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                props.edit_storage({
-                    storage_name: edited_storage.storage_name,
-                    new_storage_name : edited_storage.new_storage_name || null,
-                    new_kind: edited_storage.new_kind
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        props.edit_storage({
+                            storage_name: edited_storage.storage_name,
+                            new_storage_name : edited_storage.new_storage_name || null,
+                            new_kind: edited_storage.new_kind
+                        });
+                    } else {
+                        showError(text);
+                    }
                 });
             } else {
                 api_call.text()
                 .then(err => showError(err));
             }
-        }).catch((e) => {
-            showError(`Could not send through the request. error: ${e}`);
-        });
+        }).catch(() => showError('No internet connection'));
     }
 
     return (

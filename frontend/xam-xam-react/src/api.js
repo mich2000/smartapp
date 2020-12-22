@@ -7,11 +7,11 @@ console.log(process.env.REACT_APP_BIS_API_URL);
 let basicOptions = function() {
     return {
         mode: "cors", // no-cors, *cors, same-origin
-        cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+        cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
         credentials: "include", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
         }
     };
 }

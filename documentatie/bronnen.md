@@ -23,6 +23,7 @@ These are sources I used and researched to be able to make my project.
 
 ### Javascript
 
+* Send fetch request without retaining cache: https://stackoverflow.com/questions/29246444/fetch-how-do-you-make-a-non-cached-request
 * Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
 * Javascript post about finding out the amount of days between 2 dates: https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates
 * Javascript manner to filter an array: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter

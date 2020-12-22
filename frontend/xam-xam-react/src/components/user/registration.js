@@ -4,7 +4,7 @@ import {InputWithButton} from '../input';
 import email_util from '../../email';
 import { showError, showInfo } from '../../toast';
 
-export default function Registration(props) {
+export default function Registration() {
     const [registrationForm,setRegistrationForm] = useState({
         email : "",
         token : "",
@@ -40,17 +40,19 @@ export default function Registration(props) {
         fetch(api_functions.get_api() + "/request/new/user", opties)
         .then((api_call) => {
             if(api_call.status === 200) {
-                showInfo("Token has been sent to your email account😀.");
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        showInfo("Token has been sent to your email account😀.");
+                    } else {
+                        showError(text);
+                    }
+                });
             } else {
                 api_call.text()
-                .then(text =>showInfo(text))
-                .catch(() => {
-                    showError("Could not send through the request.");
-                });
+                .then(text => showError(text));
             }
-        }).catch(() => {
-            showError("Could not send through the request.");
-        });
+        }).catch(() => showError('No internet connection'));
     }
 
     function registration(submit_event) {
@@ -69,18 +71,21 @@ export default function Registration(props) {
         });
         fetch(api_functions.get_api() + "/auth/register", opties)
         .then((api_call) => {
-            api_call.json()
-            .then((json_obj) => {
-                if(api_call.status === 200) {
-                    showInfo("Your account has been created😀.");
-                    setRegistrationForm({email : "",token : "",password : "",confirmed_password : ""});
-                } else {
-                    showError(json_obj.error);
-                }
-            });
-        }).catch((e) => {
-            showError(`Could not send through the request. error: ${e}`);
-        });
+            if(api_call.status === 200) {
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        showInfo("Your account has been created😀.");
+                        setRegistrationForm({email : "",token : "",password : "",confirmed_password : ""});
+                    } else {
+                        showError(text);
+                    }
+                });
+            } else {
+                api_call.text()
+                .then((text) => showError(text));
+            }
+        }).catch(() => showError('No internet connection'));
     }
 
     return (

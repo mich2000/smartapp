@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1';
+const CACHE_NAME = 'v1::1';
 
 const CACHED_URLS = [
   '/favicon.ico',
@@ -13,7 +13,10 @@ const CACHED_URLS = [
   '/',
   '/static/css/2.ccc6f86f.chunk.css',
   '/static/js/2.3d19b8e3.chunk.js',
-  '/static/js/main.8718e994.chunk.js'
+  '/static/js/main.8718e994.chunk.js',
+  '/static/js/main.chunk.js',
+  '/static/js/bundle.js',
+  '/static/js/0.chunk.js'
 ];
 
 this.addEventListener('install',e => {
@@ -41,12 +44,11 @@ this.addEventListener('fetch', e => {
     e.respondWith(
         caches.match(e.request)
         .then(response => {
-            console.log(e.request.url);
             return response || fetch(e.request).catch(notConnected);
         })
     );
 });
 
 function notConnected() {
-    return new Response('No internet connection', {status: 200,headers: {'Content-Type': 'text/html'}});
+    return new Response('No internet connection', {status: 200, headers: {'Content-Type': 'text/html'}});
 }

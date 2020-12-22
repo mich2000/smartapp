@@ -30,13 +30,15 @@ export default function UnauthenticatedHome() {
                 .then(text => {
                     if(text === "authenticated") {
                         setUser({email : login_params.email, loggedIn : user.loggedIn});
+                    } else {
+                        showError(text);
                     }
                 });
             } else {
                 api_call.text()
                 .then(err => showError(err));
             }
-        }).catch((e) => showError(`Could not send through the request. error: ${e}`));
+        }).catch(() => showError('No internet connection'));
     }
 
     return (

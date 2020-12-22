@@ -40,14 +40,19 @@ export const Products = (props) => {
         fetch(api_functions.get_business_api() + '/product',options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                props.remove_product(id);
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        props.remove_product(id);
+                    } else {
+                        showError(text);
+                    }
+                });
             } else {
                 api_call.text()
                 .then(err => showError(err));
             }
-        }).catch((e) => {
-            showError(`Could not send through the request. error: ${e}`);
-        });
+        }).catch(() => showError('No internet connection'));
     }
 
     function edit_product(product) {
@@ -63,20 +68,25 @@ export const Products = (props) => {
         fetch(api_functions.get_business_api() + '/product', options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                props.edit_product({
-                    id : product.id,
-                    name : product.name,
-                    amount : product.amount,
-                    date : product.date,
-                    kind : product.kind
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        props.edit_product({
+                            id : product.id,
+                            name : product.name,
+                            amount : product.amount,
+                            date : product.date,
+                            kind : product.kind
+                        });
+                    } else {
+                        showError(text);
+                    }
                 });
             } else {
                 api_call.text()
                 .then(err => showError(err));
             }
-        }).catch((e) => {
-            showError(`Could not send through the request. error: ${e}`);
-        });
+        }).catch(() => showError('No internet connection'));
     }
 
     return (

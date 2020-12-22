@@ -37,9 +37,7 @@ export const InputProductDialog = (props) => {
                 api_call.text()
                 .then(err => showError(err));
             }
-        }).catch((e) => {
-            showError(`Could not send through the request. error: ${e}`);
-        });
+        }).catch(() => showError('No internet connection'));
     }
     
     return (

@@ -16,17 +16,24 @@ export const InputStorageDialog = (props) => {
         fetch(api_functions.get_business_api() + '/storage', options)
         .then((api_call) => {
             if(api_call.status === 200) {
-                props.add_storage({
-                    name: name,
-                    kind: type
+                api_call.text()
+                .then(text => {
+                    if(text !== 'No internet connection') {
+                        props.add_storage({
+                            name: name,
+                            kind: type
+                        });
+                        setType(StorageType.Other);
+                        setName('');
+                    } else {
+                        showError(text);
+                    }
                 });
-                setType(StorageType.Other);
-                setName('');
             } else {
                 api_call.text()
                 .then(err => showError(err));
             }
-        }).catch((e) =>  showError(`Could not send through the request. error: ${e}`));
+        }).catch(() => showError('No internet connection'));
     }
 
     return (

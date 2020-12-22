@@ -6,7 +6,7 @@ import {ToastContainer} from 'react-toastify';
 import {showError, showInfo} from './toast';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./worker.js');
+    navigator.serviceWorker.register('./worker.js', { scope: '.' });
 }
 
 const controlConnection = (e) => {
