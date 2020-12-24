@@ -102,7 +102,7 @@ export default function UserContext() {
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="dropDownProfile">
                                         <Link className="dropdown-item" to="/profile">{user.email}</Link>
-                                        <Link className="dropdown-item" to="#" onClick={logout}>Log out</Link>
+                                        <Link className="dropdown-item" to="/" onClick={logout}>Log out</Link>
                                     </div>
                                 </div>
                             </li>

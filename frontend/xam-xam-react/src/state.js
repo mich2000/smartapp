@@ -21,10 +21,6 @@ export const AppProvider = (props) => {
                     setUser({email : json.email, loggedIn : true});
                 })
                 .catch((e) => console.error(`Could not send through the request. error: ${e}`));
-            } else {
-                api_call.text()
-                .then((body) => console.log(body))
-                .catch((e) => console.error(`Could not send through the request. error: ${e}`));
             }
         })
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));

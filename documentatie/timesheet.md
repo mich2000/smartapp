@@ -107,7 +107,7 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Trying to deploy my app with docker and docker-compose, didn't succeed problems with ports, volumes and build of rust app: 23h20
 * Solving bugs related to the deployment to production of the webapp and api: 6h
 * Solving bugs related to deployment and writing, recording application and code overview: 7h
-* Working on some features related to the offline experience: 4h50
+* Working on some features related to the offline experience: 5h40
 
 ## Deployment problems
 

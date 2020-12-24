@@ -19,6 +19,13 @@ const CACHED_URLS = [
   '/static/js/0.chunk.js'
 ];
 
+const URL_TO_BE_ROUTED_TO_INDEX = [
+    '/about',
+    '/profile',
+    '/storage',
+    '/products'
+];
+
 this.addEventListener('install',e => {
     e.waitUntil(
         caches.open(CACHE_NAME)
@@ -30,23 +37,27 @@ this.addEventListener('install',e => {
 this.addEventListener('activate', e => {
     e.waitUntil(
         caches.keys()
-        .then(cacheNames => {
-            cacheNames.map(cacheName => {
-                if(cacheName !== CACHE_NAME) {
-                    return caches.delete(cacheName);
-                }
-            });
-        })
+        .then(cacheNames => cacheNames.map(cacheName => {
+            if(cacheName !== CACHE_NAME) {
+                return caches.delete(cacheName);
+            }
+        }))
     );
 });
 
 this.addEventListener('fetch', e => {
-    e.respondWith(
-        caches.match(e.request)
-        .then(response => {
-            return response || fetch(e.request).catch(notConnected);
-        })
-    );
+    if(e.request.method === 'GET') {
+        e.respondWith(
+            caches.match(e.request)
+            .then(response => {
+                let url = new URL(e.request.url);
+                if(URL_TO_BE_ROUTED_TO_INDEX.indexOf(url => url === url.pathname) !== -1) {
+                    return caches.match(url.hostname);
+                }
+                return response || fetch(e.request).catch(notConnected);
+            })
+        );
+    }
 });
 
 function notConnected() {
