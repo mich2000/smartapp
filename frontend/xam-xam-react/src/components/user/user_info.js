@@ -1,6 +1,5 @@
 import api_functions from '../../api';
 import React, { useState,useEffect }  from 'react';
-import {ToastContainer} from 'react-toastify';
 import {showError} from '../../toast';
 
 export function UserInfo() {
@@ -31,30 +30,23 @@ export function UserInfo() {
     },[])
 
     return (
-        <div className="user-info">
-            <div>
-                <div>
+        <div className="user-info d-flex flex-column">
+            <div className="d-flex flex-row align-self-center">
+                <div className="p-2">
                     <dt># Storages</dt>
                     <dd>{amount_stor}</dd>
                 </div>
-                <div>
-                    <dt># products</dt>
+                <div className="p-2">
+                    <dt># Products</dt>
                     <dd>{amount_prod}</dd>
                 </div>
             </div>
             { (amount_prod !== 0) &&
-                <div>
-                    <div>
-                        <dt>Max. expiration date</dt>
-                        <dd>{max_date}</dd>
-                    </div>
-                    <div>
-                        <dt>Min. expiration date</dt>
-                        <dd>{min_date}</dd>
-                    </div>
+                <div className="p-2">
+                    <dt>Expiration range</dt>
+                    <dd>{min_date} - {max_date}</dd>
                 </div>
             }
-            <ToastContainer/>
         </div>
     );
 }

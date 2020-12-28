@@ -1,16 +1,11 @@
-import React, { useState, useContext }  from 'react';
+import React, { useContext }  from 'react';
 import {ChangeEmail} from './change_email';
 import {ChangePwd} from './change_pwd';
 import {DeleteProfile} from './delete_profile';
 import {AppContext} from '../../state';
 
 export function User(props) {
-    const [message,setMessage] = useState({msg : '', error : false});
     const [user,setUser] = useContext(AppContext);
-
-    function set_message(msg,error) {
-        setMessage({msg:msg,error:error})
-    }
     
     function changeEmail(new_email) {
         setUser({email : new_email,loggedIn : true});
@@ -18,9 +13,6 @@ export function User(props) {
 
     return (
         <>
-            {
-                (message.msg !== '' && message.error)? <span className="font-weight-bold text-danger">{message.msg}</span> : <span className="font-weight-bold text-success">{message.msg}</span>
-            }
             <div id="accordion" className="col-sm-10 mt-5">
                 <div className="card text-center">
                     <div className="card-header" id="UpdateEmail">
@@ -29,7 +21,7 @@ export function User(props) {
                     </div>
                     <div id="collapseUpdateEmail" className="collapse" aria-labelledby="UpdateEmail" data-parent="#accordion">
                         <div className="card-body">
-                            <ChangeEmail changeEmail={email => changeEmail(email)} message_callback={(e,s) => set_message(e,s)}/>
+                            <ChangeEmail changeEmail={email => changeEmail(email)}/>
                         </div>
                     </div>
                 </div>
@@ -40,7 +32,7 @@ export function User(props) {
                     </div>
                     <div id="collapseChangePwd" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            <ChangePwd message_callback={(e,s) => set_message(e,s)} email={user.email}/>
+                            <ChangePwd email={user.email}/>
                         </div>
                     </div>
                 </div>
@@ -51,7 +43,7 @@ export function User(props) {
                     </div>
                     <div id="collapseDeleteProfile" className="collapse" aria-labelledby="ChangePwd" data-parent="#accordion">
                         <div className="card-body">
-                            <DeleteProfile message_callback={(e,s) => set_message(e,s)} email={user.email} logout={props.logout}/>
+                            <DeleteProfile email={user.email} logout={props.logout}/>
                         </div>
                     </div>
                 </div>

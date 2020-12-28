@@ -4,7 +4,7 @@ These are sources I used and researched to be able to make my project.
 
 ## Links
 
-### React + Bootstrap + Javascript
+### React
 
 * React functional hooks: https://reactjs.org/docs/hooks-intro.html
 * React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
@@ -14,12 +14,15 @@ These are sources I used and researched to be able to make my project.
 * React popup article: https://react-popup.elazizi.com/react-modal/
 * React documentation to help me out with routing: https://rookiecoder.medium.com/react-button-click-navigate-to-new-page-6af7397ea220
 * React stackoverflow post about history api: https://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
+* React show toast: https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
+* .env file doesn't work in react app, prefixing with REACT_APP_ to make it work: https://stackoverflow.com/questions/48378337/create-react-app-not-picking-up-env-files
 
 ### Bootstrap
 
 * Bootstrap table layout: https://getbootstrap.com/docs/4.1/content/tables/
 * Bootstrap documentation about colors: https://getbootstrap.com/docs/4.0/utilities/colors/
 * Bootstrap icons I use to make icons for my website: https://icons.getbootstrap.com/icons
+* Bootstrap documentation about flex display: https://getbootstrap.com/docs/4.0/utilities/flex/
 
 ### Javascript
 
@@ -36,9 +39,7 @@ These are sources I used and researched to be able to make my project.
 * Javascript blog post about the context api for state management: https://dev.to/ayushmanbthakur/redux-vs-context-api-3182
 * Javascript enums article to explain more about it: https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
 * Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
-* React show toast: https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
 * Deploying react application: https://create-react-app.dev/docs/deployment/
-* .env file doesn't work in react app, prefixing with REACT_APP_ to make it work: https://stackoverflow.com/questions/48378337/create-react-app-not-picking-up-env-files
 * Youtube video about service workers: https://www.youtube.com/watch?v=ksXwaWHCW6k
 
 ### Rust

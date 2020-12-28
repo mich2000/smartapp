@@ -42,12 +42,10 @@ export function DeleteProfile(props) {
 
     return (
         <form onSubmit={e => change_forgotten_pwd(e)}>
-            <div className="m-3">
-                <div className="input-group-btn">
-                    <button className="btn btn-danger" type="submit">
-                        Delete you're account
-                    </button>
-                </div>
+            <div className="m-3 input-group-btn">
+                <button className="btn btn-danger" type="submit">
+                    Delete you're account
+                </button>
             </div>
         </form>
     );

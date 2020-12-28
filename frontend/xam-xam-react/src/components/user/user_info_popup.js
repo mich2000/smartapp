@@ -7,7 +7,7 @@ export function UserInfoPopup(props) {
         <Popup trigger={props.trigger} modal nested>
             {
                 <div className="modal-dialog">
-                    <div className="modal-header">Overview</div>
+                    <div className="modal-header d-flex justify-content-center">Overview</div>
                     <div className="modal-content">
                         <UserInfo/>
                     </div>
