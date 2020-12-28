@@ -108,7 +108,7 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Solving bugs related to the deployment to production of the webapp and api: 6h
 * Solving bugs related to deployment and writing, recording application and code overview: 7h
 * Working on some features related to the offline experience: 5h40
-* Working on some UI of my app: 10h40 -
+* Working on some UI of my app: 1h
 
 ## Deployment problems
 
