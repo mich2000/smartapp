@@ -1,11 +1,17 @@
+# This is a template docker-compose file that needs to be filled in with correct information.
+# Volume mapping template: (host os filesystem):(docker filesystem):(type of volume: ro(readonly), rw(read-write))
+---
 version: "3.3"
 services:
   db:
     image: postgres
     volumes:
+      # Here under is the directory where you're database data will be linked.
       - ../db-data:/var/lib/postgresql/data
+      # This is where the path will be to the sql file that is used to do the migrations.
       - ./backend/xam-xam-dal/migrations/2020-10-09-202858_xam-xam-begin/up.sql:/docker-entrypoint-initdb.d/up.sql
     environment:
+      # Variables used to define the user, database name and password to it, important for the connection strings.
       POSTGRES_DB: ""
       POSTGRES_USER: ""
       POSTGRES_PASSWORD: ""
@@ -13,6 +19,7 @@ services:
       - "5432:5432"
   redis:
     image: sickp/alpine-redis
+    # Command that will be used to require a password before accessing the redis instance, don't forget to put a password after --requirepass.
     command: redis-server --requirepass ""
     ports:
       - "6379:6379"
@@ -24,6 +31,7 @@ services:
     ports:
       - "8000:8080"
     environment:
+      # Variables used to define connection strings to postgres and redis database. Also map the production ssl certificates for encryption. Finally also defines which smtp server will be used.
       DATABASE_URL: ""
       REDIS_URL: ""
       CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
@@ -46,6 +54,7 @@ services:
     volumes:
       - /etc/letsencrypt:/production:ro
     environment:
+      # Variables used to define connection strings to postgres database. Also map the production ssl certificates for encryption.
       DATABASE_URL: ""
       CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
       KEY_PATH: /production/live/xam-xam.xyz/privkey.pem
