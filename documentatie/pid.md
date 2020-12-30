@@ -70,7 +70,7 @@ Database that temporarily stores the tokens needed to create a user, change thei
 
 ## Deployment
 
-When the app is going to be deployed in production there are 2 scenario's that will be dealt with the inital deployment of the application, the initial deployment and the update of the application.  I wrote 2 bash scripts build and setup that will facilitate deployment and building of the project.
+When the app is going to be deployed in production there are 2 scenario's that will be dealt with the inital deployment of the application, the initial deployment and the update of the application. I wrote 2 bash scripts build and setup that will facilitate deployment and building of the project.
 
 ### Initial deployment
 
@@ -83,10 +83,15 @@ This is when you need to deploy the application from scratch, I will describe he
 5. Use certbot to generate SSL certificates and configure the time on the vps this is important to get correct certificates.
 6. Pull the smartapp project from Github in a directory setup specially for production.
 7. In the production directory write the Jwt.toml file and setup the correct JWT parameters in accordance to your wishes.
-8. In the production directory write the docker-compose.yml file, fill in the template and set it in the production directory and not in the smartapp directory. This file need to be filled in to configure the different volumes and credentials you want to set in the apps.
-9. Execute the setup.sh script to build and deploy the app, give in it also the path to your docker-compose.yml production file and Jwt.toml used for authentication.
-10. Test the app and troubleshoot problems.
-11. Enjoy the application.
+8. Modify the dockerfile of the frontend react app to modify the api url's in the environmental variables.
+9. In the production directory write the docker-compose.yml file, fill in the template and set it in the production directory and not in the smartapp directory. This file need to be filled in to configure the different volumes and credentials you want to set in the apps.
+10. Execute the setup.sh script to build and deploy the app, give in it also the path to your docker-compose.yml production file and Jwt.toml used for authentication.
+11. Test the app and troubleshoot problems.
+12. Enjoy the application.
 
 ### Update of the application
 
+1. Go on the VPS and go into the smartapp directory and pull all the changes from github.
+2. Execute the setup.sh script to build and deploy the app, give in it also the path to your docker-compose.yml production file and Jwt.toml used for authentication.
+3. Test the app and troubleshoot problems.
+4. Enjoy the application.
