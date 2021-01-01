@@ -1,10 +1,8 @@
-# Bronnen
+# Sources
 
 These are sources I used and researched to be able to make my project.
 
-## Links
-
-### React
+## React
 
 * React functional hooks: https://reactjs.org/docs/hooks-intro.html
 * React stack overflow post about updating nested objects: https://stackoverflow.com/questions/56802815/react-hooks-how-do-i-update-state-on-a-nested-object-with-usestate
@@ -17,14 +15,14 @@ These are sources I used and researched to be able to make my project.
 * React show toast: https://blog.logrocket.com/how-to-create-a-custom-toast-component-with-react/
 * .env file doesn't work in react app, prefixing with REACT_APP_ to make it work: https://stackoverflow.com/questions/48378337/create-react-app-not-picking-up-env-files
 
-### Bootstrap
+## Bootstrap
 
 * Bootstrap table layout: https://getbootstrap.com/docs/4.1/content/tables/
 * Bootstrap documentation about colors: https://getbootstrap.com/docs/4.0/utilities/colors/
 * Bootstrap icons I use to make icons for my website: https://icons.getbootstrap.com/icons
 * Bootstrap documentation about flex display: https://getbootstrap.com/docs/4.0/utilities/flex/
 
-### Javascript
+## Javascript
 
 * Send fetch request without retaining cache: https://stackoverflow.com/questions/29246444/fetch-how-do-you-make-a-non-cached-request
 * Offline and online events: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events
@@ -42,7 +40,7 @@ These are sources I used and researched to be able to make my project.
 * Deploying react application: https://create-react-app.dev/docs/deployment/
 * Youtube video about service workers: https://www.youtube.com/watch?v=ksXwaWHCW6k
 
-### Rust
+## Rust
 
 * Rust web framework: https://actix.rs/
 * Rust orm for mysql/postgresql/sqlite: https://diesel.rs/
@@ -71,40 +69,40 @@ These are sources I used and researched to be able to make my project.
 * Rust post about handling identity in middleware: https://users.rust-lang.org/t/actix-web-token-validation-in-middleware/38205
 * Rust ORM manner to embed migrations into application at its start: https://docs.rs/diesel_migrations/1.4.0/diesel_migrations/macro.embed_migrations.html
 
-### Postgres
+## Postgres
 
 * Postgres article to help me out with Date datatype: https://www.postgresqltutorial.com/postgresql-date/
 * Postgres stackoverflow post about returning columns after inserting something: https://stackoverflow.com/questions/6560447/can-i-use-return-value-of-insert-returning-in-another-insert
 * Postgres alter type: https://blog.yo1.dog/updating-enum-values-in-postgresql-the-safe-and-easy-way/
 * Postgres problem about sql query where I had problems about sql types: https://stackoverflow.com/questions/57750212/postgresql-error-column-qty-is-of-type-integer-but-expression-is-of-type-text
 
-### Redis
+## Redis
 
 * Redis documentation for security: https://redis.io/topics/config
 
-### Docker
+## Docker
 
 * Stackoverflow article about how to execute startup script: https://gist.github.com/onjin/2dd3cc52ef79069de1faa2dfd456c945
 * Docker documentation to help me with volumes within docker compose: https://docs.docker.com/storage/volumes/
 * Stackoverflow article to mount a single file: https://stackoverflow.com/questions/42248198/how-to-mount-a-single-file-in-a-volume
 
-### Nginx
+## Nginx
 
 * Nginx reverse proxy documentation: https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
 * Nginx routing configuration to https and setting up SSL certificats: https://serverfault.com/questions/934893/nginx-https-auto-redirect-to-specific-port
 * Nginx documentation that reroutes http requests to https: https://linuxize.com/post/redirect-http-to-https-in-nginx/
 
-### Firefox
+## Firefox
 
 * Let self-signed certificates through Firefox: https://www.starnet.com/xwin32kb/installing-a-self-signed-certificate-on-firefox/
 
-### HTTP protocol
+## HTTP protocol
 
 * CORS blog post helping me out with one of the headers: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
 * Post talking about Basic and Bearer HTTP header: https://stackoverflow.com/questions/34013299/web-api-authentication-basic-vs-bearer
 * Post about setting up authorization header for basic authentication: https://stackoverflow.com/questions/33505130/how-to-assign-basic-authentication-header-to-xmlhttprequest
 * Node development with HTTPS activated: https://create-react-app.dev/docs/using-https-in-development/
 
-### AndroidVectorDrawable to SVG
+## AndroidVectorDrawable to SVG
 
 * Link to npm package that converts the android drawables to svg: https://github.com/neworld/vd2svg
