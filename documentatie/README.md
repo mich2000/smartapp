@@ -97,7 +97,18 @@ This is when you need to deploy the application from scratch, I will describe he
 
 ## What I have learned
 
-
+* The web framework actix.
+* I have deepened my knowledge of the programming language Rust.
+* Using SSL certificates and certbot to encrypt traffic to and from servers.
+* Understanding and learning of JWT tokens and private cookies to put them in.
+* Understanding the rust ORM(diesel) to communicate with a postgres database.
+* Learning to use the nginx web server, to server content and to reroute to https automatically(important for service workers).
+* Learning about Gzip compression for request to reduce bandwidth.
+* Containerizing react apps, rust microservices.
+* Deploying a complete applications with docker-compose.
+* Learning to use the SMTP server to send emails.
+* Learning to use a redis database to store temporary tokens.
+* Building a react application and using toasts to show messages to users.
 
 ## Maintenance
 
@@ -108,6 +119,7 @@ The maintenance of the app is pretty extensive because there is a lot off to mai
 * Always optimize the final build artifacts when deploying, this means as light as possible binaries or static assets and less possible debugging symbols or code.
 * If you want to add more microservices make sure it is deployed in the right order in the docker-compose file or you could make it crash due to not being able to connect itself to a database.
 * Make sure that the react app controls on user input, on the backend it is already the case with the database and serialization format. But controlling the user input on the app will increase user experience.
+* Make sure you backup regularly the database, through cron jobs or other means.
 
 ## Extension
 
@@ -118,3 +130,4 @@ Even if the application has for the moment a good amount of features. These are 
 * Using icons for storages and food in their dialogs and lists to be more readable.
 * Write ansible playbooks to maintain the vps where the app is running to automate and win time on configuration.
 * Use nginx as reverse proxy to all the api, this will make it seem that all requests come from 1 server this is a nice-to-have security feature. Ensures with this method that all request through the proxy are compressed and encrypted.
+* Make the app more scalable by modifying the docker-compose file to replicate instances of services.

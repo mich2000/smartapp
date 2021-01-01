@@ -15,6 +15,18 @@ export const InputProductDialog = (props) => {
         event.preventDefault();
         event.stopPropagation();
         let options = api_functions.method_post();
+        if(name === '') {
+            showError('Name of a product cannot be empty.');
+            return;
+        }
+        if(parseInt(amount) <= 0) {
+            showError('The amount of products cannot be null or under it.');
+            return;
+        }
+        if(date.getMilliseconds() < new Date().getMilliseconds) {
+            showError('A expiration date of a product cannot be lower than today');
+            return;
+        }
         options.body = JSON.stringify({
             storage_name: storage,
             name: name,

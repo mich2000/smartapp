@@ -113,7 +113,8 @@ Timesheet to demonstrate my learning and making to complete my project.
 * Working on some features related to the offline experience: 5h40
 * Working on some UI of my app: 1h
 * Working on documentation: 3h45
-* Working on documentation: 13h00 - 
+* Working on documentation: 4h
+* Working on documentation: 14h45 - 16h30
 
 ## Deployment problems
 
