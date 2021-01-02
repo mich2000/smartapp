@@ -155,11 +155,11 @@ Errors I had while deploying:
 
 ### Challenges
 
-Challenge | Solution or workaround
+Challenge|Solution or workaround
 ---|---
-Error in Firefox about certificates not being valid.| The problem was that the time on the vps that the docker containers used was wrong, I then modified my timezone to match Europe/Brussels.
-SSL error when building a rust microservice for not having root certificates in the container.| Install root certificates so that it can validate its own SSL certificats.
-SSL library was missing when build a rust microservice.| Install the ssl certificates in the docker container.
-Building of the rust microservice for authentication failed.| I managed to create a workaround by reducing the amount of build flags I give through. I removed the LTO flag and codegen-units.
-Sparkpost account with which I wanted to send emails rejected my domain xam-xam.xyz.| To work around this and not wast time I just used a google account to send out emails.
-Could not link host os and docker directory to share files.| I looked up at the documentation of docker-compose to share both individual files and directories.
+Error in Firefox about certificates not being valid.  | The problem was that the time on the vps that the docker containers used was wrong, I then modified my timezone to match Europe/Brussels.
+SSL error when building a rust microservice for not having root certificates in the container.  | Install root certificates so that it can validate its own SSL certificats.
+SSL library was missing when build a rust microservice.  | Install the ssl certificates in the docker container.
+Building of the rust microservice for authentication failed.  | I managed to create a workaround by reducing the amount of build flags I give through. I removed the LTO flag and codegen-units.
+Sparkpost account with which I wanted to send emails rejected my domain xam-xam.xyz.  | To work around this and not wast time I just used a google account to send out emails.
+Could not link host os and docker directory to share files.  | I looked up at the documentation of docker-compose to share both individual files and directories.
