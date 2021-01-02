@@ -114,3 +114,4 @@
 * Working on documentation: 4h
 * Working on documentation and react app: 5h20
 * Working on documentation: 1h25
+* Working on react app: 20h00 - 
