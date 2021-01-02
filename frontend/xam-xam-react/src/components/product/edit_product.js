@@ -1,6 +1,7 @@
 import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import {ProductType} from '../../enums';
+import {showError} from '../../toast';
 
 export const EditProductDialog = (props) => {
     const [name, setName] = useState(props.item_info[1]);
