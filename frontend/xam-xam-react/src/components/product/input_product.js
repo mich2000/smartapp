@@ -23,7 +23,7 @@ export const InputProductDialog = (props) => {
             showError('The amount of products cannot be null or under it.');
             return;
         }
-        if(date < new Date()) {
+        if(date.getTime() < new Date().getTime()) {
             showError('A expiration date of a product cannot be lower than today');
             return;
         }
