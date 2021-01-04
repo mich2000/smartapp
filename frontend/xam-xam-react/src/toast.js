@@ -12,6 +12,9 @@ let options = {
 };
 
 export const showError = (msg) => {
+    if(msg === '') {
+        toast.error('An error happened', options)
+    }
     toast.error(msg, options);
 };
 

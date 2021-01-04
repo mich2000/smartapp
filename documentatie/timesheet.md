@@ -115,3 +115,4 @@
 * Working on documentation and react app: 5h20
 * Working on documentation: 1h25
 * Working on react app: 35min
+* Solving the last big bugs with the app: 15min

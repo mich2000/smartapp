@@ -13,6 +13,6 @@ export const ProductType = Object.freeze({
     Meat : 'Meat',
     Fish : 'Fish',
     Dairy : 'Dairy',
-    Unhealty : 'Unhealty',
-    Bean : 'Bean'
+    Unhealthy : 'Unhealthy',
+    Bean : 'Bean',
 });
