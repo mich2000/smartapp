@@ -38,7 +38,7 @@ this.addEventListener('activate', e => {
     e.waitUntil(
         caches.keys()
         .then(cacheNames => cacheNames.map(cacheName => {
-            if(cacheName !== CACHE_NAME) {
+            if(CACHE_NAME.indexOf(cacheName) === -1) {
                 return caches.delete(cacheName);
             }
         }))
