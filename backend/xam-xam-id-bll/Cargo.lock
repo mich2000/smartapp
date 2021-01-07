@@ -1622,7 +1622,6 @@ dependencies = [
  "chrono",
  "diesel",
  "diesel-derive-enum",
- "dotenv",
  "log",
  "r2d2",
  "serde",
@@ -1640,7 +1639,6 @@ dependencies = [
  "r2d2",
  "r2d2_redis",
  "serde",
- "toml",
  "xam-xam-common",
  "xam-xam-dal",
 ]

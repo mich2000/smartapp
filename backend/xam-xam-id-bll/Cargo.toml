@@ -11,7 +11,6 @@ serde = { version = "1.0", features = ["derive"] }
 log = "0.4.0"
 jwt-gang = { path = "../jwt-gang"}
 xam-xam-dal = { path = "../xam-xam-dal" }
-toml = "0.5"
 xam-xam-common={ path="../xam-xam-common" }
 mailgang={ path="../mailgang" }
 r2d2_redis = "0.13.0"
