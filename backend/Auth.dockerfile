@@ -4,7 +4,7 @@ COPY mailgang/ ./mailgang
 COPY xam-xam-id-bll/ ./xam-xam-id-bll
 COPY xam-xam-id-web/ ./xam-xam-id-web
 WORKDIR /xam-xam-id-web
-RUN cargo update
+RUN cargo check
 RUN cargo build --release && strip target/release/xam-xam-id-web
 
 # Final stage
