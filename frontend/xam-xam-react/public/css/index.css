@@ -50,3 +50,14 @@ svg {
     flex-direction: row;
     justify-content: space-evenly;
 }
+
+.sticky-footer{
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: rgb(211,211,211);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }

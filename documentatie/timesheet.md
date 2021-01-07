@@ -116,3 +116,4 @@
 * Working on documentation: 1h25
 * Working on react app: 35min
 * Solving the last big bugs with the app: 15min
+* Add a sticky footer to the react app: 15min

@@ -4,6 +4,7 @@ import UserContext from './components/user_context';
 import {AppProvider} from './state';
 import {ToastContainer} from 'react-toastify';
 import {showError, showInfo} from './toast';
+import {Footer} from './footer';
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./worker.js', { scope: '.' });
@@ -23,4 +24,5 @@ window.addEventListener('offline', controlConnection);
 ReactDOM.render(<AppProvider>
     <UserContext/>
     <ToastContainer/>
+    <Footer/>
 </AppProvider>,document.getElementById('root'));
