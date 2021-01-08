@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./worker.js', { scope: '.' });
 }
 
-const controlConnection = (e) => {
+const controlConnection = (_e) => {
     if(navigator.onLine) {
         showInfo("You're back online.");
     } else if(!navigator.onLine) {
