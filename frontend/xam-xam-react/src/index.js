@@ -7,10 +7,13 @@ import {showError, showInfo} from './toast';
 import {Footer} from './footer';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./worker.js', { scope: '.' });
+    navigator.serviceWorker.register('./worker.js', { scope: '.' })
+    .then(registration => {
+        registration.update();
+    });
 }
 
-const controlConnection = (connection_event) => {
+const controlConnection = (_) => {
     if(navigator.onLine) {
         showInfo("You're back online.");
     } else if(!navigator.onLine) {
