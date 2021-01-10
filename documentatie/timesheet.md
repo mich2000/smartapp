@@ -117,4 +117,4 @@
 * Working on react app: 35min
 * Solving the last big bugs with the app: 15min
 * Add a sticky footer to the react app: 20min
-* Working on backend models and reducing macro's on these: 22h15 - 
+* Working on backend models and reducing macro's on these: 55min
