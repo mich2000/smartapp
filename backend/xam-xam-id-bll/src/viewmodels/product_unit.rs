@@ -1,7 +1,7 @@
 use xam_xam_dal::product_description::ProductDescription;
-use serde::{Serialize,Deserialize};
+use serde::Serialize;
 
-#[derive(Serialize,Deserialize)]
+#[derive(Serialize)]
 pub struct ProductUnits {
     units: Vec<ProductDescription>
 }

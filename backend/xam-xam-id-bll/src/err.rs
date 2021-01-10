@@ -1,9 +1,8 @@
 use std::{error::Error, fmt};
-use serde::{Serialize,Deserialize};
 use xam_xam_dal::err::XamXamError;
 use jwt_gang::claim_error::JwtCustomError;
 
-#[derive(Debug,Serialize,Deserialize,Clone)]
+#[derive(Debug,Clone)]
 pub enum XamXamServiceError {
     //Dal error
     XamXamDalError(XamXamError),

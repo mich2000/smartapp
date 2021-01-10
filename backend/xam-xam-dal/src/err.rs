@@ -1,7 +1,6 @@
-use serde::{Deserialize, Serialize};
 use std::{error::Error, fmt};
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Clone)]
 pub enum XamXamError {
     //User-related error
     EmailNotCorrectFormat,

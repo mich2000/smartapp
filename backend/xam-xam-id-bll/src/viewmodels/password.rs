@@ -1,6 +1,6 @@
-use serde::{Deserialize,Serialize};
+use serde::Deserialize;
 
-#[derive(Serialize,Deserialize)]
+#[derive(Deserialize)]
 pub struct PasswordHolder {
     password : String,
     password_confirm : String

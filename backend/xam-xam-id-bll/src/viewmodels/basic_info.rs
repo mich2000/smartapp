@@ -1,8 +1,8 @@
 use chrono::NaiveDate;
-use serde::{Serialize,Deserialize};
+use serde::Serialize;
 use xam_xam_dal::basic_user_info::BasicUserInfo;
 
-#[derive(Debug,Serialize,Deserialize)]
+#[derive(Debug,Serialize)]
 pub struct UserInfo {
     amount_storage : i64,
     amount_product : i64,

@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use xam_xam_dal::enums::storage_kind::StorageKind;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Deserialize)]
 pub struct NewStorage {
     name: String,
     kind: StorageKind

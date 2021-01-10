@@ -68,12 +68,10 @@ impl ClaimConfiguration {
             warn!("JWT error: {}", JwtCustomError::TokenIsEmpty);
             return Err(JwtCustomError::TokenIsEmpty)
         }
-        let mut validate: Validation = Validation::default();
-        validate.iss = Some(self.get_issuer().to_string());
         match decode::<Claim>(
             &token,
             &DecodingKey::from_secret(self.get_secret()),
-            &validate,
+            &Validation { iss: Some(self.get_issuer().to_string()), ..Default::default() },
         ) {
             Ok(c) => Ok(c),
             Err(err) => match &*err.kind() {

@@ -1,8 +1,8 @@
-use serde::{Serialize,Deserialize};
+use serde::Serialize;
 use xam_xam_dal::models::storage::Storage;
 use xam_xam_dal::enums::storage_kind::StorageKind;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 pub struct Storages {
     storages : Vec<(String, StorageKind)>
 }

@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
-#[derive(Serialize, Deserialize,Debug)]
+#[derive(Deserialize)]
 pub struct IdProduct { 
     id : i32,
     storage_name : String

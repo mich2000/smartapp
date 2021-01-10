@@ -1,7 +1,6 @@
 use std::{error::Error, fmt};
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug,Deserialize,Serialize,Clone)]
+#[derive(Debug,Clone)]
 pub enum JwtCustomError {
     TokenCannotBeMadeFromClaim,
     EmptySubjectOfToken,

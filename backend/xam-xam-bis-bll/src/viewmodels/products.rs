@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use xam_xam_dal::enums::product_kind::ProductKind;
 use chrono::NaiveDate;
 use xam_xam_dal::models::product::Product;
@@ -6,7 +6,7 @@ use xam_xam_dal::models::product::Product;
 /**
  * Struct representing a series of products. Struct unit inside vector represents => (product name, product amount, product peremption date, product kind)
  */
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 pub struct Products { 
     products : Vec<(i32,String, i16, NaiveDate, ProductKind)>
 }

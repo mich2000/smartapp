@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use xam_xam_dal::enums::storage_kind::StorageKind;
 use xam_xam_dal::models::storage::UpdateStorage;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Deserialize)]
 pub struct EditStorage {
     storage_name: String,
     new_storage_name : Option<String>,

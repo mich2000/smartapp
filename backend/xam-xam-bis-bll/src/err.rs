@@ -1,8 +1,7 @@
-use serde::{Deserialize, Serialize};
 use std::{error::Error, fmt};
 use xam_xam_dal::err::XamXamError;
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Clone)]
 pub enum XamXamServiceError {
     //Dal error
     XamXamDalError(XamXamError),

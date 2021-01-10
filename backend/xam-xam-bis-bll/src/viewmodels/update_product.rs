@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use xam_xam_dal::enums::product_kind::ProductKind;
 use chrono::NaiveDate;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Deserialize)]
 pub struct UpdateProduct {
     id : i32,
     storage_name: String,

@@ -13,7 +13,7 @@ use crate::claim_error::JwtCustomError;
  * * iat : datetime the claim was issued
  * * is_admin : Claim that is used to identify if the user is an administrator
  */
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Claim {
     iss: String,
     sub: String,

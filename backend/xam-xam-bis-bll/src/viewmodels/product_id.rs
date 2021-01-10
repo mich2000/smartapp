@@ -1,6 +1,6 @@
-use serde::{Deserialize,Serialize};
+use serde::Serialize;
 
-#[derive(Deserialize,Serialize,Debug)]
+#[derive(Serialize)]
 pub struct ProductId {
     product_id : i32
 }
