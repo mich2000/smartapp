@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1::2::11';
+const CACHE_NAME = 'v1::2::12';
 
 const CACHED_URLS = [
   '/favicon.ico',
