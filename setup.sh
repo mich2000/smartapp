@@ -4,6 +4,4 @@ cp ./Jwt.toml ./backend/Jwt.toml;
 
 docker-compose down;
 
-docker builder prune -a;
-
 bash ./build.sh ./Jwt.toml && docker-compose down && docker-compose up -d;
