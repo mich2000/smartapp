@@ -51,6 +51,7 @@ this.addEventListener('fetch', e => {
                         caches.open(CACHE_NAME).then(cache => cache.put(url_response.pathname,copy));
                         return re;
                     }
+                    return re;
                 }).catch(notConnected);
             })
         );
