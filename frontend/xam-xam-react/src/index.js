@@ -5,7 +5,7 @@ import {AppProvider} from './state';
 import {ToastContainer} from 'react-toastify';
 import {showError, showInfo} from './toast';
 import {Footer} from './footer';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
 import 'jquery';
 import 'popper.js';
