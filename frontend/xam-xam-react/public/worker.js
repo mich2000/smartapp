@@ -1,22 +1,12 @@
-const CACHE_NAME = 'v1::2::9';
+const CACHE_NAME = 'v1::2::11';
 
 const CACHED_URLS = [
   '/favicon.ico',
   '/manifest.json',
   '/',
   '/images/logo-xamxam-512.png',
-  '/static/css/2.ccc6f86f.chunk.css',
-  '/static/js/2.3d19b8e3.chunk.js',
-  '/static/js/main.8718e994.chunk.js',
-  '/static/js/main.chunk.js',
-  '/static/js/bundle.js',
-  '/static/js/0.chunk.js'
+  '/images/logo-xamxam-114.png',
 ];
-
-const EXTENSIONS_TO_CACHE = [
-    'css',
-    'js'
-]
 
 const URL_TO_BE_ROUTED_TO_INDEX = [
     '/about',
@@ -46,23 +36,35 @@ this.addEventListener('activate', e => {
 
 this.addEventListener('fetch', e => {
     if(e.request.method === 'GET') {
+        const url_response = new URL(e.request.url);
         e.respondWith(
-            caches.match(e.request)
+            caches.open(CACHE_NAME)
+            .then(cache => cache.match(e.request))
             .then(response => {
-                let url_response = new URL(e.request.url);
-                if(URL_TO_BE_ROUTED_TO_INDEX.indexOf(url => url === url_response.pathname) !== -1) {
-                    console.log('index');
-                    return caches.match(url_response.hostname);
+                if(URL_TO_BE_ROUTED_TO_INDEX.some(url => url === url_response.pathname)) {
+                    return caches.match('/');
                 }
-                if(EXTENSIONS_TO_CACHE.some(url => url_response.pathname.endsWith(url))) {
-                    console.log("to be cached");
-                }
-                return response || fetch(e.request).catch(notConnected);
+                return response || fetch(e.request)
+                .then(re => {
+                    if(['/static','/js','/css'].some(ext => url_response.pathname.indexOf(ext) !== -1)) {
+                        let copy = re.clone();
+                        caches.open(CACHE_NAME).then(cache => cache.put(url_response.pathname,copy));
+                        return re;
+                    }
+                }).catch(notConnected);
             })
         );
     }
 });
 
 function notConnected() {
-    return new Response('No internet connection', {status: 200, headers: {'Content-Type': 'text/html'}});
+    return new Response(
+        'No internet connection',
+        {
+            status: 200,
+            headers: {
+                'Content-Type': 'text/html'
+            }
+        }
+    );
 }

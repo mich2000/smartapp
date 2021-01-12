@@ -40,6 +40,8 @@ These are sources I used and researched to be able to make my project.
 * Basic service worker to cache stuff: https://googlechrome.github.io/samples/service-worker/basic/
 * Deploying react application: https://create-react-app.dev/docs/deployment/
 * Youtube video about service workers: https://www.youtube.com/watch?v=ksXwaWHCW6k
+* Github post about a problem about cloning responses in a service worker: https://github.com/meanbee/magento-meanbee-pwa/issues/20
+* Stackoverflow post talking about problems I had with the response, that already was used in the service worker: https://stackoverflow.com/questions/40497859/reread-a-response-body-from-javascripts-fetch
 
 ## Rust
 

@@ -1,12 +1,41 @@
 {
   "short_name": "Xam Xam",
-  "name": "Xam-xam web app, use this web app to manage your food into storages.",
+  "name": "Xam-xam web app, web app to manage your food into storages.",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
+  "categories": [ "storages","food","food expiration","food management" ],
+  "shortcuts": [
+    {
+      "name" : "About page",
+      "url":"/about"
+    },
+    {
+      "name" : "Profile page",
+      "description":"Page to manage your credentials, profile.",
+      "url":"/about"
+    },
+    {
+      "name" : "Storage page",
+      "description": "Page to manage your storages.",
+      "url":"/storage"
+    }
+  ],
   "icons": [
-    { "src": "/images/logo-xamxam-114.png","type": "image/png","sizes": "114x114" },
-    { "src": "/images/logo-xamxam-512.png","type": "image/png","sizes": "512x512" }
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/images/logo-xamxam-114.png",
+      "type": "image/png",
+      "sizes": "114x114" 
+    },
+    {
+      "src": "/images/logo-xamxam-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
   ]
 }
