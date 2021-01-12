@@ -118,4 +118,4 @@
 * Solving the last big bugs with the app: 15min
 * Add a sticky footer to the react app: 20min
 * Working on backend models and reducing macro's on these: 55min
-* Working on bugs on the react application and refine the service worker caching: 6h5 + 10h50 - 
+* Working on bugs on the react application and refine the service worker caching: 8h35
