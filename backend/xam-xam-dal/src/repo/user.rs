@@ -176,7 +176,7 @@ pub fn delete_user(conn: &PgCon, user_id: i32) -> Result<bool, XamXamError> {
  */
 pub fn get_information_from_id(conn: &PgCon, user_id: i32) -> Result<BasicUserInfo, XamXamError> {
     info!("id of basic user info {}", user_id);
-    let result : BasicUserInfo = diesel::sql_query("select count(distinct s.id) as amount_storage, count(pi.id) as amount_product, min(pi.peremption_date) as min_bederf, max(pi.peremption_date) as max_bederf from storages s right join products pi on pi.storage_id = s.id where s.user_id = $1")
+    let result : BasicUserInfo = diesel::sql_query("select count(s.id) as amount_storage, count(pi.id) as amount_product, min(pi.peremption_date) as min_bederf, max(pi.peremption_date) as max_bederf from storages s left join products pi on pi.storage_id = s.id where s.user_id = $1")
     .bind::<Integer,_>(user_id)
     .get_result(conn)?;
     Ok(result)
