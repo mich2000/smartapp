@@ -5,26 +5,27 @@ import api_functions from '../../api';
 import {showError} from '../../toast';
 
 const ProductUnit = (props) => {
-    let difference_in_time = new Date(props.item_info[3]) - new Date();
+    let item_info = [...props.item_info];
+    let difference_in_time = new Date(item_info[3]) - new Date();
     let difference_in_days = Math.ceil(difference_in_time / (1000 * 3600 * 24));
 
     return (
         <tr>
             <th>
-                {props.item_info[1]}
+                {item_info[1]}
             </th>
             <th>
-                {props.item_info[2]}
+                {item_info[2]}
             </th>
             <th>
                 {difference_in_days} days left
             </th>
             <th>
-                {props.item_info[4]}
+                {item_info[4]}
             </th>
             <th>
-                <EditProductDialog item_info={props.item_info} storage={props.storage} edit_product={(e) => props.edit_product(e)}/>
-                <DeleteProductPopup item={props.item_info} delete_product={(id) => props.delete_product(id)}/>
+                <EditProductDialog item_info={item_info} storage={props.storage} edit_product={(e) => props.edit_product(e)}/>
+                <DeleteProductPopup item={item_info} delete_product={(id) => props.delete_product(id)}/>
             </th>
         </tr>
     );

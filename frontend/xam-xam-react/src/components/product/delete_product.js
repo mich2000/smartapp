@@ -24,7 +24,8 @@ export function DeleteProductPopup(props) {
                         <button className="btn btn-primary modal-input" value={props.item[0]}
                         onClick={(e) => {
                             trigger_delete(e);
-                            close();}}>
+                            close();
+                        }}>
                             Remove {props.item[1]}
                         </button>
                     </div>

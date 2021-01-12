@@ -30,7 +30,9 @@ export const Product = () => {
         .then((api_call) => {
             if(api_call.status === 200) {
                 api_call.json()
-                .then((json) => setProducts(json.products))
+                .then((json) => {
+                    setProducts(json.products);
+                })
                 .catch((e) => {
                     console.error(`Could not send through the request. error: ${e}`);
                 });
