@@ -1,0 +1,4 @@
+target/
+build/
+doc/
+*.zip

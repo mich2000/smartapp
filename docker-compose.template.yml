@@ -34,8 +34,8 @@ services:
       # Variables used to define connection strings to postgres and redis database. Also map the production ssl certificates for encryption. Finally also defines which smtp server will be used.
       DATABASE_URL: ""
       REDIS_URL: ""
-      CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
-      KEY_PATH: /production/live/xam-xam.xyz/privkey.pem
+      CERT_PATH: /production/live/domain/fullchain.pem
+      KEY_PATH: /production/live/domain/privkey.pem
       PERSON_SMTP_USERNAME: ""
       PERSON_SMTP_PASSWORD: ""
       PERSON_SMTP_DOMAIN: smtp.gmail.com
@@ -56,8 +56,8 @@ services:
     environment:
       # Variables used to define connection strings to postgres database. Also map the production ssl certificates for encryption.
       DATABASE_URL: ""
-      CERT_PATH: /production/live/xam-xam.xyz/fullchain.pem
-      KEY_PATH: /production/live/xam-xam.xyz/privkey.pem
+      CERT_PATH: /production/live/domain/fullchain.pem
+      KEY_PATH: /production/live/domain/privkey.pem
     links:
       - "db"
   xam-web:
