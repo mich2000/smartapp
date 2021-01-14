@@ -37,11 +37,9 @@ export const Storage = () => {
         setStorages(storages.filter(storage => storage[0] !== storage_name));
     }
 
-    return (
-        <div className="col-sm-10">
+    return <div className="col-sm-10">
             <h2>Storages</h2>
             <InputStorageDialog add_storage={(e) => add_storage(e) }/>
             <Storages storages={storages} remove_storage={(e) => remove_storage(e)} edit_storage={(e) => edit_storage(e)}/>
-        </div>
-    );
+        </div>;
 }

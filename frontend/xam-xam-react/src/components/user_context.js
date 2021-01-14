@@ -50,8 +50,7 @@ export default function UserContext() {
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
     },[user.email,setUser])
 
-    return (
-        !user.loggedIn? <Router>
+    return !user.loggedIn? <Router>
             <div className="col-sm-10">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -127,6 +126,5 @@ export default function UserContext() {
                     <AuthHome/>
                 </Route>
             </Switch>
-        </Router>
-    );
+        </Router>;
 }

@@ -3,8 +3,7 @@ import {UserInfo} from './user_info';
 import React from 'react';
 
 export function UserInfoPopup(props) {
-    return (
-        <Popup trigger={props.trigger} modal nested>
+    return <Popup trigger={props.trigger} modal nested>
             {
                 <div className="modal-dialog">
                     <div className="modal-header d-flex justify-content-center">Overview</div>
@@ -13,6 +12,5 @@ export function UserInfoPopup(props) {
                     </div>
                 </div>
             }
-        </Popup>
-    );
+        </Popup>;
 }

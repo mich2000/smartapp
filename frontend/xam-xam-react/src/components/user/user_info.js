@@ -29,8 +29,7 @@ export function UserInfo() {
         .catch((e) => showError(`Could not send through the request. error: ${e}`));
     },[])
 
-    return (
-        <div className="user-info d-flex flex-column">
+    return <div className="user-info d-flex flex-column">
             <div className="d-flex flex-row align-self-center">
                 <div className="p-2">
                     <dt># Storages</dt>
@@ -47,6 +46,5 @@ export function UserInfo() {
                     <dd>{min_date} - {max_date}</dd>
                 </div>
             }
-        </div>
-    );
+        </div>;
 }

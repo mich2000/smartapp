@@ -68,26 +68,23 @@ export function ChangeEmail(props) {
         props.message_callback(err,true);
     }
 
-    return (
-        <form onSubmit={e => change_email(e)}>
-            <div className="input-group m-3">
-                <p>Put your email under here and use the token we send you to change you password.</p>
-                <InputWithButton name="Send change token" valuePlaceholder="Enter your email" input_callback={input => send_request(input)}/>
-            </div>
-            { emailInput !== '' && 
-            <div className="m-3">
-                <div className="form-group">
-                    <input className="form-control" contentEditable="false" value={emailInput}/>
+    return <form onSubmit={e => change_email(e)}>
+                <div className="input-group m-3">
+                    <p>Put your email under here and use the token we send you to change you password.</p>
+                    <InputWithButton name="Send change token" valuePlaceholder="Enter your email" input_callback={input => send_request(input)}/>
                 </div>
-                <div className="form-group">
-                    <input className="form-control" maxLength="4" placeholder="Needed token" value={token} onChange={e => setToken(e.target.value)}/>
-                </div>
-                <div className="input-group-btn">
-                    <button className="btn btn-default" type="submit">
-                        Change email
-                    </button>
-                </div>
-            </div> }
-        </form>
-    );
+                { emailInput !== '' && <div className="m-3">
+                    <div className="form-group">
+                        <input className="form-control" contentEditable="false" value={emailInput}/>
+                    </div>
+                    <div className="form-group">
+                        <input className="form-control" maxLength="4" placeholder="Needed token" value={token} onChange={e => setToken(e.target.value)}/>
+                    </div>
+                    <div className="input-group-btn">
+                        <button className="btn btn-default" type="submit">
+                            Change email
+                        </button>
+                    </div>
+                </div> }
+            </form>;
 }

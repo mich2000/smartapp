@@ -90,8 +90,7 @@ export const Products = (props) => {
         }).catch(() => showError('No internet connection'));
     }
 
-    return (
-        <>
+    return <>
             {( props.products.length !== 0)?
             <>
                 <h2>Products from {props.Datestorage}</h2>
@@ -112,6 +111,5 @@ export const Products = (props) => {
                     </tbody>
                 </table>
             </> : <h2>No products in {props.storage}</h2>}
-        </>
-    );
+        </>;
 }

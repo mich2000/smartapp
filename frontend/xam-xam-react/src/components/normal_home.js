@@ -41,8 +41,7 @@ export default function UnauthenticatedHome() {
         }).catch(() => showError('No internet connection'));
     }
 
-    return (
-        <>
+    return <>
             <h1>xam-xam</h1>
             <div id="accordion" className="m-3">
                 <div className="card text-center">
@@ -76,6 +75,5 @@ export default function UnauthenticatedHome() {
                     </div>
                 </div>
             </div>
-        </>
-    );
+        </>;
 }

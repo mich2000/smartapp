@@ -42,10 +42,8 @@ export const Product = () => {
         });
     },[storage])
 
-    return (
-        <div className="col-sm-10">
+    return <div className="col-sm-10">
             <InputProductDialog storage={storage} add_product={(e) => add_product(e)}/>
             <Products products={products} storage={storage} remove_product={(e) => remove_product(e)} edit_product={(e) => edit_product(e)}/>
-        </div>
-    );
+        </div>;
 }

@@ -58,8 +58,7 @@ export const Storages = (props) => {
         }).catch(() => showError('No internet connection'));
     }
 
-    return (
-        <>
+    return <>
             {props.storages.length !== 0 && 
             <ul className="list-style-none d-flex flex-wrap">
                 {props.storages.map((item, i) => {
@@ -80,6 +79,5 @@ export const Storages = (props) => {
                     );
                 })}
             </ul>}
-        </>
-    );
+        </>;
 }

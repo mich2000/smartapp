@@ -88,8 +88,7 @@ export default function Registration() {
         }).catch(() => showError('No internet connection'));
     }
 
-    return (
-        <>
+    return <>
             <div className="m-3">
                 <h2>Send token creation😀</h2>
                 <InputWithButton name="Submit" type="email" valuePlaceholder="Email registration to get token" input_callback={(value) => send_request(value)}/>
@@ -114,6 +113,5 @@ export default function Registration() {
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register"/>
             </form>
-        </>
-    );
+        </>;
 }

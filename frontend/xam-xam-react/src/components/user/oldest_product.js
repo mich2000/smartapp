@@ -37,8 +37,7 @@ export function OldestProduct() {
         .catch((e) => console.error(`Could not send through the request. error: ${e}`));
     },[])
 
-    return (
-        <>
+    return <>
             {( oldestProducts.length !== 0)?
             <>
                 <h2>5 oldest products</h2>
@@ -59,6 +58,5 @@ export function OldestProduct() {
                     </tbody>
                 </table>
             </> : <h2>No products</h2>}
-        </>
-    );
+        </>;
 }

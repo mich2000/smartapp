@@ -20,17 +20,15 @@ export function Login(props) {
         props.login_callback({ email : email_input, password : password });
     }
 
-    return (
-        <form onSubmit={(e) => login(e)}>
-            <div className="input-group">
-                <input type="email" className="form-control" value={email_input} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email" required/>
-                <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" required/>
-                <div className="input-group-btn">
-                    <button className="btn btn-default" type="submit">
-                        Log in
-                    </button>
+    return <form onSubmit={(e) => login(e)}>
+                <div className="input-group">
+                    <input type="email" className="form-control" value={email_input} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email" required/>
+                    <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" required/>
+                    <div className="input-group-btn">
+                        <button className="btn btn-default" type="submit">
+                            Log in
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    );
+            </form>;
 }

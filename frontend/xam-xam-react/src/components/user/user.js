@@ -11,8 +11,7 @@ export function User(props) {
         setUser({email : new_email,loggedIn : true});
     }
 
-    return (
-        <>
+    return <>
             <div id="accordion" className="col-sm-10 mt-5">
                 <div className="card text-center">
                     <div className="card-header" id="UpdateEmail">
@@ -48,6 +47,5 @@ export function User(props) {
                     </div>
                 </div>
             </div>
-        </>
-    );
+        </>;
 }

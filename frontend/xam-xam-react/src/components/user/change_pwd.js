@@ -45,8 +45,7 @@ export function ChangePwd(props) {
         props.message_callback(err,true);
     }
 
-    return (
-        <form onSubmit={e => delete_profile(e)}>
+    return <form onSubmit={e => delete_profile(e)}>
             <div className="m-3">
                 <div className="form-group">
                     <input className="form-control" type="password" placeholder="Enter current password" value={currentPwd} onChange={e => setCurrentPwd(e.target.value)} required/>
@@ -63,6 +62,5 @@ export function ChangePwd(props) {
                     </button>
                 </div>
             </div>
-        </form>
-    );
+        </form>;
 }
