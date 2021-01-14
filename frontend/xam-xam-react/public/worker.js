@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1::2::15';
+const CACHE_NAME = 'v1::2::16';
 
 const CACHED_URLS = [
   '/favicon.ico',
@@ -6,13 +6,6 @@ const CACHED_URLS = [
   '/',
   '/images/logo-xamxam-512.png',
   '/images/logo-xamxam-114.png',
-];
-
-const URL_TO_BE_ROUTED_TO_INDEX = [
-    '/about',
-    '/profile',
-    '/storage',
-    '/products'
 ];
 
 this.addEventListener('install',e => {
@@ -41,12 +34,12 @@ this.addEventListener('fetch', e => {
             caches.open(CACHE_NAME)
             .then(cache => cache.match(e.request))
             .then(response => {
-                if(URL_TO_BE_ROUTED_TO_INDEX.some(url => url === url_response.pathname)) {
+                if([ '/about', '/profile', '/storage' ].some(url => url_response.pathname.indexOf(url) !== -1)) {
                     return caches.match('/');
                 }
                 return response || fetch(e.request)
                 .then(re => {
-                    if(['/static','/js','/css'].some(ext => url_response.pathname.indexOf(ext) !== -1)) {
+                    if([ '/static', '/js', '/css' ].some(ext => url_response.pathname.indexOf(ext) !== -1)) {
                         let copy = re.clone();
                         caches.open(CACHE_NAME).then(cache => cache.put(url_response.pathname,copy));
                         return re;
