@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1::2::17';
+const CACHE_NAME = 'v1::2::18';
 
 this.addEventListener('install',e => {
     e.waitUntil(
@@ -32,7 +32,7 @@ this.addEventListener('fetch', e => {
             caches.open(CACHE_NAME)
             .then(cache => cache.match(e.request))
             .then(response => {
-                if(url_response.port === 80 || 443) {
+                if(url_response.port === 443) {
                     if([ '/about', '/profile', '/storage' ].some(url => url_response.pathname.indexOf(url) !== -1)) {
                         return caches.match('/');
                     }
@@ -42,7 +42,6 @@ this.addEventListener('fetch', e => {
                     if([ '/static', '/js', '/css' ].some(ext => url_response.pathname.indexOf(ext) !== -1)) {
                         let copy = re.clone();
                         caches.open(CACHE_NAME).then(cache => cache.put(url_response.pathname,copy));
-                        return re;
                     }
                     return re;
                 }).catch(notConnected);
