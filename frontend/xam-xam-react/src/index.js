@@ -15,10 +15,9 @@ import './css/index.css';
 import './css/modal.css';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./worker.js', { scope: '.' })
-    .then(registration => {
-        registration.update();
-    });
+    navigator.serviceWorker.register('worker.js')
+    .then(registration => registration.update())
+    .then(() => console.log('Service worker has been registered and updated.'));
 }
 
 const controlConnection = (_) => {

@@ -32,10 +32,8 @@ this.addEventListener('fetch', e => {
             caches.open(CACHE_NAME)
             .then(cache => cache.match(e.request))
             .then(response => {
-                if(url_response.port === 443) {
-                    if([ '/about', '/profile', '/storage' ].some(url => url_response.pathname.indexOf(url) !== -1)) {
-                        return caches.match('/');
-                    }
+                if([ '/about', '/profile', '/storage' ].some(url => url_response.pathname.endsWith(url))) {
+                    return caches.match('/');
                 }
                 return response || fetch(e.request)
                 .then(re => {
