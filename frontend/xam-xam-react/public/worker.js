@@ -1,17 +1,15 @@
 const CACHE_NAME = 'v1::2::16';
 
-const CACHED_URLS = [
-  '/favicon.ico',
-  '/manifest.json',
-  '/',
-  '/images/logo-xamxam-512.png',
-  '/images/logo-xamxam-114.png',
-];
-
 this.addEventListener('install',e => {
     e.waitUntil(
         caches.open(CACHE_NAME)
-        .then(cache => cache.addAll(CACHED_URLS))
+        .then(cache => cache.addAll([
+            '/favicon.ico',
+            '/manifest.json',
+            '/',
+            '/images/logo-xamxam-512.png',
+            '/images/logo-xamxam-114.png',
+          ]))
         .then(() => this.skipWaiting())
     );
 });
@@ -34,8 +32,10 @@ this.addEventListener('fetch', e => {
             caches.open(CACHE_NAME)
             .then(cache => cache.match(e.request))
             .then(response => {
-                if([ '/about', '/profile', '/storage' ].some(url => url_response.pathname.indexOf(url) !== -1)) {
-                    return caches.match('/');
+                if(url_response.port === 80 || 443) {
+                    if([ '/about', '/profile', '/storage' ].some(url => url_response.pathname.indexOf(url) !== -1)) {
+                        return caches.match('/');
+                    }
                 }
                 return response || fetch(e.request)
                 .then(re => {
