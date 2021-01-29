@@ -8,20 +8,23 @@ mod jwt_numeric_date;
 use claim_config::ClaimConfiguration;
 use claim_error::JwtCustomError;
 
-/**
- * Returns a Result with a claim configuration if succeeded, a path is needed.
- */
-pub fn from_env_config(path : &str) -> Result<ClaimConfiguration, JwtCustomError> {
-    let toml_str = match std::fs::read_to_string(path) {
-        Ok(toml) => toml,
-        Err(_) => return Err(JwtCustomError::CustomError("Could not get the toml config file for the jwt config".to_string()))
-    };
-    let config = match toml::from_str(&toml_str) {
-        Ok(config) => config,
-        Err(e) => return Err(JwtCustomError::CustomError(format!("{}", e)))
-    };
-    info!("A jwt configuration from the file {} has been created", path);
-    Ok(config)
+pub fn get_value_from_key(key : &str) -> Option<String> {
+    match dotenv::var(key){
+        Ok(value) => Some(value),
+        Err(_) => match std::env::var(key) {
+            Ok(env_value) => Some(env_value),
+            Err(_) => None
+        }
+    }
+}
+
+pub fn env_config() -> Result<ClaimConfiguration, JwtCustomError> {
+    Ok(
+        ClaimConfiguration::new(&get_value_from_key("JWT_ISSUER").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+            &get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+            get_value_from_key("JWT_EXPIRATION").ok_or(JwtCustomError::EnvironmentalVariableMissing)?.parse::<usize>().map_err(|_|JwtCustomError::CustomError("Cannot parse the jwt expiration env line".to_owned()))?
+        )
+    )
 }
 
 #[test]
@@ -40,11 +43,4 @@ fn test_expiration() {
     let config = ClaimConfiguration::new("i", "s", 15);
     let claim = config.create_claim("u");
     assert!(!claim.is_err())
-}
-
-#[test]
-fn test_config() {
-    let config = from_env_config("Jwt.toml").unwrap();
-    assert!(!config.get_issuer().is_empty());
-    assert!(!config.get_expiration() != 0);
 }

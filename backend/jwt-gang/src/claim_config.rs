@@ -1,6 +1,5 @@
 use jsonwebtoken::errors::ErrorKind;
 use jsonwebtoken::{decode, encode, Header, TokenData, Validation,DecodingKey,EncodingKey};
-use serde::Deserialize;
 use crate::claim::Claim;
 use crate::claim_error::JwtCustomError;
 
@@ -8,7 +7,7 @@ use crate::claim_error::JwtCustomError;
  * This configuration will be used to make claims and to validate these claims.
  * - claim_issuer : issuer is mostly the server name, used to identify 
  */
-#[derive(Clone, Deserialize)]
+#[derive(Clone)]
 pub struct ClaimConfiguration {
     claim_issuer : String,
     claim_secret : String,

@@ -6,7 +6,7 @@ import {showError} from '../../toast';
 
 export const InputProductDialog = (props) => {
     const [name, setName] = useState('');
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState(1);
     const [date, setDate] = useState(new Date());
     const [type, setType] = useState(ProductType.Other);
     const storage = props.storage;
@@ -62,7 +62,7 @@ export const InputProductDialog = (props) => {
                 <div className="modal-header">Add product</div>
                 <div className="modal-content">
                     <input className="modal-input form-control" type="text" value={name} placeholder="Enter the product name" onChange={(e) => setName(e.target.value)}/>
-                    <input className="modal-input form-control" type="number" value={amount} placeholder="Enter the amount" onChange={(e) => setAmount(e.target.value)}/>
+                    <input className="modal-input form-control" min="1" type="number" value={amount} placeholder="Enter the amount" onChange={(e) => setAmount(e.target.value)}/>
                     <input className="modal-input form-control" type="date" value={date} placeholder="Enter the expiration date" onChange={(e) => setDate(e.target.value)}/>
                     <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
                         {Object.keys(ProductType).map(key => (

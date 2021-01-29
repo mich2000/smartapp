@@ -222,8 +222,13 @@ pub fn authenthicate_get_token(db_conn : &PgCon, claim_config : &ClaimConfigurat
  * Function that controls the given token and returns a new token if the previous was valid.
 */
 pub fn renew_token(claim_config : &ClaimConfiguration, token : &str) -> Result<String, XamXamServiceError> {
-    let claim = claim_config.decode_token(token)?;
-    Ok(claim_config.token_from_claim(&claim_config.create_claim(&claim.claims.get_subject())?)?)
+    Ok(
+        claim_config.token_from_claim(
+            &claim_config.create_claim(
+                &claim_config.decode_token(token)?.claims.get_subject()
+            )?
+        )?
+    )
 }
 
 /**

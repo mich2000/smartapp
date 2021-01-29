@@ -2,6 +2,7 @@ use std::{error::Error, fmt};
 
 #[derive(Debug,Clone)]
 pub enum JwtCustomError {
+    EnvironmentalVariableMissing,
     TokenCannotBeMadeFromClaim,
     EmptySubjectOfToken,
     TokenIsEmpty,
@@ -15,6 +16,7 @@ pub enum JwtCustomError {
 impl fmt::Display for JwtCustomError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            JwtCustomError::EnvironmentalVariableMissing => write!(f,"Could not get a environmental variable used to make a jwt configuration."),
             JwtCustomError::TokenCannotBeMadeFromClaim => write!(f,"Couldn't create a token out of a claim"),
             JwtCustomError::EmptySubjectOfToken => write!(f,"A subject of a JWT token can't be empty"),
             JwtCustomError::TokenIsEmpty => write!(f,"A token string cannot be empty"),

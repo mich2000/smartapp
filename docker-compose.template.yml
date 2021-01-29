@@ -39,6 +39,9 @@ services:
       PERSON_SMTP_USERNAME: ""
       PERSON_SMTP_PASSWORD: ""
       PERSON_SMTP_DOMAIN: smtp.gmail.com
+      JWT_ISSUER: ""
+      JWT_SECRET: ""
+      JWT_EXPIRATION: 0
     volumes:
       - /etc/letsencrypt:/production:ro
     links:
@@ -58,6 +61,9 @@ services:
       DATABASE_URL: ""
       CERT_PATH: /production/live/domain/fullchain.pem
       KEY_PATH: /production/live/domain/privkey.pem
+      JWT_ISSUER: ""
+      JWT_SECRET: ""
+      JWT_EXPIRATION: 0
     links:
       - "db"
   xam-web:

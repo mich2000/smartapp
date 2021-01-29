@@ -11,7 +11,5 @@ RUN cargo build --release && strip target/release/xam-xam-id-web
 # Final stage
 FROM xam-run
 COPY --from=cargoer xam-xam-id-web/target/release/xam-xam-id-web .
-ARG JWT_FILE_PATH
-COPY $JWT_FILE_PATH ./Jwt.toml
 EXPOSE 8000
 CMD ["./xam-xam-id-web"]
