@@ -1,1 +1,3 @@
-docker-compose down && bash ./build.sh && docker-compose up -d;
+docker-compose down;
+
+bash ./build.sh && docker-compose up -d;
