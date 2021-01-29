@@ -25,8 +25,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let redis_pool: RedisPool = get_redis_pool(
         &get_value_from_key("REDIS_URL").ok_or(XamXamWebError::CouldNotGetRedisConnection)?.as_ref(),
     );
-    let jwt_config = jwt_gang::from_env_config("Jwt.toml")?;
-
+    let jwt_config = jwt_gang::env_config()?;
+    
     HttpServer::new(move || {
         App::new()
             .wrap(middleware::Logger::default())

@@ -20,7 +20,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let pg_pool: PgPool = get_pg_pool(
         &get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?
     );
-    let jwt_config = jwt_gang::from_env_config("Jwt.toml")?;
+    let jwt_config = jwt_gang::env_config()?;
 
     HttpServer::new(move || {
         App::new()
