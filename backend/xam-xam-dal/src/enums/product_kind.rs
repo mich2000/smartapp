@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 /**
  * Enumeration containing all the kind of food a product can be.
  */
-#[derive(DbEnum, Debug, PartialEq, Clone, Deserialize, Serialize)]
+#[derive(DbEnum, Debug, Clone, Deserialize, Serialize)]
 #[DieselType = "Product_Kind"]
 pub enum ProductKind {
     Other,

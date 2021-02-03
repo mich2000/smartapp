@@ -5,7 +5,7 @@ use bcrypt::{hash, verify, DEFAULT_COST};
 /**
  * Struct that represents the basic user. This form of user is very simple.
 */
-#[derive(Debug, Queryable, Identifiable, Insertable)]
+#[derive(Queryable, Identifiable, Insertable)]
 #[table_name = "users"]
 pub struct User {
     pub id: i32,

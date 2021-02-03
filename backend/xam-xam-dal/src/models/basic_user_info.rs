@@ -1,7 +1,7 @@
 use chrono::NaiveDate;
 use diesel::sql_types::{BigInt, Date, Nullable};
 
-#[derive(Debug, QueryableByName, FromSqlRow)]
+#[derive(QueryableByName)]
 pub struct BasicUserInfo {
     #[sql_type = "BigInt"]
     pub amount_storage: i64,

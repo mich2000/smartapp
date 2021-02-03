@@ -3,15 +3,11 @@ extern crate log;
 
 #[macro_use]
 pub extern crate diesel;
-pub mod basic_user_info;
 pub mod err;
 pub mod models;
 pub mod repo;
 pub mod schema;
 pub mod enums;
-pub mod product_description;
-
-mod product_id;
 
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager;

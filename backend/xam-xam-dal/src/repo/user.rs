@@ -1,18 +1,15 @@
-use crate::product_description::ProductDescription;
-use crate::basic_user_info::BasicUserInfo;
-use diesel::query_dsl::filter_dsl::FilterDsl;
-use diesel::query_dsl::filter_dsl::FindDsl;
-use diesel::query_dsl::select_dsl::SelectDsl;
-use diesel::ExpressionMethods;
-use diesel::OptionalExtension;
-use diesel::RunQueryDsl;
-use diesel::sql_types::Integer;
-use crate::err::XamXamError;
+use crate::models::product_description::ProductDescription;
+use crate::models::basic_user_info::BasicUserInfo;
 use crate::models::user::{InsertableUser, User};
+use diesel::query_dsl::filter_dsl::{FilterDsl, FindDsl};
+use diesel::query_dsl::select_dsl::SelectDsl;
+use diesel::{ExpressionMethods, OptionalExtension, RunQueryDsl};
+use diesel::sql_types::Integer;
+use xam_xam_common::util::control_email;
+use bcrypt::{hash, DEFAULT_COST};
+use crate::err::XamXamError;
 use crate::schema::users::dsl::*;
 use crate::PgCon;
-use bcrypt::{hash, DEFAULT_COST};
-use xam_xam_common::util::control_email;
 
 /**
  * Inserts a user in a database

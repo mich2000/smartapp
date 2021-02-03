@@ -6,7 +6,7 @@ use crate::schema::*;
 /**
  * Struct that represents the Storage unit where products lie.
  */
-#[derive(Insertable, Queryable, Associations, Identifiable, Debug, PartialEq, Clone)]
+#[derive(Insertable, Queryable, Associations, Identifiable)]
 #[belongs_to(User)]
 #[table_name = "storages"]
 pub struct Storage {

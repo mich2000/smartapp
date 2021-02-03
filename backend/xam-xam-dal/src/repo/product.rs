@@ -10,7 +10,7 @@ use crate::schema::products::dsl::*;
 use diesel::QueryDsl;
 use diesel::ExpressionMethods;
 use crate::repo::storage;
-use crate::product_id::ProductId;
+use crate::models::product_id::ProductId;
 
 /**
  * Function used to insert a product into the products table in the database.

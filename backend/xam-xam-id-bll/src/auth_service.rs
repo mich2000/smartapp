@@ -10,7 +10,7 @@ use crate::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_dal::models::user::{InsertableUser,User};
 use xam_xam_dal::repo::user;
 use xam_xam_common::util::{get_hash,control_email};
-use xam_xam_dal::basic_user_info::BasicUserInfo;
+use xam_xam_dal::models::basic_user_info::BasicUserInfo;
 use crate::err::XamXamServiceError;
 use xam_xam_dal::err::XamXamError;
 use crate::{RCon,PgCon};

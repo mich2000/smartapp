@@ -1,9 +1,9 @@
 use chrono::NaiveDate;
 use crate::enums::product_kind::ProductKind;
 use diesel::sql_types::{SmallInt, Date, Text};
-use serde::{Serialize,Deserialize};
+use serde::Serialize;
 
-#[derive(Debug, QueryableByName, FromSqlRow, Serialize, Deserialize)]
+#[derive(QueryableByName, FromSqlRow, Serialize)]
 pub struct ProductDescription {
     #[sql_type = "Text"]
     name : String,
