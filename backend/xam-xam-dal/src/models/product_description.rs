@@ -3,7 +3,7 @@ use crate::enums::product_kind::ProductKind;
 use diesel::sql_types::{SmallInt, Date, Text};
 use serde::Serialize;
 
-#[derive(QueryableByName, FromSqlRow, Serialize)]
+#[derive(QueryableByName, Clone, FromSqlRow, Serialize)]
 pub struct ProductDescription {
     #[sql_type = "Text"]
     name : String,
