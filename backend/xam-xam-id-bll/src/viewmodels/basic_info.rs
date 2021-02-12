@@ -4,8 +4,8 @@ use xam_xam_dal::models::basic_user_info::BasicUserInfo;
 
 #[derive(Serialize)]
 pub struct UserInfo {
-    amount_storage : i16,
-    amount_product : i16,
+    amount_storage : i32,
+    amount_product : i32,
     min_bederf : Option<NaiveDate>,
     max_bederf : Option<NaiveDate>
 }

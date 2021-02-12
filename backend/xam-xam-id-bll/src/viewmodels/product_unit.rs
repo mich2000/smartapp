@@ -3,16 +3,12 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct ProductUnits {
-    units: [Option<ProductDescription>;5]
+    units: Vec<ProductDescription>
 }
 
 impl From<Vec<ProductDescription>> for ProductUnits {
     fn from(units : Vec<ProductDescription>) -> Self {
-        let mut product_arr : [Option<ProductDescription>;5] = [None,None,None,None,None];
-        for index in 0..units.len() {
-            product_arr[index] = Some(units[index].clone());
-        }
-        Self { units : product_arr }
+        Self { units }
     }
 }
 
