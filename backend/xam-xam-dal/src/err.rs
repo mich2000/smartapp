@@ -67,12 +67,14 @@ impl fmt::Display for XamXamError {
 
 impl From<diesel::result::Error> for XamXamError {
     fn from(error: diesel::result::Error) -> Self {
+        error!("{}", error);
         XamXamError::CustomError(format!("{}", error))
     }
 }
 
 impl From<bcrypt::BcryptError> for XamXamError {
     fn from(error: bcrypt::BcryptError) -> Self {
+        error!("{}", error);
         XamXamError::CustomError(format!("{}", error))
     }
 }

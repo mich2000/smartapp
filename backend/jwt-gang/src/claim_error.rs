@@ -1,6 +1,6 @@
 use std::{error::Error, fmt};
 
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub enum JwtCustomError {
     EnvironmentalVariableMissing,
     TokenCannotBeMadeFromClaim,

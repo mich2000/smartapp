@@ -22,4 +22,6 @@ futures-util = "0.3.7"
 
 [profile.release]
 panic = "abort"
+lto = true
+codegen-units = 1
 opt-level = "z"

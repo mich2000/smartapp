@@ -25,12 +25,14 @@ impl fmt::Display for XamXamServiceError {
 
 impl From<XamXamError> for XamXamServiceError {
     fn from(err: XamXamError) -> Self {
+        error!("{}",err);
         XamXamServiceError::XamXamDalError(err)
     }
 }
 
 impl From<&str> for XamXamServiceError {
     fn from(err: &str) -> Self {
+        error!("{}",err);
         XamXamServiceError::CustomError(err.to_string())
     }
 }

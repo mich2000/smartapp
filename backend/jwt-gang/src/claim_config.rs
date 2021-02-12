@@ -64,7 +64,7 @@ impl ClaimConfiguration {
      */
     pub fn decode_token(&self, token: &str) -> Result<TokenData<Claim>, JwtCustomError> {
         if token.is_empty() {
-            warn!("JWT error: {}", JwtCustomError::TokenIsEmpty);
+            warn!("{}", JwtCustomError::TokenIsEmpty);
             return Err(JwtCustomError::TokenIsEmpty)
         }
         match decode::<Claim>(
@@ -75,19 +75,19 @@ impl ClaimConfiguration {
             Ok(c) => Ok(c),
             Err(err) => match &*err.kind() {
                 ErrorKind::InvalidToken => {
-                    warn!("JWT error: {}", JwtCustomError::TokenIsInvalid);
+                    warn!("{}", JwtCustomError::TokenIsInvalid);
                     Err(JwtCustomError::TokenIsInvalid)
                 }
                 ErrorKind::InvalidIssuer => {
-                    warn!("JWT error: {}", JwtCustomError::IssuerIsInvalid);
+                    warn!("{}", JwtCustomError::IssuerIsInvalid);
                     Err(JwtCustomError::IssuerIsInvalid)
                 }
                 ErrorKind::ExpiredSignature => {
-                    warn!("JWT error: {}", JwtCustomError::SignatureHasExpired);
+                    warn!("{}", JwtCustomError::SignatureHasExpired);
                     Err(JwtCustomError::SignatureHasExpired)
                 },
                 e => {
-                    warn!("JWT error: {}",format!("Some other JWT error. Error: {:#?}",&e));
+                    warn!("{}",format!("Some other JWT error. Error: {:#?}",&e));
                     Err(JwtCustomError::CustomError(format!("Some other JWT error. Error: {:#?}",&e)))
                 }
             },
