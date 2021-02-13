@@ -4,6 +4,7 @@ import {DeleteStoragePopup} from './delete_storage';
 import {EditStoragePopup} from './edit_storage';
 import {Link} from "react-router-dom";
 import {showError} from '../../toast';
+import {DoorIcon} from '../../icon';
 
 export const Storages = (props) => {
     function delete_storage(event) {
@@ -69,9 +70,7 @@ export const Storages = (props) => {
                                 pathname: "/products",
                                 search : "?storage=" + item[0]
                             }}>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1h8zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                                </svg>
+                                <DoorIcon/>
                             </Link>
                             <EditStoragePopup edit_storage={(e) => edit_storage(e)} item={item}/>
                             <DeleteStoragePopup delete_storage={(e) => delete_storage(e)} item={item}/>

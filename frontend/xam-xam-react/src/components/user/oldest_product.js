@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import api_functions from '../../api';
+import {DoorIcon} from '../../icon';
 
 const ProductUnit = (props) => {
     return (
@@ -21,7 +22,9 @@ const ProductUnit = (props) => {
                 <Link className="text-dark" to={{
                     pathname: "/products",
                     search : "?storage=" + props.item_info.storage_name
-                }}>{props.item_info.storage_name}</Link>
+                }}>
+                    <DoorIcon/>
+                </Link>{props.item_info.storage_name}
             </th>
         </tr>
     );
