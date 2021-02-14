@@ -51,7 +51,7 @@ export const InputProductDialog = (props) => {
             }
         }).catch(() => showError('No internet connection'));
     }
-    
+
     return <Popup trigger={<button className="btn btn-primary modal-input">
             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-plus svg-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -63,8 +63,11 @@ export const InputProductDialog = (props) => {
                 <div className="modal-content">
                     <input className="modal-input form-control" type="text" value={name} placeholder="Enter the product name" onChange={(e) => setName(e.target.value)}/>
                     <input className="modal-input form-control" min="1" type="number" value={amount} placeholder="Enter the amount" onChange={(e) => setAmount(e.target.value)}/>
-                    <input className="modal-input form-control" type="date" value={date} placeholder="Enter the expiration date" onChange={(e) => setDate(e.target.value)}/>
-                    <select className="modal-input form-control" value={type} onChange={(e) => setType(e.target.value)}>
+                    <input className="modal-input form-control" type="date" value={date} placeholder="Enter the expiration date" onChange={(e) => {
+                        console.log(e.target.value);
+                        setDate(e.target.value);
+                    }}/>
+                    <select className="modal-input form-control" value={type} placeholder={date} onChange={(e) => setType(e.target.value)}>
                         {Object.keys(ProductType).map(key => (
                             <option key={key} value={key}>
                                 {key}

@@ -16,3 +16,11 @@ export const ProductType = Object.freeze({
     Unhealthy : 'Unhealthy',
     Bean : 'Bean',
 });
+
+export const ExpirationOptions = Object.freeze({
+    ThreeDay : '3 days',
+    SevenDay : '7 days',
+    Fortnight : '14 days',
+    OneMonth : '1 month',
+    TwoMonth : '2 months'
+});

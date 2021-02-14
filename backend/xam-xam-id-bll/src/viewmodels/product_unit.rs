@@ -1,14 +1,15 @@
 use xam_xam_dal::models::product_description::ProductDescription;
 use serde::Serialize;
+use smallvec::SmallVec;
 
 #[derive(Serialize)]
 pub struct ProductUnits {
-    units: Vec<ProductDescription>
+    units: SmallVec::<[ProductDescription;5]>
 }
 
 impl From<Vec<ProductDescription>> for ProductUnits {
     fn from(units : Vec<ProductDescription>) -> Self {
-        Self { units }
+        Self { units : SmallVec::from(units) }
     }
 }
 

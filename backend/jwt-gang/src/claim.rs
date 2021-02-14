@@ -35,12 +35,11 @@ impl Claim {
             warn!("The subject of the jwt claim is empty");
             return Err(JwtCustomError::EmptySubjectOfToken)
         }
-        let today = Utc::now();
         Ok(
             Self {
                 sub: subject.to_string(),
                 iss: issuer.to_string(),
-                exp: today + chrono::Duration::seconds(expiration as i64)
+                exp: Utc::now() + chrono::Duration::seconds(expiration as i64)
             }
         )
     }
