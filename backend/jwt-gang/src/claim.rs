@@ -1,7 +1,7 @@
+use crate::claim_error::JwtCustomError;
+use crate::jwt_numeric_date;
 use chrono::prelude::*;
 use serde::{Deserialize, Serialize};
-use crate::jwt_numeric_date;
-use crate::claim_error::JwtCustomError;
 
 /**
  * Claim is used to prove authorization for an user for a certain amount of time.
@@ -18,30 +18,24 @@ pub struct Claim {
     iss: String,
     sub: String,
     #[serde(with = "jwt_numeric_date")]
-    exp: DateTime<Utc>
+    exp: DateTime<Utc>,
 }
 
 impl Claim {
-    pub fn new(
-        subject : &str,
-        issuer : &str,
-        expiration : usize
-    ) -> Result<Claim, JwtCustomError> {
+    pub fn new(subject: &str, issuer: &str, expiration: usize) -> Result<Claim, JwtCustomError> {
         if expiration == 0 {
             warn!("JWT claim cannot have a expiration equal to 0.");
-            return Err(JwtCustomError::ExpirationEqualsNull)
+            return Err(JwtCustomError::ExpirationEqualsNull);
         }
         if subject.is_empty() {
             warn!("The subject of the jwt claim is empty");
-            return Err(JwtCustomError::EmptySubjectOfToken)
+            return Err(JwtCustomError::EmptySubjectOfToken);
         }
-        Ok(
-            Self {
-                sub: subject.to_string(),
-                iss: issuer.to_string(),
-                exp: Utc::now() + chrono::Duration::seconds(expiration as i64)
-            }
-        )
+        Ok(Self {
+            sub: subject.to_string(),
+            iss: issuer.to_string(),
+            exp: Utc::now() + chrono::Duration::seconds(expiration as i64),
+        })
     }
 
     pub fn get_subject(&self) -> &str {

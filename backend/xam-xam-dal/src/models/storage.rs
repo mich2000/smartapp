@@ -52,7 +52,7 @@ impl InsertableStorage {
         Ok(Self {
             user_id,
             name: storage_name.to_string(),
-            storage_kind: new_storage_kind
+            storage_kind: new_storage_kind,
         })
     }
 }

@@ -1,15 +1,15 @@
-use crate::models::product_description::ProductDescription;
-use crate::models::basic_user_info::BasicUserInfo;
-use crate::models::user::{InsertableUser, User};
-use diesel::query_dsl::filter_dsl::{FilterDsl, FindDsl};
-use diesel::query_dsl::select_dsl::SelectDsl;
-use diesel::{ExpressionMethods, OptionalExtension, RunQueryDsl};
-use diesel::sql_types::Integer;
-use xam_xam_common::util::control_email;
-use bcrypt::{hash, DEFAULT_COST};
 use crate::err::XamXamError;
+use crate::models::basic_user_info::BasicUserInfo;
+use crate::models::product_description::ProductDescription;
+use crate::models::user::{InsertableUser, User};
 use crate::schema::users::dsl::*;
 use crate::PgCon;
+use bcrypt::{hash, DEFAULT_COST};
+use diesel::query_dsl::filter_dsl::{FilterDsl, FindDsl};
+use diesel::query_dsl::select_dsl::SelectDsl;
+use diesel::sql_types::Integer;
+use diesel::{ExpressionMethods, OptionalExtension, RunQueryDsl};
+use xam_xam_common::util::control_email;
 
 /**
  * Inserts a user in a database
@@ -93,14 +93,13 @@ pub fn change_email(conn: &PgCon, user_id: i32, new_user_email: &str) -> Result<
                     "The user with the id {} has succesfully changed its email",
                     user_id
                 );
-                Ok(true)
-            } else {
-                info!(
-                    "The user with the id {} has succesfully couldn't change his email",
-                    user_id
-                );
-                Ok(false)
+                return Ok(true);
             }
+            info!(
+                "The user with the id {} has succesfully couldn't change his email",
+                user_id
+            );
+            Ok(false)
         }
         Err(e) => Err(e.into()),
     }
@@ -117,10 +116,7 @@ pub fn change_password(
     if new_user_pwd.is_empty() {
         return Err(XamXamError::PasswordIsEmpty);
     }
-    let hashed_pwd: String = match hash(new_user_pwd, DEFAULT_COST) {
-        Ok(hash) => hash,
-        Err(_) => return Err(XamXamError::PasswordCannotBeMade),
-    };
+    let hashed_pwd: String = hash(new_user_pwd, DEFAULT_COST)?;
     match diesel::update(users.find(user_id))
         .set(password_hash.eq(&hashed_pwd))
         .execute(conn)
@@ -131,14 +127,13 @@ pub fn change_password(
                     "The user with the id {} has succesfully changed its password",
                     user_id
                 );
-                Ok(true)
-            } else {
-                info!(
-                    "The user with the id {} has succesfully couldn't change his password",
-                    user_id
-                );
-                Ok(false)
+                return Ok(true);
             }
+            info!(
+                "The user with the id {} has succesfully couldn't change his password",
+                user_id
+            );
+            Ok(false)
         }
         Err(e) => Err(e.into()),
     }
@@ -155,14 +150,13 @@ pub fn delete_user(conn: &PgCon, user_id: i32) -> Result<bool, XamXamError> {
                     "The user with the id {} has succesfully been deleted",
                     user_id
                 );
-                Ok(true)
-            } else {
-                info!(
-                    "The user with the id {} has succesfully couldn't be deleted",
-                    user_id
-                );
-                Ok(false)
+                return Ok(true);
             }
+            info!(
+                "The user with the id {} has succesfully couldn't be deleted",
+                user_id
+            );
+            Ok(false)
         }
         Err(e) => Err(e.into()),
     }
@@ -179,7 +173,10 @@ pub fn get_information_from_id(conn: &PgCon, user_id: i32) -> Result<BasicUserIn
     Ok(result)
 }
 
-pub fn get_five_first_products(conn : &PgCon, user_id : i32) -> Result<Vec<ProductDescription>, XamXamError> {
+pub fn get_five_first_products(
+    conn: &PgCon,
+    user_id: i32,
+) -> Result<Vec<ProductDescription>, XamXamError> {
     let result = diesel::sql_query("select pi.name as name, pi.amount as amount, pi.peremption_date as date, pi.product_kind as kind,s.name as storage_name from storages s right join products pi on pi.storage_id = s.id where s.user_id = $1 order by pi.peremption_date asc limit 5")
     .bind::<Integer,_>(user_id)
     .load(conn)?;

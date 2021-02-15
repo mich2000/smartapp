@@ -22,7 +22,7 @@ pub struct Product {
 #[derive(AsChangeset)]
 #[table_name = "products"]
 pub struct UpdateProduct {
-    pub id : i32,
+    pub id: i32,
     pub name: Option<String>,
     pub amount: Option<i16>,
     pub peremption_date: Option<NaiveDate>,

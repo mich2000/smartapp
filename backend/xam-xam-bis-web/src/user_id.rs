@@ -36,7 +36,11 @@ impl FromRequest for UserId {
         };
         let id: i32 = match id_of_token.parse::<i32>() {
             Ok(id) => id,
-            Err(_) => return err(XamXamWebError::from("Could not parse string reference to i32",))
+            Err(_) => {
+                return err(XamXamWebError::from(
+                    "Could not parse string reference to i32",
+                ))
+            }
         };
         ok(UserId::new(id))
     }

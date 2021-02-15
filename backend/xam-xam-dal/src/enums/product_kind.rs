@@ -1,6 +1,6 @@
 use diesel_derive_enum::DbEnum;
-use std::fmt;
 use serde::{Deserialize, Serialize};
+use std::fmt;
 
 /**
  * Enumeration containing all the kind of food a product can be.
@@ -21,7 +21,9 @@ pub enum ProductKind {
 
 impl std::fmt::Display for ProductKind {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f,"{}",
+        write!(
+            f,
+            "{}",
             match self {
                 ProductKind::Other => "other",
                 ProductKind::Vegetables => "vegetables",
@@ -31,7 +33,7 @@ impl std::fmt::Display for ProductKind {
                 ProductKind::Fish => "fish",
                 ProductKind::Dairy => "dairy",
                 ProductKind::Unhealthy => "unhealthy",
-                ProductKind::Bean => "bean"
+                ProductKind::Bean => "bean",
             }
         )
     }

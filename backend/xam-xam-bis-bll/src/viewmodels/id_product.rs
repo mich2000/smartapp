@@ -1,9 +1,9 @@
 use serde::Deserialize;
 
 #[derive(Deserialize)]
-pub struct IdProduct { 
-    id : i32,
-    storage_name : String
+pub struct IdProduct {
+    id: i32,
+    storage_name: String,
 }
 
 impl IdProduct {

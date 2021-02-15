@@ -1,30 +1,35 @@
-pub mod claim_config;
 pub mod claim;
+pub mod claim_config;
 pub mod claim_error;
 mod jwt_numeric_date;
 
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
 use claim_config::ClaimConfiguration;
 use claim_error::JwtCustomError;
 
-pub fn get_value_from_key(key : &str) -> Option<String> {
-    match dotenv::var(key){
+pub fn get_value_from_key(key: &str) -> Option<String> {
+    match dotenv::var(key) {
         Ok(value) => Some(value),
         Err(_) => match std::env::var(key) {
             Ok(env_value) => Some(env_value),
-            Err(_) => None
-        }
+            Err(_) => None,
+        },
     }
 }
 
 pub fn env_config() -> Result<ClaimConfiguration, JwtCustomError> {
-    Ok(
-        ClaimConfiguration::new(&get_value_from_key("JWT_ISSUER").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
-            &get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
-            get_value_from_key("JWT_EXPIRATION").ok_or(JwtCustomError::EnvironmentalVariableMissing)?.parse::<usize>().map_err(|_|JwtCustomError::CustomError("Cannot parse the jwt expiration env line".to_owned()))?
-        )
-    )
+    Ok(ClaimConfiguration::new(
+        &get_value_from_key("JWT_ISSUER").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+        &get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+        get_value_from_key("JWT_EXPIRATION")
+            .ok_or(JwtCustomError::EnvironmentalVariableMissing)?
+            .parse::<usize>()
+            .map_err(|_| {
+                JwtCustomError::CustomError("Cannot parse the jwt expiration env line".to_owned())
+            })?,
+    ))
 }
 
 #[test]

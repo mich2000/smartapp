@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct StorageName {
-    name : String
+    name: String,
 }
 
 impl StorageName {

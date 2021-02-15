@@ -16,7 +16,7 @@ impl fmt::Display for XamXamServiceError {
         match self {
             //Dal error
             XamXamServiceError::XamXamDalError(err) => write!(f, "{}", err),
-            XamXamServiceError::StorageNameIsEmpty => write!(f,"A storage name cannot be empty."),
+            XamXamServiceError::StorageNameIsEmpty => write!(f, "A storage name cannot be empty."),
             // Custom errors
             XamXamServiceError::CustomError(e) => write!(f, "{}", e),
         }
@@ -25,14 +25,14 @@ impl fmt::Display for XamXamServiceError {
 
 impl From<XamXamError> for XamXamServiceError {
     fn from(err: XamXamError) -> Self {
-        error!("{}",err);
+        error!("{}", err);
         XamXamServiceError::XamXamDalError(err)
     }
 }
 
 impl From<&str> for XamXamServiceError {
     fn from(err: &str) -> Self {
-        error!("{}",err);
+        error!("{}", err);
         XamXamServiceError::CustomError(err.to_string())
     }
 }

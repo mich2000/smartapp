@@ -5,15 +5,15 @@ use xam_xam_dal::models::storage::UpdateStorage;
 #[derive(Deserialize)]
 pub struct EditStorage {
     storage_name: String,
-    new_storage_name : Option<String>,
-    new_kind: StorageKind
+    new_storage_name: Option<String>,
+    new_kind: StorageKind,
 }
 
 impl From<&EditStorage> for UpdateStorage {
-    fn from(edit : &EditStorage) -> Self {
+    fn from(edit: &EditStorage) -> Self {
         UpdateStorage {
             name: edit.new_storage_name.clone(),
-            storage_kind: Some(edit.new_kind.clone())
+            storage_kind: Some(edit.new_kind.clone()),
         }
     }
 }

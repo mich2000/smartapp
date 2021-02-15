@@ -4,7 +4,7 @@ use xam_xam_dal::enums::storage_kind::StorageKind;
 #[derive(Deserialize)]
 pub struct NewStorage {
     name: String,
-    kind: StorageKind
+    kind: StorageKind,
 }
 
 impl NewStorage {

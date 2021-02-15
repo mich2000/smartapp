@@ -1,14 +1,15 @@
+mod controllers;
 mod db;
 mod err;
 mod user_id;
 mod web_config;
-mod controllers;
 
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
 use actix_web::{http::header::ContentEncoding, middleware, web, App, HttpServer};
 
-use xam_xam_bis_bll::{PgPool,get_pg_pool};
+use xam_xam_bis_bll::{get_pg_pool, PgPool};
 
 use xam_xam_common::util::get_value_from_key;
 
@@ -18,7 +19,7 @@ use crate::err::XamXamWebError;
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     web_config::log_init()?;
     let pg_pool: PgPool = get_pg_pool(
-        &get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?
+        &get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?,
     );
     let jwt_config = jwt_gang::env_config()?;
 
@@ -34,6 +35,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .service(controllers::product::remove_product)
             .service(controllers::product::update_product)
             .service(controllers::product::get_product_list)
+            .service(controllers::product::move_product)
             .service(controllers::storage::add_storage)
             .service(controllers::storage::delete_storage)
             .service(controllers::storage::get_storages)

@@ -1,20 +1,20 @@
-use chrono::NaiveDate;
 use crate::enums::product_kind::ProductKind;
-use diesel::sql_types::{SmallInt, Date, Text};
+use chrono::NaiveDate;
+use diesel::sql_types::{Date, SmallInt, Text};
 use serde::Serialize;
 
 #[derive(QueryableByName, Clone, FromSqlRow, Serialize)]
 pub struct ProductDescription {
     #[sql_type = "Text"]
-    name : String,
+    name: String,
     #[sql_type = "SmallInt"]
-    amount : i16,
+    amount: i16,
     #[sql_type = "Date"]
-    date : NaiveDate,
+    date: NaiveDate,
     #[sql_type = "Text"]
-    kind : ProductKind,
+    kind: ProductKind,
     #[sql_type = "Text"]
-    storage_name : String
+    storage_name: String,
 }
 
 impl diesel::deserialize::FromSql<diesel::sql_types::Text, diesel::pg::Pg> for ProductKind {
