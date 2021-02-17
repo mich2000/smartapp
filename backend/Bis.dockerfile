@@ -1,11 +1,12 @@
 #build stage
 FROM xam-build as cargoer
+
 COPY mailgang/ ./mailgang
 COPY xam-xam-bis-bll/ ./xam-xam-bis-bll
 COPY xam-xam-bis-web/ ./xam-xam-bis-web
+
 WORKDIR /xam-xam-bis-web
 
-RUN cargo check
 RUN cargo build --release && strip target/release/xam-xam-bis-web
 
 # Final stage
