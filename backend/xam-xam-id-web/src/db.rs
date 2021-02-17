@@ -9,12 +9,14 @@ pub trait GetCon<T> {
 
 impl GetCon<PgCon> for Data<PgPool> {
     fn conn(&self) -> Result<PgCon, XamXamWebError> {
-        self.get().or(Err(XamXamWebError::CouldNotGetPostGresConnection))
+        self.get()
+            .or(Err(XamXamWebError::CouldNotGetPostGresConnection))
     }
 }
 
 impl GetCon<RCon> for Data<RedisPool> {
     fn conn(&self) -> Result<RCon, XamXamWebError> {
-        self.get().or(Err(XamXamWebError::CouldNotGetRedisConnection))
+        self.get()
+            .or(Err(XamXamWebError::CouldNotGetRedisConnection))
     }
 }

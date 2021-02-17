@@ -51,28 +51,28 @@ impl From<actix_web::error::ParseError> for XamXamWebError {
 
 impl From<actix_web::Error> for XamXamWebError {
     fn from(err: actix_web::Error) -> Self {
-        error!("{}",err);
+        error!("{}", err);
         XamXamWebError::CustomError(err.to_string())
     }
 }
 
 impl From<&str> for XamXamWebError {
     fn from(err: &str) -> Self {
-        error!("{}",err);
+        error!("{}", err);
         XamXamWebError::CustomError(err.to_string())
     }
 }
 
 impl From<xam_xam_id_bll::err::XamXamServiceError> for XamXamWebError {
     fn from(err: xam_xam_id_bll::err::XamXamServiceError) -> Self {
-        error!("{}",err);
+        error!("{}", err);
         XamXamWebError::ServiceError(err)
     }
 }
 
 impl From<jwt_gang::claim_error::JwtCustomError> for XamXamWebError {
     fn from(err: jwt_gang::claim_error::JwtCustomError) -> Self {
-        error!("{}",err);
+        error!("{}", err);
         XamXamWebError::ServiceError(XamXamServiceError::JWTerror(err))
     }
 }

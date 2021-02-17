@@ -1,3 +1,4 @@
+use crate::db::GetCon;
 use crate::err::XamXamWebError;
 use crate::extractors::credentials::Cred;
 use crate::{PgPool, RedisPool};
@@ -6,11 +7,10 @@ use actix_web::{get, post, put, web::Data, web::Json, HttpResponse};
 use actix_web_httpauth::headers::authorization::Bearer;
 use jwt_gang::claim_config::ClaimConfiguration;
 use xam_xam_id_bll::auth_service;
-use xam_xam_id_bll::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_id_bll::viewmodels::email::EmailHolder;
+use xam_xam_id_bll::viewmodels::forgot_pwd::ForgottenPassword;
 use xam_xam_id_bll::viewmodels::new_user::NewUser;
 use xam_xam_id_bll::RCon;
-use crate::db::GetCon;
 
 /**
  * Function that is used to take in the a token and user creation info, the token will be controlled on the redis database. If the token is okay and the user doesn't already exist he is inserted in the database or otherwhise an error is returned.
@@ -100,9 +100,11 @@ pub async fn renew_token(
         .to_owned();
     let user_id_token = match token_subject.parse::<i32>() {
         Ok(id) => id,
-        Err(_) => return Err(XamXamWebError::from(
-            "Could not parse string reference to i32",
-        ))
+        Err(_) => {
+            return Err(XamXamWebError::from(
+                "Could not parse string reference to i32",
+            ))
+        }
     };
     let jwt_claim = jwt_config
         .as_ref()
@@ -131,7 +133,7 @@ pub async fn change_forgotten_pwd(
 pub async fn get_email(
     session: Identity,
     pg: Data<PgPool>,
-    jwt_config: Data<ClaimConfiguration>
+    jwt_config: Data<ClaimConfiguration>,
 ) -> Result<HttpResponse, XamXamWebError> {
     let jwt_token = match session.identity() {
         Some(token) => token,
@@ -144,9 +146,12 @@ pub async fn get_email(
         .to_owned();
     let user_id_token = match token_subject.parse::<i32>() {
         Ok(id) => id,
-        Err(_) => return Err(XamXamWebError::from(
-            "Could not parse string reference to i32",
-        ))
+        Err(_) => {
+            return Err(XamXamWebError::from(
+                "Could not parse string reference to i32",
+            ))
+        }
     };
-    Ok(HttpResponse::Ok().json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg.conn()?)?))
+    Ok(HttpResponse::Ok()
+        .json::<EmailHolder>(auth_service::get_email_from_id(user_id_token, &pg.conn()?)?))
 }

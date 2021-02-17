@@ -7,13 +7,14 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+xam-xam-dal = { path = "../xam-xam-dal" }
+xam-xam-common = { path = "../xam-xam-common" }
+mailgang = { path = "../mailgang" }
+jwt-gang = { path = "../jwt-gang"}
+
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4.0"
-jwt-gang = { path = "../jwt-gang"}
-xam-xam-dal = { path = "../xam-xam-dal" }
-xam-xam-common={ path="../xam-xam-common" }
-mailgang={ path="../mailgang" }
 r2d2_redis = "0.13.0"
 r2d2 = "0.8.9"
-chrono = {version="0.4",features=["serde"]}
-smallvec = {version="1.6.1",features=["serde"]}
+chrono = {version = "0.4",features = ["serde"]}
+smallvec = {version = "1.6.1",features = ["serde"]}

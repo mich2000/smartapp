@@ -1,10 +1,10 @@
 use crate::err::XamXamServiceError;
 use crate::viewmodels::id_product::IdProduct;
 use crate::viewmodels::insert_product::InsertProduct;
+use crate::viewmodels::move_product::MoveProduct;
 use crate::viewmodels::product_id::ProductId;
 use crate::viewmodels::products::Products;
 use crate::viewmodels::update_product::UpdateProduct;
-use crate::viewmodels::move_product::MoveProduct;
 use crate::PgCon;
 use xam_xam_dal::repo::product;
 
@@ -65,10 +65,19 @@ pub fn remove_product(
     Ok(())
 }
 
-pub fn move_product(conn: &PgCon, user_id: i32, model: &MoveProduct) -> Result<(), XamXamServiceError> {
+pub fn move_product(
+    conn: &PgCon,
+    user_id: i32,
+    model: &MoveProduct,
+) -> Result<(), XamXamServiceError> {
     if model.get_new_storage_name().is_empty() {
         return Err(XamXamServiceError::StorageNameIsEmpty);
     }
-    product::move_product(conn, user_id, model.get_product_id(), model.get_new_storage_name())?;
+    product::move_product(
+        conn,
+        user_id,
+        model.get_product_id(),
+        model.get_new_storage_name(),
+    )?;
     Ok(())
 }

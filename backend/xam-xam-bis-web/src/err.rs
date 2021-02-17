@@ -77,27 +77,25 @@ impl Error for XamXamWebError {}
 
 impl XamXamWebError {
     fn show_public_error(&self) -> String {
-        if let XamXamWebError::ServiceError(service_err) = &self {
-            if let XamXamServiceError::XamXamDalError(dal_err) = service_err {
-                return match dal_err {
-                    XamXamError::EmailNotCorrectFormat => "Email is not in the correct form",
-                    XamXamError::EmailIsEmpty => "Email cannot be empty",
-                    XamXamError::EmailIsAlreadyTaken => "User email is already taken",
-                    XamXamError::EmailAndPasswordIsEmpty => {
-                        "Email and password can't be equal to nothing"
-                    }
-                    XamXamError::PasswordIsEmpty => "Password cannot be empty",
-                    XamXamError::PasswordAndPasswordConfirmedNotEqual => {
-                        "Password and confirmed password aren't the same"
-                    }
-                    XamXamError::UserNotFound => "User cannot be found",
-                    XamXamError::UserAlreadyPresent => "User is already present",
-                    XamXamError::UserIsNotPresent => "User is not present",
-                    XamXamError::PasswordIsNotCorrect => "Given password is wrong",
-                    _ => "An internal error happened",
+        if let XamXamWebError::ServiceError(XamXamServiceError::XamXamDalError(dal_err)) = &self {
+            match dal_err {
+                XamXamError::EmailNotCorrectFormat => "Email is not in the correct form",
+                XamXamError::EmailIsEmpty => "Email cannot be empty",
+                XamXamError::EmailIsAlreadyTaken => "User email is already taken",
+                XamXamError::EmailAndPasswordIsEmpty => {
+                    "Email and password can't be equal to nothing"
                 }
-                .to_string();
+                XamXamError::PasswordIsEmpty => "Password cannot be empty",
+                XamXamError::PasswordAndPasswordConfirmedNotEqual => {
+                    "Password and confirmed password aren't the same"
+                }
+                XamXamError::UserNotFound => "User cannot be found",
+                XamXamError::UserAlreadyPresent => "User is already present",
+                XamXamError::UserIsNotPresent => "User is not present",
+                XamXamError::PasswordIsNotCorrect => "Given password is wrong",
+                _ => "An internal error happened",
             }
+            .to_string();
         }
         match self {
             XamXamWebError::CredentialsNotPresent => "Credentials where not present in the request",
