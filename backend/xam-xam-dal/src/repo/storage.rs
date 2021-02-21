@@ -27,6 +27,18 @@ pub fn get_storages(conn: &PgCon, id_user: i32) -> Result<Vec<Storage>, XamXamEr
 }
 
 /**
+ * Method to get all storage names of a particular user by his user id.
+ */
+pub fn get_storage_names(conn: &PgCon, id_user: i32) -> Result<Vec<String>, XamXamError> {
+    Ok(
+        storages
+        .filter(user_id.eq(id_user))
+        .select(name)
+        .get_results::<String>(conn)?
+    )
+}
+
+/**
  * Update the storage by looking up its name and user id and then applies a struct that contains the information to update the storage. Function can returns a true if it affected a storage, false if no things were changed.
  */
 pub fn update_storage(

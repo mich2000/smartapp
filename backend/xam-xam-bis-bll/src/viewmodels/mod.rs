@@ -8,3 +8,4 @@ pub mod products;
 pub mod storage_name;
 pub mod storages;
 pub mod update_product;
+pub mod storage_names;

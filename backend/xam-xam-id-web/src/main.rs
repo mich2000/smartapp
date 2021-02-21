@@ -68,6 +68,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .default_service(web::route().to(web::HttpResponse::NotFound))
     })
     .bind_rustls("0.0.0.0:8080", web_config::tls_config())?
+    .keep_alive(15)
     .workers(1)
     .run()
     .await?;

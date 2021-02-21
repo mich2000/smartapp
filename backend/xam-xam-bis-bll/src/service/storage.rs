@@ -3,12 +3,17 @@ use crate::viewmodels::edit_storage::EditStorage;
 use crate::viewmodels::new_storage::NewStorage;
 use crate::viewmodels::storage_name::StorageName;
 use crate::viewmodels::storages::Storages;
+use crate::viewmodels::storage_names::StorageNames;
 use crate::PgCon;
 use xam_xam_dal::models::storage::InsertableStorage;
 use xam_xam_dal::repo::storage;
 
 pub fn storage_list(conn: &PgCon, user_id: i32) -> Result<Storages, XamXamServiceError> {
     Ok(storage::get_storages(conn, user_id)?.into())
+}
+
+pub fn storage_name_list(conn: &PgCon, user_id: i32) -> Result<StorageNames, XamXamServiceError> {
+    Ok(storage::get_storage_names(conn, user_id)?.into())
 }
 
 /**

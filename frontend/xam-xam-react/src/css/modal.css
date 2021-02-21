@@ -15,9 +15,9 @@
   margin-bottom: 0.2rem;
 }
 .modal-dialog, .center-info-user {
-  border-radius: 18px;
+  border-radius: 1rem;
   margin: 1rem;
   padding: 1rem;
-  border: 1px solid #cfcece;
+  border: 0.3rem solid #cfcece;
   background-color: white;
 }
