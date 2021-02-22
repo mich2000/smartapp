@@ -32,7 +32,7 @@ window.addEventListener('online', controlConnection);
 window.addEventListener('offline', controlConnection);
 
 ReactDOM.render(<AppProvider>
-    <UserContext/>
     <ToastContainer/>
+    <UserContext/>
     <Footer/>
 </AppProvider>,document.getElementById('root'));

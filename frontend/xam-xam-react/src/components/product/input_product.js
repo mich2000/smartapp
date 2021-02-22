@@ -5,8 +5,8 @@ import {ProductType} from '../../enums';
 import {showError} from '../../toast';
 
 export function nowDatePlusDays(days,event) {
-    event.preventDefault();
-    event.stopPropagation();
+    event?.preventDefault();
+    event?.stopPropagation();
     const newDate = new Date();
     newDate.setDate(newDate.getDate() + days);
     let month = newDate.getMonth() > 9 ? newDate.getMonth() : '0' + newDate.getMonth();
@@ -15,8 +15,8 @@ export function nowDatePlusDays(days,event) {
 }
 
 export function nowDatePlusMonth(months, event) {
-    event.preventDefault();
-    event.stopPropagation();
+    event?.preventDefault();
+    event?.stopPropagation();
     const newDate = new Date();
     newDate.setMonth(newDate.getMonth() + months);
     let month = newDate.getMonth() > 9 ? newDate.getMonth() : '0' + newDate.getMonth();
@@ -27,7 +27,7 @@ export function nowDatePlusMonth(months, event) {
 export const InputProductDialog = (props) => {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState(1);
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(nowDatePlusDays(1));
     const [type, setType] = useState(ProductType.Other);
     const storage = props.storage;
 
@@ -81,9 +81,9 @@ export const InputProductDialog = (props) => {
                 close => <div className="modal-dialog">
                 <div className="modal-header">Add product</div>
                 <div className="modal-content">
-                    <input className="modal-input form-control" type="text" value={name} placeholder="Enter the product name" onChange={(e) => setName(e.target.value)}/>
-                    <input className="modal-input form-control" min="1" type="number" value={amount} placeholder="Enter the amount" onChange={(e) => setAmount(e.target.value)}/>
-                    <label>Expires in</label>
+                    <input className="modal-input form-control" type="text" value={name} placeholder="Product name" onChange={(e) => setName(e.target.value)}/>
+                    <input className="modal-input form-control" min="1" type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)}/>
+                    <input className="modal-input form-control" type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
                     <div className="user-info">
                         <input className="modal-input form-control" type="button" value="3 days" onClick={(e) => setDate(nowDatePlusDays(3,e))}/>
                         <input className="modal-input form-control" type="button" value="7 days" onClick={(e) => setDate(nowDatePlusDays(7,e))}/>
@@ -93,8 +93,7 @@ export const InputProductDialog = (props) => {
                         <input className="modal-input form-control" type="button" value="1 month" onClick={(e) => setDate(nowDatePlusMonth(1,e))}/>
                         <input className="modal-input form-control" type="button" value="2 months" onClick={(e) => setDate(nowDatePlusMonth(2,e))}/>
                     </div>
-                    <input className="modal-input form-control" type="date" value={date} placeholder="Enter the expiration date" onChange={(e) => setDate(e.target.value)}/>
-                    <select className="modal-input form-control" value={type} placeholder={date} onChange={(e) => setType(e.target.value)}>
+                    <select className="modal-input form-control" value={type} nChange={(e) => setType(e.target.value)}>
                         {Object.keys(ProductType).map(key => (
                             <option key={key} value={key}>
                                 {key}
