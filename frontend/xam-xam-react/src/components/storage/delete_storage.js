@@ -1,10 +1,10 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
-import {DeleteCrossIcon} from '../../icon';
+import {DeleteIcon} from '../../icon';
 
 export function DeleteStoragePopup(props) {
     return <Popup trigger={<button className="badge badge-pill badge-danger m-2" value={props.item} type="button">
-            <DeleteCrossIcon/>
+            <DeleteIcon/>
         </button>}
         modal nested>
             {

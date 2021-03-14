@@ -10,8 +10,6 @@ use serde::{Deserialize, Serialize};
  * * sub : is an id of an user
  * * iss : is the issuer of the claim
  * * exp : datetime which indicates the date that it will be valid
- * * iat : datetime the claim was issued
- * * is_admin : Claim that is used to identify if the user is an administrator
  */
 #[derive(Serialize, Deserialize)]
 pub struct Claim {

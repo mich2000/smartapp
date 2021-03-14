@@ -102,5 +102,5 @@ export function ForgottenPassword() {
                         </button>
                     </div>
                 </div> }
-</form>;
+            </form>;
 }
