@@ -36,11 +36,10 @@ impl ClaimConfiguration {
     }
 
     pub fn create_claim(&self, user_id: &str) -> Result<Claim, JwtCustomError> {
-        Ok(Claim::new(
-            user_id,
-            self.get_issuer(),
-            self.get_expiration(),
-        )?)
+        if user_id.is_empty() {
+            return Err(JwtCustomError::UserIdIsEmpty);
+        }
+        Claim::new(user_id, self.get_issuer(), self.get_expiration())
     }
 
     pub fn token_from_claim(&self, claim: &Claim) -> Result<String, JwtCustomError> {

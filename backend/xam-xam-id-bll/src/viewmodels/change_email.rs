@@ -2,9 +2,9 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct EmailsHolder {
-    from_email : String,
-    to_email : String,
-    token : String
+    from_email: String,
+    to_email: String,
+    token: String,
 }
 
 impl EmailsHolder {
@@ -15,7 +15,7 @@ impl EmailsHolder {
     pub fn get_to_email(&self) -> &str {
         &self.to_email
     }
-    
+
     pub fn get_token(&self) -> &str {
         &self.token
     }

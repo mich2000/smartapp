@@ -2,8 +2,8 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct EmailAndPwdHolder {
-    email : String,
-    pwd : String
+    email: String,
+    pwd: String,
 }
 
 impl EmailAndPwdHolder {

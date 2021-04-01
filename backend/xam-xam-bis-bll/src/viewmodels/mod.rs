@@ -6,6 +6,6 @@ pub mod new_storage;
 pub mod product_id;
 pub mod products;
 pub mod storage_name;
+pub mod storage_names;
 pub mod storages;
 pub mod update_product;
-pub mod storage_names;

@@ -2,8 +2,8 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct PasswordHolder {
-    password : String,
-    password_confirm : String
+    password: String,
+    password_confirm: String,
 }
 
 impl PasswordHolder {

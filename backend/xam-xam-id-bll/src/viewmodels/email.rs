@@ -1,13 +1,13 @@
-use serde::{Deserialize,Serialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize,Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct EmailHolder {
-    email : String
+    email: String,
 }
 
 impl From<String> for EmailHolder {
-    fn from(new_email : String) -> Self {
-        EmailHolder { email : new_email }
+    fn from(new_email: String) -> Self {
+        EmailHolder { email: new_email }
     }
 }
 

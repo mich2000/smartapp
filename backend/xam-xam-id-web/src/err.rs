@@ -73,7 +73,7 @@ impl From<xam_xam_id_bll::err::XamXamServiceError> for XamXamWebError {
 impl From<jwt_gang::claim_error::JwtCustomError> for XamXamWebError {
     fn from(err: jwt_gang::claim_error::JwtCustomError) -> Self {
         error!("{}", err);
-        XamXamWebError::ServiceError(XamXamServiceError::JWTerror(err))
+        XamXamWebError::ServiceError(XamXamServiceError::JwtError(err))
     }
 }
 
@@ -102,7 +102,7 @@ impl XamXamWebError {
                 }
                 .to_string();
             }
-            if let XamXamServiceError::JWTerror(err_jwt) = service_err {
+            if let XamXamServiceError::JwtError(err_jwt) = service_err {
                 return match err_jwt {
                     JwtCustomError::TokenIsInvalid => "Token was invalid",
                     JwtCustomError::SignatureHasExpired => "Token has expired",
@@ -147,7 +147,7 @@ impl error::ResponseError for XamXamWebError {
         match &*self {
             XamXamWebError::ServiceError(service_err) => match service_err {
                 //User related error
-                XamXamServiceError::UserAlreadyInRedisDB => StatusCode::UNAUTHORIZED,
+                XamXamServiceError::UserAlreadyInRedisDb => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForUserCreation => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForForgottenPwd => StatusCode::UNAUTHORIZED,
                 XamXamServiceError::TokenNotCorrectForChangingEmail => StatusCode::UNAUTHORIZED,
@@ -155,7 +155,7 @@ impl error::ResponseError for XamXamWebError {
                 // DAL errors
                 XamXamServiceError::XamXamDalError(_) => StatusCode::BAD_REQUEST,
                 // JWT errors
-                XamXamServiceError::JWTerror(_) => StatusCode::BAD_REQUEST,
+                XamXamServiceError::JwtError(_) => StatusCode::BAD_REQUEST,
                 //Custom errors
                 XamXamServiceError::CustomError(_) => StatusCode::BAD_REQUEST,
             },

@@ -2,8 +2,8 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct NewEmailHolder {
-    token : String,
-    email : String
+    token: String,
+    email: String,
 }
 
 impl NewEmailHolder {

@@ -7,6 +7,7 @@ pub enum JwtCustomError {
     EmptySubjectOfToken,
     TokenIsEmpty,
     TokenIsInvalid,
+    UserIdIsEmpty,
     IssuerIsInvalid,
     SignatureHasExpired,
     ExpirationEqualsNull,
@@ -28,6 +29,7 @@ impl fmt::Display for JwtCustomError {
             }
             JwtCustomError::TokenIsEmpty => write!(f, "A token string cannot be empty"),
             JwtCustomError::TokenIsInvalid => write!(f, "JWT token is invalid"),
+            JwtCustomError::UserIdIsEmpty => write!(f, "The user id is empty"),
             JwtCustomError::IssuerIsInvalid => write!(f, "JWT token issuer is invalid"),
             JwtCustomError::SignatureHasExpired => {
                 write!(f, "Signature of jwt token has been expired")

@@ -2,10 +2,10 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct ForgottenPassword {
-    email : String,
-    token : String,
-    password : String,
-    password_confirm : String
+    email: String,
+    token: String,
+    password: String,
+    password_confirm: String,
 }
 
 impl ForgottenPassword {

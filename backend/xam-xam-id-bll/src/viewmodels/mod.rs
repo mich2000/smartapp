@@ -1,9 +1,9 @@
-pub mod new_user;
-pub mod email;
+pub mod basic_info;
 pub mod change_email;
-pub mod password;
+pub mod email;
+pub mod email_pwd;
 pub mod forgot_pwd;
 pub mod new_email;
-pub mod email_pwd;
-pub mod basic_info;
+pub mod new_user;
+pub mod password;
 pub mod product_unit;
