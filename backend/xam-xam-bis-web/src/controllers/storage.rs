@@ -14,7 +14,10 @@ pub async fn get_storages(id: UserId, pg: Data<PgPool>) -> Result<HttpResponse, 
 }
 
 #[get("/storages/names")]
-pub async fn get_storages_storages(id: UserId, pg: Data<PgPool>) -> Result<HttpResponse, XamXamWebError> {
+pub async fn get_storages_storages(
+    id: UserId,
+    pg: Data<PgPool>,
+) -> Result<HttpResponse, XamXamWebError> {
     Ok(HttpResponse::Ok().json(storage::storage_name_list(&pg.conn()?, id.get_id())?))
 }
 
