@@ -5,26 +5,27 @@ use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, TokenData, 
 
 /**
  * This configuration will be used to make claims and to validate these claims.
- * - claim_issuer : issuer is mostly the server name, used to identify
  */
 #[derive(Clone)]
 pub struct ClaimConfiguration {
-    claim_issuer: String,
     claim_secret: String,
+    claim_encoder: EncodingKey,
+    validation: Validation,
     claim_expiration: usize,
 }
 
 impl ClaimConfiguration {
     pub fn new(issuer: &str, secret: &str, expiration: usize) -> Self {
+        let secret = secret.to_string();
         Self {
-            claim_issuer: issuer.to_string(),
             claim_secret: secret.to_string(),
+            claim_encoder: EncodingKey::from_secret(&secret.as_ref()),
+            validation: Validation {
+                iss: Some(issuer.to_string()),
+                ..Default::default()
+            },
             claim_expiration: expiration,
         }
-    }
-
-    pub fn get_issuer(&self) -> &str {
-        &self.claim_issuer
     }
 
     pub fn get_secret(&self) -> &[u8] {
@@ -39,15 +40,15 @@ impl ClaimConfiguration {
         if user_id.is_empty() {
             return Err(JwtCustomError::UserIdIsEmpty);
         }
-        Claim::new(user_id, self.get_issuer(), self.get_expiration())
+        let issuer = match &self.validation.iss {
+            Some(iss) => iss,
+            None => return Err(JwtCustomError::IssuerIsEmpty),
+        };
+        Claim::new(user_id, issuer, self.get_expiration())
     }
 
     pub fn token_from_claim(&self, claim: &Claim) -> Result<String, JwtCustomError> {
-        match encode(
-            &Header::default(),
-            &claim,
-            &EncodingKey::from_secret(self.get_secret()),
-        ) {
+        match encode(&Header::default(), &claim, &self.claim_encoder) {
             Ok(token) => {
                 info!("A token has been made from a claim");
                 Ok(token)
@@ -75,10 +76,7 @@ impl ClaimConfiguration {
         match decode::<Claim>(
             &token,
             &DecodingKey::from_secret(self.get_secret()),
-            &Validation {
-                iss: Some(self.get_issuer().to_string()),
-                ..Default::default()
-            },
+            &self.validation,
         ) {
             Ok(c) => Ok(c),
             Err(err) => match &*err.kind() {
