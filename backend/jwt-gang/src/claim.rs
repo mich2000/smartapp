@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
  * * iss : is the issuer of the claim
  * * exp : datetime which indicates the date that it will be valid
  */
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Claim {
     iss: String,
     sub: String,
@@ -20,7 +20,7 @@ pub struct Claim {
 }
 
 impl Claim {
-    pub fn new(subject: &str, issuer: &str, expiration: usize) -> Result<Claim, JwtCustomError> {
+    pub fn new(subject: &str, issuer: &str, expiration: u64) -> Result<Claim, JwtCustomError> {
         if expiration == 0 {
             warn!("JWT claim cannot have a expiration equal to 0.");
             return Err(JwtCustomError::ExpirationEqualsNull);

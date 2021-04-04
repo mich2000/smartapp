@@ -19,13 +19,14 @@ pub fn get_value_from_key(key: &str) -> Option<String> {
     }
 }
 
-pub fn env_config() -> Result<ClaimConfiguration, JwtCustomError> {
+pub fn env_config(secret: &'static str) -> Result<ClaimConfiguration<'_>, JwtCustomError> {
     Ok(ClaimConfiguration::new(
         &get_value_from_key("JWT_ISSUER").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
-        &get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+        //&get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+        secret,
         get_value_from_key("JWT_EXPIRATION")
             .ok_or(JwtCustomError::EnvironmentalVariableMissing)?
-            .parse::<usize>()
+            .parse::<u64>()
             .map_err(|_| {
                 JwtCustomError::CustomError("Cannot parse the jwt expiration env line".to_owned())
             })?,
@@ -48,4 +49,15 @@ fn test_expiration() {
     let config = ClaimConfiguration::new("i", "s", 15);
     let claim = config.create_claim("u");
     assert!(!claim.is_err())
+}
+
+#[test]
+fn test_expiration_after_sleeping() {
+    use claim_config::ClaimConfiguration;
+    let config = ClaimConfiguration::new("i", "s", 1);
+    let claim = config.create_claim("u");
+    assert!(claim.is_ok());
+    let token = config.token_from_claim(&claim.unwrap()).unwrap();
+    std::thread::sleep(std::time::Duration::from_secs(5));
+    assert!(config.decode_token(&token).is_err());
 }

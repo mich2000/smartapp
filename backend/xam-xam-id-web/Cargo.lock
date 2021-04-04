@@ -3180,6 +3180,7 @@ dependencies = [
  "env_logger",
  "futures-util",
  "jwt-gang",
+ "lazy_static",
  "log",
  "log4rs",
  "mailgang",

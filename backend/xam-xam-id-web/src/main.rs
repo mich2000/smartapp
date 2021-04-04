@@ -6,17 +6,25 @@ mod err;
 mod extractors;
 mod web_config;
 
-use xam_xam_id_bll::{get_pg_pool, get_redis_pool, PgPool, RedisPool};
-
-use xam_xam_common::util::get_value_from_key;
-
 use crate::err::XamXamWebError;
+use jwt_gang::claim_error::JwtCustomError;
+use xam_xam_common::util::get_value_from_key;
+use xam_xam_id_bll::{get_pg_pool, get_redis_pool, PgPool, RedisPool};
 
 #[macro_use]
 extern crate log;
 
+#[macro_use]
+extern crate lazy_static;
+
+lazy_static! {
+    static ref SECRET: String = get_value_from_key("JWT_SECRET")
+        .ok_or(JwtCustomError::EnvironmentalVariableMissing)
+        .unwrap();
+}
+
 #[actix_web::main]
-async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     web_config::log_init()?;
 
     let pg_pool: PgPool = get_pg_pool(
@@ -29,7 +37,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .ok_or(XamXamWebError::CouldNotGetRedisConnection)?
             .as_ref(),
     );
-    let jwt_config = jwt_gang::env_config()?;
+
+    let jwt_config = jwt_gang::env_config(&SECRET)?;
 
     HttpServer::new(move || {
         App::new()

@@ -4,36 +4,30 @@ use jsonwebtoken::errors::ErrorKind;
 use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, TokenData, Validation};
 
 /**
- * This configuration will be used to make claims and to validate these claims.
+ * This configuration will be used to make claims and to validate these claims. The maximum expiration that can be given is 2^16 expiration.
  */
 #[derive(Clone)]
-pub struct ClaimConfiguration {
-    claim_secret: String,
+pub struct ClaimConfiguration<'a> {
+    claim_decoder: DecodingKey<'a>,
     claim_encoder: EncodingKey,
     validation: Validation,
-    claim_expiration: usize,
 }
 
-impl ClaimConfiguration {
-    pub fn new(issuer: &str, secret: &str, expiration: usize) -> Self {
-        let secret = secret.to_string();
+impl<'a> ClaimConfiguration<'a> {
+    pub fn new(issuer: &str, secret: &'a str, expiration: u64) -> Self {
         Self {
-            claim_secret: secret.to_string(),
-            claim_encoder: EncodingKey::from_secret(&secret.as_ref()),
+            claim_decoder: DecodingKey::from_secret(secret.as_ref()),
+            claim_encoder: EncodingKey::from_secret(secret.as_ref()),
             validation: Validation {
                 iss: Some(issuer.to_string()),
+                leeway : expiration,
                 ..Default::default()
             },
-            claim_expiration: expiration,
         }
     }
 
-    pub fn get_secret(&self) -> &[u8] {
-        self.claim_secret.as_ref()
-    }
-
-    pub fn get_expiration(&self) -> usize {
-        self.claim_expiration
+    pub fn get_expiration(&self) -> u64 {
+        self.validation.leeway
     }
 
     pub fn create_claim(&self, user_id: &str) -> Result<Claim, JwtCustomError> {
@@ -73,11 +67,7 @@ impl ClaimConfiguration {
             warn!("{}", JwtCustomError::TokenIsEmpty);
             return Err(JwtCustomError::TokenIsEmpty);
         }
-        match decode::<Claim>(
-            &token,
-            &DecodingKey::from_secret(self.get_secret()),
-            &self.validation,
-        ) {
+        match decode::<Claim>(&token, &self.claim_decoder, &self.validation) {
             Ok(c) => Ok(c),
             Err(err) => match &*err.kind() {
                 ErrorKind::InvalidToken => {
@@ -102,4 +92,17 @@ impl ClaimConfiguration {
             },
         }
     }
+}
+
+#[test]
+fn test_sizes() {
+    pub fn show_size<T>() {
+        println!("{}", std::mem::size_of::<T>());
+    }
+    show_size::<Validation>();
+    show_size::<DecodingKey>();
+    show_size::<EncodingKey>();
+    show_size::<ClaimConfiguration>();
+    show_size::<usize>();
+    show_size::<u16>();
 }
