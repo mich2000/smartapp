@@ -44,6 +44,9 @@ export default function Registration() {
                 .then(text => {
                     if(text !== 'No internet connection') {
                         showInfo("Token has been sent to your email account😀.");
+                        let registerForm = registrationForm;
+                        registerForm.email = value;
+                        setRegistrationForm(registerForm);
                     } else {
                         showError(text);
                     }
