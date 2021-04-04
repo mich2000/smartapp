@@ -14,16 +14,25 @@ pub struct ClaimConfiguration<'a> {
 }
 
 impl<'a> ClaimConfiguration<'a> {
-    pub fn new(issuer: &str, secret: &'a str, expiration: u64) -> Self {
-        Self {
+    pub fn new(issuer: &str, secret: &'a str, expiration: u64) -> Result<Self, JwtCustomError> {
+        if issuer.is_empty() {
+            return Err(JwtCustomError::IssuerIsEmpty);
+        }
+        if secret.is_empty() {
+            return Err(JwtCustomError::SecretIsEmpty);
+        }
+        if expiration >= i64::MAX as u64 {
+            return Err(JwtCustomError::ExpirationIsTooBig);
+        }
+        Ok(Self {
             claim_decoder: DecodingKey::from_secret(secret.as_ref()),
             claim_encoder: EncodingKey::from_secret(secret.as_ref()),
             validation: Validation {
                 iss: Some(issuer.to_string()),
-                leeway : expiration,
+                leeway: expiration,
                 ..Default::default()
             },
-        }
+        })
     }
 
     pub fn get_expiration(&self) -> u64 {

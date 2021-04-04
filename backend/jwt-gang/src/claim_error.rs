@@ -12,6 +12,8 @@ pub enum JwtCustomError {
     IssuerIsEmpty,
     SignatureHasExpired,
     ExpirationEqualsNull,
+    ExpirationIsTooBig,
+    SecretIsEmpty,
     CustomError(String),
 }
 
@@ -39,6 +41,10 @@ impl fmt::Display for JwtCustomError {
             JwtCustomError::ExpirationEqualsNull => {
                 write!(f, "An expiration of jwt token cannot be equal or under 0")
             }
+            JwtCustomError::ExpirationIsTooBig => {
+                write!(f, "Expiration cannot be more or equals i64::MAX")
+            }
+            JwtCustomError::SecretIsEmpty => write!(f, "Encryption secret is empty"),
             JwtCustomError::CustomError(e) => write!(f, "{}", e),
         }
     }

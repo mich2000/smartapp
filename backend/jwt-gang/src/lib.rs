@@ -20,9 +20,8 @@ pub fn get_value_from_key(key: &str) -> Option<String> {
 }
 
 pub fn env_config(secret: &'static str) -> Result<ClaimConfiguration<'_>, JwtCustomError> {
-    Ok(ClaimConfiguration::new(
+    ClaimConfiguration::new(
         &get_value_from_key("JWT_ISSUER").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
-        //&get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
         secret,
         get_value_from_key("JWT_EXPIRATION")
             .ok_or(JwtCustomError::EnvironmentalVariableMissing)?
@@ -30,13 +29,13 @@ pub fn env_config(secret: &'static str) -> Result<ClaimConfiguration<'_>, JwtCus
             .map_err(|_| {
                 JwtCustomError::CustomError("Cannot parse the jwt expiration env line".to_owned())
             })?,
-    ))
+    )
 }
 
 #[test]
 fn test_good_claim() {
     use claim_config::ClaimConfiguration;
-    let config = ClaimConfiguration::new("i", "s", 15);
+    let config = ClaimConfiguration::new("i", "s", 15).unwrap();
     let claim = config.create_claim("u").unwrap();
     let token = config.token_from_claim(&claim).unwrap();
     assert!(config.decode_token(&token).is_ok());
@@ -44,9 +43,17 @@ fn test_good_claim() {
 }
 
 #[test]
+fn faulthy_jwt_config() {
+    use claim_config::ClaimConfiguration;
+    assert!(ClaimConfiguration::new("", "dqf", 45).is_err());
+    assert!(ClaimConfiguration::new("qsdfsq", "", 45).is_err());
+    assert!(ClaimConfiguration::new("qsdfsq", "qsfze", i64::MAX as u64).is_err());
+}
+
+#[test]
 fn test_expiration() {
     use claim_config::ClaimConfiguration;
-    let config = ClaimConfiguration::new("i", "s", 15);
+    let config = ClaimConfiguration::new("i", "s", 15).unwrap();
     let claim = config.create_claim("u");
     assert!(!claim.is_err())
 }
@@ -54,7 +61,7 @@ fn test_expiration() {
 #[test]
 fn test_expiration_after_sleeping() {
     use claim_config::ClaimConfiguration;
-    let config = ClaimConfiguration::new("i", "s", 1);
+    let config = ClaimConfiguration::new("i", "s", 1).unwrap();
     let claim = config.create_claim("u");
     assert!(claim.is_ok());
     let token = config.token_from_claim(&claim.unwrap()).unwrap();
