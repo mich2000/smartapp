@@ -7,29 +7,24 @@ use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, TokenData, 
  * This configuration will be used to make claims and to validate these claims.
  */
 #[derive(Clone)]
-pub struct ClaimConfiguration {
-    claim_secret: String,
+pub struct ClaimConfiguration<'a> {
+    claim_decoder: DecodingKey<'a>,
     claim_encoder: EncodingKey,
     validation: Validation,
     claim_expiration: usize,
 }
 
-impl ClaimConfiguration {
-    pub fn new(issuer: &str, secret: &str, expiration: usize) -> Self {
-        let secret = secret.to_string();
+impl<'a> ClaimConfiguration<'a> {
+    pub fn new(issuer: &str, secret: &'a str, expiration: usize) -> Self {
         Self {
-            claim_secret: secret.to_string(),
-            claim_encoder: EncodingKey::from_secret(&secret.as_ref()),
+            claim_decoder: DecodingKey::from_secret(secret.as_ref()),
+            claim_encoder: EncodingKey::from_secret(secret.as_ref()),
             validation: Validation {
                 iss: Some(issuer.to_string()),
                 ..Default::default()
             },
             claim_expiration: expiration,
         }
-    }
-
-    pub fn get_secret(&self) -> &[u8] {
-        self.claim_secret.as_ref()
     }
 
     pub fn get_expiration(&self) -> usize {
@@ -73,11 +68,7 @@ impl ClaimConfiguration {
             warn!("{}", JwtCustomError::TokenIsEmpty);
             return Err(JwtCustomError::TokenIsEmpty);
         }
-        match decode::<Claim>(
-            &token,
-            &DecodingKey::from_secret(self.get_secret()),
-            &self.validation,
-        ) {
+        match decode::<Claim>(&token, &self.claim_decoder, &self.validation) {
             Ok(c) => Ok(c),
             Err(err) => match &*err.kind() {
                 ErrorKind::InvalidToken => {

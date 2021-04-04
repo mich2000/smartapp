@@ -2404,6 +2404,7 @@ dependencies = [
  "env_logger",
  "futures-util",
  "jwt-gang",
+ "lazy_static",
  "log",
  "rustls",
  "xam-xam-bis-bll",

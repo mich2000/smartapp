@@ -38,7 +38,7 @@ pub async fn login(
     credentials: Cred,
     session: Identity,
     pg: Data<PgPool>,
-    jwt_config: Data<ClaimConfiguration>,
+    jwt_config: Data<ClaimConfiguration<'_>>,
 ) -> Result<HttpResponse, XamXamWebError> {
     let jwt_token: String = match auth_service::authenthicate_get_token(
         &pg.conn()?,
@@ -71,7 +71,7 @@ pub async fn logout(id: Identity) -> HttpResponse {
 #[get("/validate")]
 pub async fn validate(
     session: Identity,
-    jwt_config: Data<ClaimConfiguration>,
+    jwt_config: Data<ClaimConfiguration<'_>>,
 ) -> Result<HttpResponse, XamXamWebError> {
     let jwt_token = match session.identity() {
         Some(token) => token,
@@ -87,7 +87,7 @@ pub async fn validate(
 #[get("/renew/token")]
 pub async fn renew_token(
     session: Identity,
-    jwt_config: Data<ClaimConfiguration>,
+    jwt_config: Data<ClaimConfiguration<'_>>,
 ) -> Result<HttpResponse, XamXamWebError> {
     let jwt_token = match session.identity() {
         Some(token) => token,
@@ -133,7 +133,7 @@ pub async fn change_forgotten_pwd(
 pub async fn get_email(
     session: Identity,
     pg: Data<PgPool>,
-    jwt_config: Data<ClaimConfiguration>,
+    jwt_config: Data<ClaimConfiguration<'_>>,
 ) -> Result<HttpResponse, XamXamWebError> {
     let jwt_token = match session.identity() {
         Some(token) => token,

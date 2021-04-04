@@ -19,10 +19,11 @@ pub fn get_value_from_key(key: &str) -> Option<String> {
     }
 }
 
-pub fn env_config() -> Result<ClaimConfiguration, JwtCustomError> {
+pub fn env_config(secret: &'static str) -> Result<ClaimConfiguration<'_>, JwtCustomError> {
     Ok(ClaimConfiguration::new(
         &get_value_from_key("JWT_ISSUER").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
-        &get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+        //&get_value_from_key("JWT_SECRET").ok_or(JwtCustomError::EnvironmentalVariableMissing)?,
+        secret,
         get_value_from_key("JWT_EXPIRATION")
             .ok_or(JwtCustomError::EnvironmentalVariableMissing)?
             .parse::<usize>()

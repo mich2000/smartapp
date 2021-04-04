@@ -7,13 +7,20 @@ mod web_config;
 #[macro_use]
 extern crate log;
 
-use actix_web::{http::header::ContentEncoding, middleware, web, App, HttpServer};
+#[macro_use]
+extern crate lazy_static;
 
-use xam_xam_bis_bll::{get_pg_pool, PgPool};
-
-use xam_xam_common::util::get_value_from_key;
+lazy_static! {
+    static ref SECRET: String = get_value_from_key("JWT_SECRET")
+        .ok_or(JwtCustomError::EnvironmentalVariableMissing)
+        .unwrap();
+}
 
 use crate::err::XamXamWebError;
+use actix_web::{http::header::ContentEncoding, middleware, web, App, HttpServer};
+use jwt_gang::claim_error::JwtCustomError;
+use xam_xam_bis_bll::{get_pg_pool, PgPool};
+use xam_xam_common::util::get_value_from_key;
 
 #[actix_web::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -21,7 +28,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let pg_pool: PgPool = get_pg_pool(
         &get_value_from_key("DATABASE_URL").ok_or(XamXamWebError::CouldNotGetPostGresConnection)?,
     );
-    let jwt_config = jwt_gang::env_config()?;
+    let jwt_config = jwt_gang::env_config(&SECRET)?;
 
     HttpServer::new(move || {
         App::new()
