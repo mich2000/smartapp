@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import Popup from 'reactjs-popup';
 import {ProductType} from '../../enums';
 import {showError} from '../../toast';
@@ -11,13 +11,6 @@ export const EditProductDialog = (props) => {
     const [date, setDate] = useState(props.item_info[3]);
     const [type, setType] = useState(props.item_info[4]);
     const id = props.item_info[0];
-
-    useEffect(() => {
-        setName(props.item_info[1]);
-        setAmount(props.item_info[2]);
-        setDate(props.item_info[3]);
-        setType(props.item_info[4]);
-    },[props.item_info])
 
     function edit_product(event) {
         event.preventDefault();
@@ -54,7 +47,7 @@ export const EditProductDialog = (props) => {
                     <input className="modal-input form-control" min="1" type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)}/>
                     <input className="modal-input form-control" type="date" value={date} onChange={(e) => setDate(e.target.value)}/>
                     <div className="user-info">
-                        <input className="modal-input form-control" type="button" value="3 days" onClick={(e) => setDate(nowDatePlusDays(3,e))}/>
+                        <input className="modal-input form-control" type="button" value="3 days" onClick={(e) => setDate(nowDatePlusDays(3,e)) }/>
                         <input className="modal-input form-control" type="button" value="7 days" onClick={(e) => setDate(nowDatePlusDays(7,e))}/>
                         <input className="modal-input form-control" type="button" value="14 days" onClick={(e) => setDate(nowDatePlusDays(14,e))}/>
                     </div>
