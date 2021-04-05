@@ -9,7 +9,7 @@ export function nowDatePlusDays(days,event) {
     event?.preventDefault();
     event?.stopPropagation();
     const newDate = new Date();
-    newDate.setDate(newDate.getDate()) + days);
+    newDate.setDate(newDate.getDate() + days);
     let month = newDate.getMonth() > 9 ? newDate.getMonth() + 1 : '0' + newDate.getMonth() + 1;
     let day = newDate.getDate() > 9 ? newDate.getDate() : '0' + newDate.getDate();
     return `${newDate.getFullYear()}-${month}-${day}`;
