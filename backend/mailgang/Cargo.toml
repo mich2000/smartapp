@@ -9,6 +9,6 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 xam-xam-common = { path = "../xam-xam-common" }
 
-log = "0.4.0"
+log = "0.4.14"
 lettre = "0.9.5"
 lettre_email = "0.9.4"

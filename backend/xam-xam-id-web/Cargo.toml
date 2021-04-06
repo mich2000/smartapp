@@ -13,11 +13,10 @@ mailgang = { path = "../mailgang" }
 actix-web = { version = "3", features = ["rustls"] }
 actix-cors = "0.5.4"
 actix-identity = "0.3.1"
-actix-web-httpauth = "0.5.0"
+actix-web-httpauth = "0.5.1"
 rustls = "0.18.1"
-log = "0.4.0"
-log4rs = "1"
-futures-util = "0.3.12"
+log = "0.4.14"
+futures-util = "0.3.13"
 env_logger="0.8.3"
 lazy_static = "1.4.0"
 

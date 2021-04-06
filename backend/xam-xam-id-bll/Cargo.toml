@@ -13,8 +13,8 @@ mailgang = { path = "../mailgang" }
 jwt-gang = { path = "../jwt-gang"}
 
 serde = { version = "1.0", features = ["derive"] }
-log = "0.4.0"
+log = "0.4.14"
 r2d2_redis = "0.13.0"
 r2d2 = "0.8.9"
-chrono = {version = "0.4",features = ["serde"]}
+chrono = {version = "0.4.19",features = ["serde"]}
 smallvec = {version = "1.6.1",features = ["serde"]}
