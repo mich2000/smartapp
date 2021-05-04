@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1::3::9';
+const CACHE_NAME = 'v1::3::10';
 
 this.addEventListener('install',e => {
     e.waitUntil(
