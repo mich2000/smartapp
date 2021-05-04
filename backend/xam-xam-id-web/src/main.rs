@@ -23,6 +23,12 @@ lazy_static! {
         .unwrap();
 }
 
+/**
+ * Paths that are covered:
+ * /request
+ * /auth
+ * /user
+ */
 #[actix_web::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     web_config::log_init()?;
@@ -51,28 +57,31 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .data(jwt_config.clone())
             .wrap(web_config::identity())
             .service(
-                web::scope("/request")
-                    .service(controllers::request::request_new_user)
-                    .service(controllers::request::request_pwd_change)
-                    .service(controllers::request::request_new_email),
-            )
-            .service(
-                web::scope("/auth")
-                    .service(controllers::auth::register)
-                    .service(controllers::auth::login)
-                    .service(controllers::auth::logout)
-                    .service(controllers::auth::renew_token)
-                    .service(controllers::auth::change_forgotten_pwd)
-                    .service(controllers::auth::validate)
-                    .service(controllers::auth::get_email),
-            )
-            .service(
-                web::scope("/user")
-                    .service(controllers::user::get_basic_info)
-                    .service(controllers::user::get_five_first_products)
-                    .service(controllers::user::change_email)
-                    .service(controllers::user::change_password)
-                    .service(controllers::user::delete_profile),
+                web::scope("/id")
+                .service(
+                    web::scope("/request")
+                        .service(controllers::request::request_new_user)
+                        .service(controllers::request::request_pwd_change)
+                        .service(controllers::request::request_new_email),
+                )
+                .service(
+                    web::scope("/auth")
+                        .service(controllers::auth::register)
+                        .service(controllers::auth::login)
+                        .service(controllers::auth::logout)
+                        .service(controllers::auth::renew_token)
+                        .service(controllers::auth::change_forgotten_pwd)
+                        .service(controllers::auth::validate)
+                        .service(controllers::auth::get_email),
+                )
+                .service(
+                    web::scope("/user")
+                        .service(controllers::user::get_basic_info)
+                        .service(controllers::user::get_five_first_products)
+                        .service(controllers::user::change_email)
+                        .service(controllers::user::change_password)
+                        .service(controllers::user::delete_profile),
+                )
             )
             .default_service(web::route().to(web::HttpResponse::NotFound))
     })
