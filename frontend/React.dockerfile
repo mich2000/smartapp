@@ -1,7 +1,7 @@
 FROM node:14-alpine as build-stage
 
-ENV REACT_APP_ID_API_URL=https://xam-xam.xyz:8000/id
-ENV REACT_APP_BIS_API_URL=https://xam-xam.xyz:8001/bis
+ENV REACT_APP_ID_API_URL=https://xam-xam.xyz/id
+ENV REACT_APP_BIS_API_URL=https://xam-xam.xyz/bis
 
 COPY xam-xam-react/ $HOME/xam-xam-react/
 
