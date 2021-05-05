@@ -17,7 +17,7 @@ EXPOSE 80
 RUN rm -rf /usr/share/nginx/html/*
 RUN rm /etc/nginx/conf.d/default.conf
 
-COPY --from=build-stage $HOME/xam-xam-react//build/ /usr/share/nginx/html
+COPY --from=build-stage $HOME/xam-xam-react/build/ /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx","-g","daemon off;"]
