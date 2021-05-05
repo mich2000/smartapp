@@ -11,8 +11,6 @@ RUN npm install && npm run build
 
 # Final build state
 FROM nginx:alpine
-EXPOSE 8000
-EXPOSE 8001
 EXPOSE 443
 EXPOSE 80
 

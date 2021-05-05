@@ -72,8 +72,6 @@ services:
       - "xam-bis"
       - "xam-id"
     ports:
-      - 8000:8000
-      - 8001:8001
       - 443:443
       - 80:80
     volumes:
