@@ -76,3 +76,6 @@ services:
       - 80:80
     volumes:
       - /etc/letsencrypt:/production:ro
+    links:
+      - "xam-bis"
+      - "xam-id"
