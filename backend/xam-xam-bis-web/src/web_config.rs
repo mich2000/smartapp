@@ -1,14 +1,7 @@
 use actix_cors::Cors;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use env_logger::Builder;
-use rustls::{
-    internal::pemfile::{certs, pkcs8_private_keys},
-    NoClientAuth, ServerConfig,
-};
-use std::fs::File;
-use std::io::BufReader;
 use std::io::Write;
-use xam_xam_common::util::get_value_from_key;
 
 /**
  * Function that initializes an IdentityService
@@ -17,7 +10,6 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
     IdentityService::new(
         CookieIdentityPolicy::new(&[0; 32])
             .name("Authorization")
-            .secure(true)
             .http_only(true),
     )
 }
@@ -27,21 +19,6 @@ pub fn identity() -> IdentityService<CookieIdentityPolicy> {
  */
 pub fn cors() -> Cors {
     Cors::permissive().allowed_methods(vec!["POST", "PUT", "DELETE", "GET", "OPTIONS"])
-}
-
-/**
- * Tls configuration that is used to provide tls and https, this is important for security.
- */
-pub fn tls_config() -> ServerConfig {
-    let cert_file =
-        &mut BufReader::new(File::open(get_value_from_key("CERT_PATH").unwrap()).unwrap());
-    let key_file =
-        &mut BufReader::new(File::open(get_value_from_key("KEY_PATH").unwrap()).unwrap());
-    let cert_chain = certs(cert_file).unwrap();
-    let mut keys = pkcs8_private_keys(key_file).unwrap();
-    let mut config = ServerConfig::new(NoClientAuth::new());
-    config.set_single_cert(cert_chain, keys.remove(0)).unwrap();
-    config
 }
 
 /**

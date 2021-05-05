@@ -11,10 +11,9 @@ xam-xam-bis-bll={path="../xam-xam-bis-bll"}
 xam-xam-common={path="../xam-xam-common"}
 jwt-gang={path="../jwt-gang"}
 
-actix-web = { version = "3", features = ["rustls"] }
+actix-web = { version = "3" }
 actix-cors = "0.5.4"
 actix-identity = "0.3.1"
-rustls = "0.18.1"
 log="0.4.14"
 futures-util = "0.3.13"
 chrono="0.4.19"

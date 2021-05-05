@@ -4,6 +4,12 @@ mod err;
 mod user_id;
 mod web_config;
 
+use crate::err::XamXamWebError;
+use actix_web::{http::header::ContentEncoding, middleware, web, App, HttpServer};
+use jwt_gang::claim_error::JwtCustomError;
+use xam_xam_bis_bll::{get_pg_pool, PgPool};
+use xam_xam_common::util::get_value_from_key;
+
 #[macro_use]
 extern crate log;
 
@@ -15,12 +21,6 @@ lazy_static! {
         .ok_or(JwtCustomError::EnvironmentalVariableMissing)
         .unwrap();
 }
-
-use crate::err::XamXamWebError;
-use actix_web::{http::header::ContentEncoding, middleware, web, App, HttpServer};
-use jwt_gang::claim_error::JwtCustomError;
-use xam_xam_bis_bll::{get_pg_pool, PgPool};
-use xam_xam_common::util::get_value_from_key;
 
 #[actix_web::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -52,7 +52,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             )
             .default_service(web::route().to(web::HttpResponse::NotFound))
     })
-    .bind_rustls("0.0.0.0:8081", web_config::tls_config())?
+    .bind("0.0.0.0:8081")?
     .keep_alive(15)
     .workers(1)
     .run()

@@ -12,6 +12,7 @@ RUN npm install && npm run build
 # Final build state
 FROM nginx:alpine
 EXPOSE 443
+EXPOSE 80
 
 RUN rm -rf /usr/share/nginx/html/*
 RUN rm /etc/nginx/conf.d/default.conf
