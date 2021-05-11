@@ -1,4 +1,4 @@
-FROM rust:slim-stretch as cargoer
+FROM rust:slim-buster as cargoer
 RUN apt-get update && apt-get -y install pkg-config libssl-dev libpq-dev && apt-get autoremove
 
 COPY jwt-gang/ ./jwt-gang
