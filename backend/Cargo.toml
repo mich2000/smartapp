@@ -1,0 +1,2 @@
+[workspace]
+members = [ "jwt-gang", "xam-xam-bis-web", "xam-xam-dal",   "xam-xam-id-web",  "mailgang", "xam-xam-bis-bll", "xam-xam-common",  "xam-xam-id-bll" ]
