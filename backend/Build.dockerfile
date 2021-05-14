@@ -11,4 +11,4 @@ COPY xam-xam-bis-bll/ ./xam-xam-bis-bll
 COPY xam-xam-bis-web/ ./xam-xam-bis-web
 COPY ./Cargo.toml ./Cargo.toml
 
-RUN cargo build --release && strip target/release/xam-xam-id-web && strip target/release/xam-xam-bis-web
+RUN cargo t && cargo build --release && strip target/release/xam-xam-id-web && strip target/release/xam-xam-bis-web
