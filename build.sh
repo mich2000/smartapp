@@ -5,5 +5,5 @@ docker build -t xam-bis -f ./backend/Bis.dockerfile ./backend && \
 docker tag xam-id xam-id:staging && \
 docker tag xam-bis xam-bis:staging;
 
-docker build -t xam-web -f ./frontend/React.dockerfile ./frontend
-docker tag xam-web xam-web:staging
+docker build -t xam-web -f ./frontend/React.dockerfile ./frontend && \
+docker tag xam-web xam-web:staging;
